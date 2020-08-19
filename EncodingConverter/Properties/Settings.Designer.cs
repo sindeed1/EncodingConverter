@@ -61,12 +61,12 @@ namespace EncodingConverter.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PrefferedInputEncoding {
+        public string PreferredInputEncoding {
             get {
-                return ((string)(this["PrefferedInputEncoding"]));
+                return ((string)(this["PreferredInputEncoding"]));
             }
             set {
-                this["PrefferedInputEncoding"] = value;
+                this["PreferredInputEncoding"] = value;
             }
         }
     }

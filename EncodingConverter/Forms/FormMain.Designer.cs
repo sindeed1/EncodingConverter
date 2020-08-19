@@ -53,7 +53,7 @@ namespace AEC
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.splitContainerInput = new System.Windows.Forms.SplitContainer();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtPrefferedInputEncoding = new System.Windows.Forms.TextBox();
+            this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
             this.chkAutoDetect = new System.Windows.Forms.CheckBox();
             this.encodingsTool_input = new AHD.SM.Controls.EncodingsTool();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
@@ -122,7 +122,7 @@ namespace AEC
             // splitContainerInput.Panel1
             // 
             this.splitContainerInput.Panel1.Controls.Add(this.label7);
-            this.splitContainerInput.Panel1.Controls.Add(this.txtPrefferedInputEncoding);
+            this.splitContainerInput.Panel1.Controls.Add(this.txtPreferredInputEncoding);
             this.splitContainerInput.Panel1.Controls.Add(this.chkAutoDetect);
             this.splitContainerInput.Panel1.Controls.Add(this.encodingsTool_input);
             this.splitContainerInput.Panel1.Controls.Add(this.linkLabel1);
@@ -138,12 +138,12 @@ namespace AEC
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
             // 
-            // txtPrefferedInputEncoding
+            // txtPreferredInputEncoding
             // 
-            resources.ApplyResources(this.txtPrefferedInputEncoding, "txtPrefferedInputEncoding");
-            this.txtPrefferedInputEncoding.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "PrefferedInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtPrefferedInputEncoding.Name = "txtPrefferedInputEncoding";
-            this.txtPrefferedInputEncoding.Text = global::EncodingConverter.Properties.Settings.Default.PrefferedInputEncoding;
+            resources.ApplyResources(this.txtPreferredInputEncoding, "txtPreferredInputEncoding");
+            this.txtPreferredInputEncoding.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "PreferredInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtPreferredInputEncoding.Name = "txtPreferredInputEncoding";
+            this.txtPreferredInputEncoding.Text = global::EncodingConverter.Properties.Settings.Default.PreferredInputEncoding;
             // 
             // chkAutoDetect
             // 
@@ -371,7 +371,7 @@ namespace AEC
         private System.Windows.Forms.Button btnApplyOutputFormatting;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtPrefferedInputEncoding;
+        private System.Windows.Forms.TextBox txtPreferredInputEncoding;
     }
 }
 

@@ -29,6 +29,7 @@ using System.IO;
 using href.Utils;
 using EncodingConverter;
 using System.Diagnostics;
+using EncodingConverter;
 
 namespace AEC
 {
@@ -68,23 +69,24 @@ namespace AEC
             this.splitContainerInput.DragEnter += InputControl_DragEnter;
             this.splitContainerInput.DragDrop += InputControl_DragDrop;
 
-            this.linkLanguage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLanguage_LinkClicked);
-            this.linkAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAbout_LinkClicked);
-            this.linkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkHelp_LinkClicked);
-            this.btnChangeOutputFile.Click += new System.EventHandler(this.btnChangeOutputFile_Click);
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            this.encodingsTool_input.SelectedEncodingChanged += new System.EventHandler(this.encodingsTool_input_SelectedEncodingChanged);
-            this.encodingsTool_output.SelectedEncodingChanged += new System.EventHandler(this.encodingsTool_output_SelectedEncodingChanged);
+            this.linkLanguage.LinkClicked += this.linkLanguage_LinkClicked;
+            this.linkAbout.LinkClicked += this.linkAbout_LinkClicked;
+            this.linkHelp.LinkClicked += this.linkHelp_LinkClicked;
+            this.btnChangeOutputFile.Click += this.btnChangeOutputFile_Click;
+            this.linkLabel1.LinkClicked += this.linkLabel1_LinkClicked;
+            this.btnSave.Click += this.btnSave_Click;
+            this.encodingsTool_input.SelectedEncodingChanged += this.encodingsTool_input_SelectedEncodingChanged;
+            this.encodingsTool_output.SelectedEncodingChanged += this.encodingsTool_output_SelectedEncodingChanged;
 
-            this.txtInputPath.TextChanged += TxtInputPath_TextChanged;
-
+            this.FormClosed += FormMain_FormClosed;
         }
         #endregion
 
-        private void TxtInputPath_TextChanged(object sender, EventArgs e)
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
+            Program.Settings.Save();
         }
+
 
         void ChangeInputFile(string inputPath)
         {
@@ -98,7 +100,7 @@ namespace AEC
                 richTextBox_in.Lines = File.ReadAllLines(txtInputPath.Text, encoding);
             }
 
-            txtOutputPath.Text = FormatOutputpath(inputPath);// string.Format(formatString, directory, fileName, fileExtention, outputEncoding.EncodingName, outputEncoding.BodyName);
+            txtOutputPath.Text = FormatOutputpath(inputPath);
             ShowOutput();
         }
         string FormatOutputpath(string inputPath)
@@ -124,26 +126,26 @@ namespace AEC
             _OutputPathFormattingParameters[10] = outputEncoding.EncodingName;   //{10} Output encoding name
             _OutputPathFormattingParameters[11] = outputEncoding.BodyName;       //{11} Output encoding Body name
             _OutputPathFormattingParameters[12] = outputEncoding.CodePage;       //{12} Output encoding Code page
-                                                                                //{13-19} reserved and empty
+                                                                                 //{13-19} reserved and empty
             _OutputPathFormattingParameters[20] = inputEncoding.EncodingName;    //{20} Input encoding name
             _OutputPathFormattingParameters[21] = inputEncoding.BodyName;        //{21} Input encoding Body name
             _OutputPathFormattingParameters[22] = inputEncoding.CodePage;        //{22} Input encoding Code page
 
             string result;
             result = string.Format(formatString, _OutputPathFormattingParameters);
-                //, directory                     //{0} directory path
-                //, fileName                      //{1} file name without extension
-                //, fileExtention                 //{2} extension
-                //, "", "", "", "", "", "", ""    //{3-9} reserved and empty
-                //, outputEncoding.EncodingName   //{10} Output encoding name
-                //, outputEncoding.BodyName       //{11} Output encoding Body name
-                //, outputEncoding.CodePage       //{12} Output encoding Code page
-                //, "", "", "", "", "", "", ""    //{13-19} reserved and empty
-                //, inputEncoding.EncodingName   //{20} Input encoding name
-                //, inputEncoding.BodyName       //{21} Input encoding Body name
-                //, inputEncoding.CodePage       //{22} Input encoding Code page
-                ////, "", "", "", "", "", "", ""    //{23-29} reserved and empty
-                //);
+            //, directory                     //{0} directory path
+            //, fileName                      //{1} file name without extension
+            //, fileExtention                 //{2} extension
+            //, "", "", "", "", "", "", ""    //{3-9} reserved and empty
+            //, outputEncoding.EncodingName   //{10} Output encoding name
+            //, outputEncoding.BodyName       //{11} Output encoding Body name
+            //, outputEncoding.CodePage       //{12} Output encoding Code page
+            //, "", "", "", "", "", "", ""    //{13-19} reserved and empty
+            //, inputEncoding.EncodingName   //{20} Input encoding name
+            //, inputEncoding.BodyName       //{21} Input encoding Body name
+            //, inputEncoding.CodePage       //{22} Input encoding Code page
+            ////, "", "", "", "", "", "", ""    //{23-29} reserved and empty
+            //);
 
             return result;
         }
@@ -176,7 +178,29 @@ namespace AEC
             FileStream stream = new FileStream(txtInputPath.Text, FileMode.Open, FileAccess.Read);
             byte[] buf = new byte[stream.Length];
             stream.Read(buf, 0, (int)stream.Length);
-            Encoding encoding = EncodingTools.DetectInputCodepage(buf);
+            string prefferedString = txtPreferredInputEncoding.Text.Trim();
+            Encoding encoding;
+            if (prefferedString == null || prefferedString.Length <= 0)
+            {
+                encoding = EncodingTools.DetectInputCodepage(buf);
+            }
+            else
+            {
+                var encodings = EncodingTools.DetectInputCodepages(buf, 10);
+                var searchStrings = txtPreferredInputEncoding.Text.ToLower().Split(' ');
+                var prefferedEncodings = encodings.Where(x => x.EncodingName.ToLower().Contains(searchStrings)).ToArray();
+                if (prefferedEncodings == null || prefferedEncodings.Length <= 0)
+                {
+                    encoding = encodings[0];
+                }
+                else
+                {
+                    Trace.TraceInformation(string.Format("Found '{0}' encodings with the preferred encoding text '{1}'", prefferedEncodings.Length, txtPreferredInputEncoding.Text));
+                    encoding = prefferedEncodings[0];
+                }
+            }
+
+
             stream.Close();
             encodingsTool_input.SelectedEncoding = encoding;
             richTextBox_in.Lines = File.ReadAllLines(txtInputPath.Text, encoding);

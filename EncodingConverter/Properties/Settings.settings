@@ -11,7 +11,7 @@
     <Setting Name="AutoDetectInputEncoding" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="PrefferedInputEncoding" Type="System.String" Scope="User">
+    <Setting Name="PreferredInputEncoding" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

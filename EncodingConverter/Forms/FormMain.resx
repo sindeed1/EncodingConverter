@@ -183,6 +183,9 @@
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
     <value>149, 17</value>
   </data>
@@ -193,7 +196,7 @@
     <value>9</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
-    <value>Preffered encoding:</value>
+    <value>Preferred encoding:</value>
   </data>
   <data name="&gt;&gt;label7.Name" xml:space="preserve">
     <value>label7</value>
@@ -207,28 +210,28 @@
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="txtPrefferedInputEncoding.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="txtPreferredInputEncoding.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="txtPrefferedInputEncoding.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="txtPreferredInputEncoding.Location" type="System.Drawing.Point, System.Drawing">
     <value>255, 14</value>
   </data>
-  <data name="txtPrefferedInputEncoding.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 20</value>
+  <data name="txtPreferredInputEncoding.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 20</value>
   </data>
-  <data name="txtPrefferedInputEncoding.TabIndex" type="System.Int32, mscorlib">
+  <data name="txtPreferredInputEncoding.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="&gt;&gt;txtPrefferedInputEncoding.Name" xml:space="preserve">
-    <value>txtPrefferedInputEncoding</value>
+  <data name="&gt;&gt;txtPreferredInputEncoding.Name" xml:space="preserve">
+    <value>txtPreferredInputEncoding</value>
   </data>
-  <data name="&gt;&gt;txtPrefferedInputEncoding.Type" xml:space="preserve">
+  <data name="&gt;&gt;txtPreferredInputEncoding.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtPrefferedInputEncoding.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txtPreferredInputEncoding.Parent" xml:space="preserve">
     <value>splitContainerInput.Panel1</value>
   </data>
-  <data name="&gt;&gt;txtPrefferedInputEncoding.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;txtPreferredInputEncoding.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="chkAutoDetect.AutoSize" type="System.Boolean, mscorlib">
@@ -495,117 +498,6 @@
   <data name="&gt;&gt;gbInput.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;btnApplyOutputFormatting.Name" xml:space="preserve">
-    <value>btnApplyOutputFormatting</value>
-  </data>
-  <data name="&gt;&gt;btnApplyOutputFormatting.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnApplyOutputFormatting.Parent" xml:space="preserve">
-    <value>gbOutput</value>
-  </data>
-  <data name="&gt;&gt;btnApplyOutputFormatting.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPathFormat.Name" xml:space="preserve">
-    <value>txtOutputPathFormat</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPathFormat.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPathFormat.Parent" xml:space="preserve">
-    <value>gbOutput</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPathFormat.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;label6.Name" xml:space="preserve">
-    <value>label6</value>
-  </data>
-  <data name="&gt;&gt;label6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
-    <value>gbOutput</value>
-  </data>
-  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;splitContainerOutput.Name" xml:space="preserve">
-    <value>splitContainerOutput</value>
-  </data>
-  <data name="&gt;&gt;splitContainerOutput.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitContainerOutput.Parent" xml:space="preserve">
-    <value>gbOutput</value>
-  </data>
-  <data name="&gt;&gt;splitContainerOutput.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;label5.Name" xml:space="preserve">
-    <value>label5</value>
-  </data>
-  <data name="&gt;&gt;label5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>gbOutput</value>
-  </data>
-  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;btnChangeOutputFile.Name" xml:space="preserve">
-    <value>btnChangeOutputFile</value>
-  </data>
-  <data name="&gt;&gt;btnChangeOutputFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnChangeOutputFile.Parent" xml:space="preserve">
-    <value>gbOutput</value>
-  </data>
-  <data name="&gt;&gt;btnChangeOutputFile.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPath.Name" xml:space="preserve">
-    <value>txtOutputPath</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPath.Parent" xml:space="preserve">
-    <value>gbOutput</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPath.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="gbOutput.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="gbOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>442, 3</value>
-  </data>
-  <data name="gbOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 486</value>
-  </data>
-  <data name="gbOutput.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="gbOutput.Text" xml:space="preserve">
-    <value>Output</value>
-  </data>
-  <data name="&gt;&gt;gbOutput.Name" xml:space="preserve">
-    <value>gbOutput</value>
-  </data>
-  <data name="&gt;&gt;gbOutput.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;gbOutput.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;gbOutput.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="btnApplyOutputFormatting.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -636,9 +528,6 @@
   <data name="&gt;&gt;btnApplyOutputFormatting.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="txtOutputPathFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -651,6 +540,9 @@
   <data name="txtOutputPathFormat.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="txtOutputPathFormat.ToolTip" xml:space="preserve">
     <value>Formatting parameters:
 File path and name parameters:
@@ -980,6 +872,33 @@ Input encoding parameters:
   <data name="&gt;&gt;txtOutputPath.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="gbOutput.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="gbOutput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>442, 3</value>
+  </data>
+  <data name="gbOutput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>434, 486</value>
+  </data>
+  <data name="gbOutput.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="gbOutput.Text" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="&gt;&gt;gbOutput.Name" xml:space="preserve">
+    <value>gbOutput</value>
+  </data>
+  <data name="&gt;&gt;gbOutput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbOutput.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;gbOutput.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="linkHelp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
@@ -1142,9 +1061,6 @@ Input encoding parameters:
   <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="gbInput" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="gbOutput" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
