@@ -66,6 +66,8 @@ namespace AEC
 
         void AddEventHandlers()
         {
+            this.DataBindings.Add(new System.Windows.Forms.Binding("ClientSize", global::EncodingConverter.Properties.Settings.Default, "MainFormSize", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+
             this.splitContainerInput.DragEnter += InputControl_DragEnter;
             this.splitContainerInput.DragDrop += InputControl_DragDrop;
 

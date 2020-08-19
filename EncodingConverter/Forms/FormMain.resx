@@ -118,58 +118,145 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnOpen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="linkHelp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="linkHelp.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="linkHelp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnOpen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
+  <data name="linkHelp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 455</value>
   </data>
-  <data name="btnOpen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="linkHelp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 13</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnOpen.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="linkHelp.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
-  <data name="btnOpen.Text" xml:space="preserve">
-    <value>&amp;Open</value>
+  <data name="linkHelp.Text" xml:space="preserve">
+    <value>Help</value>
   </data>
-  <data name="&gt;&gt;btnOpen.Name" xml:space="preserve">
-    <value>btnOpen</value>
+  <data name="&gt;&gt;linkHelp.Name" xml:space="preserve">
+    <value>linkHelp</value>
   </data>
-  <data name="&gt;&gt;btnOpen.Type" xml:space="preserve">
+  <data name="&gt;&gt;linkHelp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkHelp.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;linkHelp.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="linkAbout.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="linkAbout.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="linkAbout.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="linkAbout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 455</value>
+  </data>
+  <data name="linkAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 13</value>
+  </data>
+  <data name="linkAbout.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="linkAbout.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="&gt;&gt;linkAbout.Name" xml:space="preserve">
+    <value>linkAbout</value>
+  </data>
+  <data name="&gt;&gt;linkAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkAbout.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;linkAbout.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="linkLanguage.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="linkLanguage.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="linkLanguage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="linkLanguage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>89, 455</value>
+  </data>
+  <data name="linkLanguage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 13</value>
+  </data>
+  <data name="linkLanguage.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="linkLanguage.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="&gt;&gt;linkLanguage.Name" xml:space="preserve">
+    <value>linkLanguage</value>
+  </data>
+  <data name="&gt;&gt;linkLanguage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkLanguage.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;linkLanguage.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="btnSave.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>421, 450</value>
+  </data>
+  <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 23</value>
+  </data>
+  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>Convert and &amp;Save</value>
+  </data>
+  <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
+    <value>btnSave</value>
+  </data>
+  <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnOpen.Parent" xml:space="preserve">
-    <value>gbInput</value>
+  <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnOpen.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="txtInputPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="splitContainer1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="txtInputPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 21</value>
-  </data>
-  <data name="txtInputPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>340, 20</value>
-  </data>
-  <data name="txtInputPath.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;txtInputPath.Name" xml:space="preserve">
-    <value>txtInputPath</value>
-  </data>
-  <data name="&gt;&gt;txtInputPath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtInputPath.Parent" xml:space="preserve">
-    <value>gbInput</value>
-  </data>
-  <data name="&gt;&gt;txtInputPath.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="splitContainer1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="splitContainerInput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -217,10 +304,13 @@
     <value>255, 14</value>
   </data>
   <data name="txtPreferredInputEncoding.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 20</value>
+    <value>55, 20</value>
   </data>
   <data name="txtPreferredInputEncoding.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
+  </data>
+  <data name="txtPreferredInputEncoding.ToolTip" xml:space="preserve">
+    <value>When detecting the encoding, the program will try to find the encoding that matches the given text</value>
   </data>
   <data name="&gt;&gt;txtPreferredInputEncoding.Name" xml:space="preserve">
     <value>txtPreferredInputEncoding</value>
@@ -289,7 +379,7 @@
 </value>
   </data>
   <data name="encodingsTool_input.Size" type="System.Drawing.Size, System.Drawing">
-    <value>418, 208</value>
+    <value>307, 181</value>
   </data>
   <data name="encodingsTool_input.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -385,7 +475,7 @@
     <value>0, 23</value>
   </data>
   <data name="richTextBox_in.Size" type="System.Drawing.Size, System.Drawing">
-    <value>421, 153</value>
+    <value>310, 138</value>
   </data>
   <data name="richTextBox_in.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -451,10 +541,10 @@
     <value>1</value>
   </data>
   <data name="splitContainerInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>421, 433</value>
+    <value>310, 391</value>
   </data>
   <data name="splitContainerInput.SplitterDistance" type="System.Int32, mscorlib">
-    <value>253</value>
+    <value>226</value>
   </data>
   <data name="splitContainerInput.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -471,17 +561,68 @@
   <data name="&gt;&gt;splitContainerInput.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="btnOpen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnOpen.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="btnOpen.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnOpen.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnOpen.Text" xml:space="preserve">
+    <value>&amp;Open</value>
+  </data>
+  <data name="&gt;&gt;btnOpen.Name" xml:space="preserve">
+    <value>btnOpen</value>
+  </data>
+  <data name="&gt;&gt;btnOpen.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnOpen.Parent" xml:space="preserve">
+    <value>gbInput</value>
+  </data>
+  <data name="&gt;&gt;btnOpen.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="txtInputPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="txtInputPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 21</value>
+  </data>
+  <data name="txtInputPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 20</value>
+  </data>
+  <data name="txtInputPath.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;txtInputPath.Name" xml:space="preserve">
+    <value>txtInputPath</value>
+  </data>
+  <data name="&gt;&gt;txtInputPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtInputPath.Parent" xml:space="preserve">
+    <value>gbInput</value>
+  </data>
+  <data name="&gt;&gt;txtInputPath.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="gbInput.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="gbInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>0, 0</value>
   </data>
   <data name="gbInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>433, 486</value>
+    <value>322, 444</value>
   </data>
   <data name="gbInput.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="gbInput.Text" xml:space="preserve">
     <value>Input</value>
@@ -493,9 +634,21 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;gbInput.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
+    <value>splitContainer1.Panel1</value>
   </data>
   <data name="&gt;&gt;gbInput.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.Name" xml:space="preserve">
+    <value>splitContainer1.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.Parent" xml:space="preserve">
+    <value>splitContainer1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="btnApplyOutputFormatting.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -505,7 +658,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnApplyOutputFormatting.Location" type="System.Drawing.Point, System.Drawing">
-    <value>350, 19</value>
+    <value>231, 19</value>
   </data>
   <data name="btnApplyOutputFormatting.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 23</value>
@@ -535,14 +688,11 @@
     <value>110, 21</value>
   </data>
   <data name="txtOutputPathFormat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>234, 20</value>
+    <value>115, 20</value>
   </data>
   <data name="txtOutputPathFormat.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="txtOutputPathFormat.ToolTip" xml:space="preserve">
     <value>Formatting parameters:
 File path and name parameters:
@@ -636,7 +786,7 @@ Input encoding parameters:
 </value>
   </data>
   <data name="encodingsTool_output.Size" type="System.Drawing.Size, System.Drawing">
-    <value>422, 205</value>
+    <value>303, 180</value>
   </data>
   <data name="encodingsTool_output.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -702,7 +852,7 @@ Input encoding parameters:
     <value>0, 21</value>
   </data>
   <data name="richTextBox_out.Size" type="System.Drawing.Size, System.Drawing">
-    <value>422, 151</value>
+    <value>303, 134</value>
   </data>
   <data name="richTextBox_out.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -768,10 +918,10 @@ Input encoding parameters:
     <value>1</value>
   </data>
   <data name="splitContainerOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>422, 403</value>
+    <value>303, 361</value>
   </data>
   <data name="splitContainerOutput.SplitterDistance" type="System.Int32, mscorlib">
-    <value>224</value>
+    <value>199</value>
   </data>
   <data name="splitContainerOutput.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -825,7 +975,7 @@ Input encoding parameters:
     <value>NoControl</value>
   </data>
   <data name="btnChangeOutputFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>350, 48</value>
+    <value>231, 48</value>
   </data>
   <data name="btnChangeOutputFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 23</value>
@@ -855,7 +1005,7 @@ Input encoding parameters:
     <value>60, 51</value>
   </data>
   <data name="txtOutputPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>284, 20</value>
+    <value>165, 20</value>
   </data>
   <data name="txtOutputPath.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -876,13 +1026,13 @@ Input encoding parameters:
     <value>Fill</value>
   </data>
   <data name="gbOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>442, 3</value>
+    <value>0, 0</value>
   </data>
   <data name="gbOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 486</value>
+    <value>315, 444</value>
   </data>
   <data name="gbOutput.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="gbOutput.Text" xml:space="preserve">
     <value>Output</value>
@@ -894,172 +1044,43 @@ Input encoding parameters:
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;gbOutput.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
+    <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;gbOutput.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="linkHelp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="linkHelp.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="linkHelp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="linkHelp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>54, 503</value>
-  </data>
-  <data name="linkHelp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 13</value>
-  </data>
-  <data name="linkHelp.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="linkHelp.Text" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="&gt;&gt;linkHelp.Name" xml:space="preserve">
-    <value>linkHelp</value>
-  </data>
-  <data name="&gt;&gt;linkHelp.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;linkHelp.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;linkHelp.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="linkAbout.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="linkAbout.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="linkAbout.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="linkAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 503</value>
-  </data>
-  <data name="linkAbout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 13</value>
-  </data>
-  <data name="linkAbout.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="linkAbout.Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="&gt;&gt;linkAbout.Name" xml:space="preserve">
-    <value>linkAbout</value>
-  </data>
-  <data name="&gt;&gt;linkAbout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;linkAbout.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;linkAbout.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="linkLanguage.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="linkLanguage.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="linkLanguage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="linkLanguage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>88, 503</value>
-  </data>
-  <data name="linkLanguage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 13</value>
-  </data>
-  <data name="linkLanguage.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="linkLanguage.Text" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="&gt;&gt;linkLanguage.Name" xml:space="preserve">
-    <value>linkLanguage</value>
-  </data>
-  <data name="&gt;&gt;linkLanguage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;linkLanguage.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;linkLanguage.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="btnSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="btnSave.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>653, 498</value>
-  </data>
-  <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 23</value>
-  </data>
-  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="btnSave.Text" xml:space="preserve">
-    <value>Convert and &amp;Save</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
-    <value>btnSave</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tableLayoutPanel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>879, 492</value>
-  </data>
-  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="gbInput" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="gbOutput" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="&gt;&gt;splitContainer1.Panel2.Name" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.Parent" xml:space="preserve">
+    <value>splitContainer1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="splitContainer1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>641, 444</value>
+  </data>
+  <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
+    <value>322</value>
+  </data>
+  <data name="splitContainer1.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Name" xml:space="preserve">
+    <value>splitContainer1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1068,7 +1089,7 @@ Input encoding parameters:
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>879, 533</value>
+    <value>640, 480</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1494,6 +1515,12 @@ Input encoding parameters:
         AAAAAAAAAAAAAMP/AADAHwAAgAEAAIAAAACAAAAAgAEAAIABAACAAQAAAAEAAAADAAAAAwAAAAMAAAAD
         AADABwAA/AcAAP+HAAA=
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>320, 240</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
