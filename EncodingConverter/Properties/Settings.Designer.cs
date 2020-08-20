@@ -93,5 +93,17 @@ namespace EncodingConverter.Properties {
                 this["MainFormLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("322")]
+        public int MainForm_SpliContainer_SplitterDistance {
+            get {
+                return ((int)(this["MainForm_SpliContainer_SplitterDistance"]));
+            }
+            set {
+                this["MainForm_SpliContainer_SplitterDistance"] = value;
+            }
+        }
     }
 }

@@ -53,10 +53,14 @@ namespace AEC
             this.linkLanguage = new System.Windows.Forms.LinkLabel();
             this.btnSave = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
+            this.txtOutputPathFormat = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.splitContainerInput = new System.Windows.Forms.SplitContainer();
             this.label7 = new System.Windows.Forms.Label();
+            this.chkAutoDetect = new System.Windows.Forms.CheckBox();
+            this.encodingsTool_input = new AHD.SM.Controls.EncodingsTool();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.richTextBox_in = new System.Windows.Forms.RichTextBox();
@@ -67,17 +71,13 @@ namespace AEC
             this.btnApplyOutputFormatting = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainerOutput = new System.Windows.Forms.SplitContainer();
+            this.encodingsTool_output = new AHD.SM.Controls.EncodingsTool();
             this.label4 = new System.Windows.Forms.Label();
             this.richTextBox_out = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnChangeOutputFile = new System.Windows.Forms.Button();
             this.txtOutputPath = new System.Windows.Forms.TextBox();
-            this.encodingsTool_input = new AHD.SM.Controls.EncodingsTool();
-            this.encodingsTool_output = new AHD.SM.Controls.EncodingsTool();
-            this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
-            this.chkAutoDetect = new System.Windows.Forms.CheckBox();
-            this.txtOutputPathFormat = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -127,6 +127,22 @@ namespace AEC
             this.toolTip1.ReshowDelay = 40;
             this.toolTip1.ShowAlways = true;
             // 
+            // txtPreferredInputEncoding
+            // 
+            resources.ApplyResources(this.txtPreferredInputEncoding, "txtPreferredInputEncoding");
+            this.txtPreferredInputEncoding.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "PreferredInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtPreferredInputEncoding.Name = "txtPreferredInputEncoding";
+            this.txtPreferredInputEncoding.Text = global::EncodingConverter.Properties.Settings.Default.PreferredInputEncoding;
+            this.toolTip1.SetToolTip(this.txtPreferredInputEncoding, resources.GetString("txtPreferredInputEncoding.ToolTip"));
+            // 
+            // txtOutputPathFormat
+            // 
+            resources.ApplyResources(this.txtOutputPathFormat, "txtOutputPathFormat");
+            this.txtOutputPathFormat.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "OutputFilePathFormatString", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtOutputPathFormat.Name = "txtOutputPathFormat";
+            this.txtOutputPathFormat.Text = global::EncodingConverter.Properties.Settings.Default.OutputFilePathFormatString;
+            this.toolTip1.SetToolTip(this.txtOutputPathFormat, resources.GetString("txtOutputPathFormat.ToolTip"));
+            // 
             // splitContainer1
             // 
             resources.ApplyResources(this.splitContainer1, "splitContainer1");
@@ -173,6 +189,21 @@ namespace AEC
             // 
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
+            // 
+            // chkAutoDetect
+            // 
+            resources.ApplyResources(this.chkAutoDetect, "chkAutoDetect");
+            this.chkAutoDetect.Checked = global::EncodingConverter.Properties.Settings.Default.AutoDetectInputEncoding;
+            this.chkAutoDetect.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkAutoDetect.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EncodingConverter.Properties.Settings.Default, "AutoDetectInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkAutoDetect.Name = "chkAutoDetect";
+            this.chkAutoDetect.UseVisualStyleBackColor = true;
+            // 
+            // encodingsTool_input
+            // 
+            resources.ApplyResources(this.encodingsTool_input, "encodingsTool_input");
+            this.encodingsTool_input.Name = "encodingsTool_input";
+            this.encodingsTool_input.SelectedEncoding = ((System.Text.Encoding)(resources.GetObject("encodingsTool_input.SelectedEncoding")));
             // 
             // linkLabel1
             // 
@@ -247,6 +278,12 @@ namespace AEC
             this.splitContainerOutput.Panel2.Controls.Add(this.richTextBox_out);
             this.splitContainerOutput.Panel2.Controls.Add(this.label3);
             // 
+            // encodingsTool_output
+            // 
+            resources.ApplyResources(this.encodingsTool_output, "encodingsTool_output");
+            this.encodingsTool_output.Name = "encodingsTool_output";
+            this.encodingsTool_output.SelectedEncoding = ((System.Text.Encoding)(resources.GetObject("encodingsTool_output.SelectedEncoding")));
+            // 
             // label4
             // 
             resources.ApplyResources(this.label4, "label4");
@@ -279,43 +316,6 @@ namespace AEC
             resources.ApplyResources(this.txtOutputPath, "txtOutputPath");
             this.txtOutputPath.Name = "txtOutputPath";
             this.txtOutputPath.ReadOnly = true;
-            // 
-            // encodingsTool_input
-            // 
-            resources.ApplyResources(this.encodingsTool_input, "encodingsTool_input");
-            this.encodingsTool_input.Name = "encodingsTool_input";
-            this.encodingsTool_input.SelectedEncoding = ((System.Text.Encoding)(resources.GetObject("encodingsTool_input.SelectedEncoding")));
-            // 
-            // encodingsTool_output
-            // 
-            resources.ApplyResources(this.encodingsTool_output, "encodingsTool_output");
-            this.encodingsTool_output.Name = "encodingsTool_output";
-            this.encodingsTool_output.SelectedEncoding = ((System.Text.Encoding)(resources.GetObject("encodingsTool_output.SelectedEncoding")));
-            // 
-            // txtPreferredInputEncoding
-            // 
-            resources.ApplyResources(this.txtPreferredInputEncoding, "txtPreferredInputEncoding");
-            this.txtPreferredInputEncoding.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "PreferredInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtPreferredInputEncoding.Name = "txtPreferredInputEncoding";
-            this.txtPreferredInputEncoding.Text = global::EncodingConverter.Properties.Settings.Default.PreferredInputEncoding;
-            this.toolTip1.SetToolTip(this.txtPreferredInputEncoding, resources.GetString("txtPreferredInputEncoding.ToolTip"));
-            // 
-            // chkAutoDetect
-            // 
-            resources.ApplyResources(this.chkAutoDetect, "chkAutoDetect");
-            this.chkAutoDetect.Checked = global::EncodingConverter.Properties.Settings.Default.AutoDetectInputEncoding;
-            this.chkAutoDetect.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutoDetect.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EncodingConverter.Properties.Settings.Default, "AutoDetectInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkAutoDetect.Name = "chkAutoDetect";
-            this.chkAutoDetect.UseVisualStyleBackColor = true;
-            // 
-            // txtOutputPathFormat
-            // 
-            resources.ApplyResources(this.txtOutputPathFormat, "txtOutputPathFormat");
-            this.txtOutputPathFormat.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "OutputFilePathFormatString", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtOutputPathFormat.Name = "txtOutputPathFormat";
-            this.txtOutputPathFormat.Text = global::EncodingConverter.Properties.Settings.Default.OutputFilePathFormatString;
-            this.toolTip1.SetToolTip(this.txtOutputPathFormat, resources.GetString("txtOutputPathFormat.ToolTip"));
             // 
             // FormMain
             // 

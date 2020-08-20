@@ -252,6 +252,74 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="txtPreferredInputEncoding.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="txtPreferredInputEncoding.Location" type="System.Drawing.Point, System.Drawing">
+    <value>255, 14</value>
+  </data>
+  <data name="txtPreferredInputEncoding.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 20</value>
+  </data>
+  <data name="txtPreferredInputEncoding.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="txtPreferredInputEncoding.ToolTip" xml:space="preserve">
+    <value>When detecting the encoding, the program will try to find the encoding that matches the given text</value>
+  </data>
+  <data name="&gt;&gt;txtPreferredInputEncoding.Name" xml:space="preserve">
+    <value>txtPreferredInputEncoding</value>
+  </data>
+  <data name="&gt;&gt;txtPreferredInputEncoding.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtPreferredInputEncoding.Parent" xml:space="preserve">
+    <value>splitContainerInput.Panel1</value>
+  </data>
+  <data name="&gt;&gt;txtPreferredInputEncoding.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="txtOutputPathFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="txtOutputPathFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 21</value>
+  </data>
+  <data name="txtOutputPathFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 20</value>
+  </data>
+  <data name="txtOutputPathFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="txtOutputPathFormat.ToolTip" xml:space="preserve">
+    <value>Formatting parameters:
+File path and name parameters:
+{0} Directory path
+{1} File name without extension
+{2} File extension
+
+Output encoding parameters:
+{10} Output encoding name
+{11} Output encoding Body name
+{12} Output encoding Code page
+
+Input encoding parameters:
+{20} Input encoding name
+{21} Input encoding Body name
+{22} Input encoding Code page</value>
+  </data>
+  <data name="&gt;&gt;txtOutputPathFormat.Name" xml:space="preserve">
+    <value>txtOutputPathFormat</value>
+  </data>
+  <data name="&gt;&gt;txtOutputPathFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtOutputPathFormat.Parent" xml:space="preserve">
+    <value>gbOutput</value>
+  </data>
+  <data name="&gt;&gt;txtOutputPathFormat.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="splitContainer1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
@@ -296,33 +364,6 @@
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="txtPreferredInputEncoding.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="txtPreferredInputEncoding.Location" type="System.Drawing.Point, System.Drawing">
-    <value>255, 14</value>
-  </data>
-  <data name="txtPreferredInputEncoding.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 20</value>
-  </data>
-  <data name="txtPreferredInputEncoding.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="txtPreferredInputEncoding.ToolTip" xml:space="preserve">
-    <value>When detecting the encoding, the program will try to find the encoding that matches the given text</value>
-  </data>
-  <data name="&gt;&gt;txtPreferredInputEncoding.Name" xml:space="preserve">
-    <value>txtPreferredInputEncoding</value>
-  </data>
-  <data name="&gt;&gt;txtPreferredInputEncoding.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtPreferredInputEncoding.Parent" xml:space="preserve">
-    <value>splitContainerInput.Panel1</value>
-  </data>
-  <data name="&gt;&gt;txtPreferredInputEncoding.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="chkAutoDetect.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -651,6 +692,9 @@
   <data name="&gt;&gt;splitContainer1.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="splitContainer1.Panel1MinSize" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
   <data name="btnApplyOutputFormatting.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -680,47 +724,6 @@
   </data>
   <data name="&gt;&gt;btnApplyOutputFormatting.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="txtOutputPathFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="txtOutputPathFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>110, 21</value>
-  </data>
-  <data name="txtOutputPathFormat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 20</value>
-  </data>
-  <data name="txtOutputPathFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="txtOutputPathFormat.ToolTip" xml:space="preserve">
-    <value>Formatting parameters:
-File path and name parameters:
-{0} Directory path
-{1} File name without extension
-{2} File extension
-
-Output encoding parameters:
-{10} Output encoding name
-{11} Output encoding Body name
-{12} Output encoding Code page
-
-Input encoding parameters:
-{20} Input encoding name
-{21} Input encoding Body name
-{22} Input encoding Code page</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPathFormat.Name" xml:space="preserve">
-    <value>txtOutputPathFormat</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPathFormat.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPathFormat.Parent" xml:space="preserve">
-    <value>gbOutput</value>
-  </data>
-  <data name="&gt;&gt;txtOutputPathFormat.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1060,6 +1063,9 @@ Input encoding parameters:
   </data>
   <data name="&gt;&gt;splitContainer1.Panel2.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="splitContainer1.Panel2MinSize" type="System.Int32, mscorlib">
+    <value>100</value>
   </data>
   <data name="splitContainer1.Size" type="System.Drawing.Size, System.Drawing">
     <value>641, 444</value>
@@ -1515,9 +1521,6 @@ Input encoding parameters:
         AAAAAAAAAAAAAMP/AADAHwAAgAEAAIAAAACAAAAAgAEAAIABAACAAQAAAAEAAAADAAAAAwAAAAMAAAAD
         AADABwAA/AcAAP+HAAA=
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>320, 240</value>
