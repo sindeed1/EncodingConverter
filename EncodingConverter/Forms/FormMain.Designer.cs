@@ -57,6 +57,7 @@ namespace AEC
             this.txtOutputPathFormat = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbInput = new System.Windows.Forms.GroupBox();
+            this.txtCompanionFile = new System.Windows.Forms.TextBox();
             this.splitContainerInput = new System.Windows.Forms.SplitContainer();
             this.label7 = new System.Windows.Forms.Label();
             this.chkAutoDetect = new System.Windows.Forms.CheckBox();
@@ -78,6 +79,9 @@ namespace AEC
             this.label5 = new System.Windows.Forms.Label();
             this.btnChangeOutputFile = new System.Windows.Forms.Button();
             this.txtOutputPath = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -158,12 +162,21 @@ namespace AEC
             // 
             // gbInput
             // 
+            this.gbInput.Controls.Add(this.label9);
+            this.gbInput.Controls.Add(this.label8);
+            this.gbInput.Controls.Add(this.textBox1);
+            this.gbInput.Controls.Add(this.txtCompanionFile);
             this.gbInput.Controls.Add(this.splitContainerInput);
             this.gbInput.Controls.Add(this.btnOpen);
             this.gbInput.Controls.Add(this.txtInputPath);
             resources.ApplyResources(this.gbInput, "gbInput");
             this.gbInput.Name = "gbInput";
             this.gbInput.TabStop = false;
+            // 
+            // txtCompanionFile
+            // 
+            resources.ApplyResources(this.txtCompanionFile, "txtCompanionFile");
+            this.txtCompanionFile.Name = "txtCompanionFile";
             // 
             // splitContainerInput
             // 
@@ -317,6 +330,21 @@ namespace AEC
             this.txtOutputPath.Name = "txtOutputPath";
             this.txtOutputPath.ReadOnly = true;
             // 
+            // textBox1
+            // 
+            resources.ApplyResources(this.textBox1, "textBox1");
+            this.textBox1.Name = "textBox1";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            // 
             // FormMain
             // 
             resources.ApplyResources(this, "$this");
@@ -385,6 +413,10 @@ namespace AEC
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnChangeOutputFile;
         private System.Windows.Forms.TextBox txtOutputPath;
+        private System.Windows.Forms.TextBox txtCompanionFile;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label9;
     }
 }
 

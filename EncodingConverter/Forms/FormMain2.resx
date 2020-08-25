@@ -117,39 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Button_OK" xml:space="preserve">
-    <value>&amp;OK</value>
+  <data name="encodingsTool_input.SelectedEncoding" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAEAQAAABhTeXN0ZW0uVGV4dC5VVEY4RW5jb2RpbmcLAAAAEmVtaXRVVEY4
+        SWRlbnRpZmllchBpc1Rocm93RXhjZXB0aW9uCm1fY29kZVBhZ2UIZGF0YUl0ZW0PZW5jb2RlckZhbGxi
+        YWNrD2RlY29kZXJGYWxsYmFjaxNFbmNvZGluZyttX2NvZGVQYWdlEUVuY29kaW5nK2RhdGFJdGVtFUVu
+        Y29kaW5nK21faXNSZWFkT25seRhFbmNvZGluZytlbmNvZGVyRmFsbGJhY2sYRW5jb2RpbmcrZGVjb2Rl
+        ckZhbGxiYWNrAAAAAwMDAAMAAwMBAQglU3lzdGVtLkdsb2JhbGl6YXRpb24uQ29kZVBhZ2VEYXRhSXRl
+        bSZTeXN0ZW0uVGV4dC5FbmNvZGVyUmVwbGFjZW1lbnRGYWxsYmFjayZTeXN0ZW0uVGV4dC5EZWNvZGVy
+        UmVwbGFjZW1lbnRGYWxsYmFjawglU3lzdGVtLkdsb2JhbGl6YXRpb24uQ29kZVBhZ2VEYXRhSXRlbQEm
+        U3lzdGVtLlRleHQuRW5jb2RlclJlcGxhY2VtZW50RmFsbGJhY2smU3lzdGVtLlRleHQuRGVjb2RlclJl
+        cGxhY2VtZW50RmFsbGJhY2sBAOn9AAAKCQIAAAAJAwAAAOn9AAAKAQkCAAAACQMAAAAEAgAAACZTeXN0
+        ZW0uVGV4dC5FbmNvZGVyUmVwbGFjZW1lbnRGYWxsYmFjawMAAAAKc3RyRGVmYXVsdBtiSXNNaWNyb3Nv
+        ZnRCZXN0Rml0RmFsbGJhY2srRW5jb2RlckZhbGxiYWNrK2JJc01pY3Jvc29mdEJlc3RGaXRGYWxsYmFj
+        awEAAAEBBgYAAAAD77+9AAAEAwAAACZTeXN0ZW0uVGV4dC5EZWNvZGVyUmVwbGFjZW1lbnRGYWxsYmFj
+        awMAAAAKc3RyRGVmYXVsdBtiSXNNaWNyb3NvZnRCZXN0Rml0RmFsbGJhY2srRGVjb2RlckZhbGxiYWNr
+        K2JJc01pY3Jvc29mdEJlc3RGaXRGYWxsYmFjawEAAAEBCQYAAAAAAAs=
+</value>
   </data>
-  <data name="CheckBox_OpenSavedFile" xml:space="preserve">
-    <value>Open &amp;saved file ?</value>
-  </data>
-  <data name="Filter_AllFiles" xml:space="preserve">
-    <value>*.*</value>
-  </data>
-  <data name="Message_About" xml:space="preserve">
-    <value>Copyright © Ala Ibrahim Hadid 2009 - 2015
-
-AHD Encoding Converter is a part of AHD Subtitles Maker Professional.
-AHD Subtitles Maker Professional is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-AHD Subtitles Maker Professional is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-You should have received a copy of the GNU General Public License along with this program. If not, see&lt;http://www.gnu.org/licenses/&gt;.</value>
-  </data>
-  <data name="Message_BrowseWhereYouWantToSaveTheFile" xml:space="preserve">
-    <value>Browse where you want to save the file</value>
-  </data>
-  <data name="Message_Done" xml:space="preserve">
-    <value>Done !!</value>
-  </data>
-  <data name="Message_InputFileDoesNotExsist" xml:space="preserve">
-    <value>The provided input file does not exsist!</value>
-  </data>
-  <data name="Message_OpenTheFileYouWantToConvertEncodingFor" xml:space="preserve">
-    <value>Open the file you want to convert encoding for</value>
-  </data>
-  <data name="Message_PleaseBrowseForInputFileFirst" xml:space="preserve">
-    <value>Please browse for input file first !</value>
-  </data>
-  <data name="Message_PleaseBrowseWhereToSaveTheFileFirst" xml:space="preserve">
-    <value>Please browse where to save the file first !</value>
+  <data name="encodingsTool_output.SelectedEncoding" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAEAQAAABhTeXN0ZW0uVGV4dC5VVEY4RW5jb2RpbmcLAAAAEmVtaXRVVEY4
+        SWRlbnRpZmllchBpc1Rocm93RXhjZXB0aW9uCm1fY29kZVBhZ2UIZGF0YUl0ZW0PZW5jb2RlckZhbGxi
+        YWNrD2RlY29kZXJGYWxsYmFjaxNFbmNvZGluZyttX2NvZGVQYWdlEUVuY29kaW5nK2RhdGFJdGVtFUVu
+        Y29kaW5nK21faXNSZWFkT25seRhFbmNvZGluZytlbmNvZGVyRmFsbGJhY2sYRW5jb2RpbmcrZGVjb2Rl
+        ckZhbGxiYWNrAAAAAwMDAAMAAwMBAQglU3lzdGVtLkdsb2JhbGl6YXRpb24uQ29kZVBhZ2VEYXRhSXRl
+        bSZTeXN0ZW0uVGV4dC5FbmNvZGVyUmVwbGFjZW1lbnRGYWxsYmFjayZTeXN0ZW0uVGV4dC5EZWNvZGVy
+        UmVwbGFjZW1lbnRGYWxsYmFjawglU3lzdGVtLkdsb2JhbGl6YXRpb24uQ29kZVBhZ2VEYXRhSXRlbQEm
+        U3lzdGVtLlRleHQuRW5jb2RlclJlcGxhY2VtZW50RmFsbGJhY2smU3lzdGVtLlRleHQuRGVjb2RlclJl
+        cGxhY2VtZW50RmFsbGJhY2sBAOn9AAAKCQIAAAAJAwAAAOn9AAAKAQkCAAAACQMAAAAEAgAAACZTeXN0
+        ZW0uVGV4dC5FbmNvZGVyUmVwbGFjZW1lbnRGYWxsYmFjawMAAAAKc3RyRGVmYXVsdBtiSXNNaWNyb3Nv
+        ZnRCZXN0Rml0RmFsbGJhY2srRW5jb2RlckZhbGxiYWNrK2JJc01pY3Jvc29mdEJlc3RGaXRGYWxsYmFj
+        awEAAAEBBgYAAAAD77+9AAAEAwAAACZTeXN0ZW0uVGV4dC5EZWNvZGVyUmVwbGFjZW1lbnRGYWxsYmFj
+        awMAAAAKc3RyRGVmYXVsdBtiSXNNaWNyb3NvZnRCZXN0Rml0RmFsbGJhY2srRGVjb2RlckZhbGxiYWNr
+        K2JJc01pY3Jvc29mdEJlc3RGaXRGYWxsYmFjawEAAAEBCQYAAAAAAAs=
+</value>
   </data>
 </root>

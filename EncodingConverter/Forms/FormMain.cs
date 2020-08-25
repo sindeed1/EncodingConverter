@@ -103,8 +103,19 @@ namespace AEC
                 richTextBox_in.Lines = File.ReadAllLines(txtInputPath.Text, encoding);
             }
 
+
             txtOutputPath.Text = FormatOutputpath(inputPath);
             ShowOutput();
+        }
+
+        string GetCompanionFile(string inputPath)
+        {
+            FileInfo file = new FileInfo(inputPath);
+            DirectoryInfo dir = file.Directory;
+
+            var files = dir.GetFiles();
+
+            return null;
         }
         string FormatOutputpath(string inputPath)
         {
@@ -181,16 +192,16 @@ namespace AEC
             FileStream stream = new FileStream(txtInputPath.Text, FileMode.Open, FileAccess.Read);
             byte[] buf = new byte[stream.Length];
             stream.Read(buf, 0, (int)stream.Length);
-            string prefferedString = txtPreferredInputEncoding.Text.Trim();
+            string preferredString = txtPreferredInputEncoding.Text.Trim();
             Encoding encoding;
-            if (prefferedString == null || prefferedString.Length <= 0)
+            if (preferredString == null || preferredString.Length <= 0)
             {
                 encoding = EncodingTools.DetectInputCodepage(buf);
             }
             else
             {
                 var encodings = EncodingTools.DetectInputCodepages(buf, 10);
-                var searchStrings = txtPreferredInputEncoding.Text.ToLower().Split(' ');
+                var searchStrings = preferredString.ToLower().Split(' ');
                 var prefferedEncodings = encodings.Where(x => x.EncodingName.ToLower().Contains(searchStrings)).ToArray();
                 if (prefferedEncodings == null || prefferedEncodings.Length <= 0)
                 {
@@ -198,7 +209,7 @@ namespace AEC
                 }
                 else
                 {
-                    Trace.TraceInformation(string.Format("Found '{0}' encodings with the preferred encoding text '{1}'", prefferedEncodings.Length, txtPreferredInputEncoding.Text));
+                    Trace.TraceInformation(string.Format("Found '{0}' encodings with the preferred encoding text '{1}'", prefferedEncodings.Length, preferredString));
                     encoding = prefferedEncodings[0];
                 }
             }

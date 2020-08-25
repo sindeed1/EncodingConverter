@@ -119,6 +119,15 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The provided input file does not exsist!.
+        /// </summary>
+        internal static string Message_InputFileDoesNotExsist {
+            get {
+                return ResourceManager.GetString("Message_InputFileDoesNotExsist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open the file you want to convert encoding for.
         /// </summary>
         internal static string Message_OpenTheFileYouWantToConvertEncodingFor {
