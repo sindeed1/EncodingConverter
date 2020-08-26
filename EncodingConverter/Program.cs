@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EncodingConverter.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -18,6 +19,9 @@ namespace EncodingConverter
         [STAThread]
         static void Main(string[] args)
         {
+            args.ProcessCommandLine(Program.GetCommands, new ShowUICommand());
+            return;
+
             _ECC.ProcessCommandLine(args);
             if (_ECC.CommandLineCommand != null)
             {
@@ -28,6 +32,16 @@ namespace EncodingConverter
             StartUI();
         }
 
+        static ICommandLineCommand[] GetCommands()
+        {
+            ICommandLineCommand[] commands = new ICommandLineCommand[2];
+            int index = 0;
+            commands[index++] = new ConvertCommand();
+            commands[index++] = new ShowUICommand();
+
+
+            return commands;
+        }
         static void StartUI()
         {
             Application.EnableVisualStyles();

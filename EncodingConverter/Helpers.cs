@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EncodingConverter.Commands;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -87,6 +88,78 @@ namespace EncodingConverter
                 if (!switchFound)
                     defaultSwitch(arg);
             }//i args
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        /// <remarks>Command line is something like this:
+        /// [command] [filepath] </remarks>
+        public static bool ProcessCommandLine(this string[] args, Func<ICommandLineCommand[]> getCommands, ICommandLineCommand defaultCommand)
+        {
+            Console.WriteLine("Processing command line...");
+
+            if (args == null || args.Length <= 0)
+            {
+                Console.WriteLine("No command line arguments.");
+                return ProcessDefaultCommand(args, defaultCommand);
+            }
+
+            ICommandLineCommand[] commands;
+            commands = getCommands();
+
+            if (commands == null || commands.Length <= 0)
+            {
+                Console.WriteLine("Command list not available.");
+                return ProcessDefaultCommand(args, defaultCommand);
+            }
+
+            string commandName = args[0].Trim().ToLower();
+            ICommandLineCommand cmd;
+            cmd = commands.FirstOrDefault(x => x.Name.ToLower() == commandName);
+            if (cmd == null)
+            {
+                return ProcessDefaultCommand(args, defaultCommand);
+            }
+
+            cmd.Execute(args, 1);
+
+            return true;
+        }
+
+        static bool ProcessDefaultCommand(string[] args, ICommandLineCommand defaultCommand)
+        {
+            Console.WriteLine("No default command line. Further processing is not possible.");
+            Trace.TraceInformation("Processing default command '");
+
+            if (defaultCommand == null)
+            {
+                Console.WriteLine("No default command line. Further processing is not possible.");
+                return false; ;
+            }
+
+            if (args == null || args.Length <= 0)
+            {
+                Trace.TraceInformation("Command line arguments are not provided.");
+                Trace.TraceInformation("Execute the default command with no arguments");
+                defaultCommand.Execute(args, 0);
+            }
+            else
+            {
+                if (args[0].Trim().ToLower() == defaultCommand.Name.Trim().ToLower())
+                {
+                    Trace.TraceInformation("Execute default command with first argument as command name...");
+                    defaultCommand.Execute(args, 1);
+                }
+                else
+                {
+                    Trace.TraceInformation("Execute default command with no command name in the arguments...");
+                    defaultCommand.Execute(args, 0);
+                }
+            }
+
+            return true;
         }
 
         //public static Func<string[], bool> ProcessCommandLine(string[] args, Func<string[], bool>[] commands, Func<string[], bool> defaultCommand)

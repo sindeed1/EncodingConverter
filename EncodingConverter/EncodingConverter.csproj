@@ -68,8 +68,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLine.cs" />
     <Compile Include="Commands\ConvertCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ShowUICommand.cs" />
     <Compile Include="Controls\ControlsBase.cs" />
     <Compile Include="Controls\EncodingsTool.cs" />
     <Compile Include="Controls\EncodingsTool.Designer.cs">

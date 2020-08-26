@@ -59,6 +59,11 @@ namespace AHD.SM.Controls
             }
             set
             {
+                if (value == null)
+                {
+                    listView1.SelectedItems.Clear();
+                    return;
+                }
                 foreach (ListViewItem_Encoding item in listView1.Items)
                 {
                     if (item.Encoding.CodePage == value.CodePage)

@@ -12,6 +12,6 @@ namespace EncodingConverter.Commands
         string ShortDescription { get; }
         string LongDescription { get; }
 
-        bool Excute(string[] args);
+        bool Execute(string[] args, int argsStartIndex);
     }
 }

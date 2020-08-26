@@ -4,49 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EncodingConverter.Commands
+namespace EncodingConverter
 {
-    class ConvertCommand : ICommandLineCommand
+    static class CommandLine
     {
-        const string CLARG_SWITCH = "-";
         const string CLARG_InputEncoding = "ie:";
         const string CLARG_OutputEncoding = "oe:";
-        const string CLARG_Convert = "convert";
 
-        Func<string, bool>[] _CommonCommandLineSwitches;
-
-        public string Name => CLARG_Convert;
-
-        public string ShortDescription => "Converts a text file from a given encoding to another.";
-
-        public string LongDescription => "";
-
-        public bool Execute(string[] args, int argsStartIndex)
-        {
-            string switchName = CLARG_Convert;
-            if (!args[0].IsSwitch(switchName))
-                return false;
-
-            InitCommonSwitches();
-
-            args.ProcessCommadLineSwitches(argsStartIndex, _CommonCommandLineSwitches, CommandLine.ProcessNoSwitch);
-
-            Program.ECC.Convert();
-            return true;
-        }
-
-
-        void InitCommonSwitches()
-        {
-            if (_CommonCommandLineSwitches != null)
-                return;
-
-            _CommonCommandLineSwitches = new Func<string, bool>[2];
-            _CommonCommandLineSwitches[0] = CommandLine.ProcessInputEncodingCLArg;
-            _CommonCommandLineSwitches[1] = CommandLine.ProcessOutputEncodingCLArg;
-        }
-
-        bool ProcessInputEncodingCLArg(string arg)
+        /// <summary>
+        /// Reads the argument. If it's an InputEncoding argument, loads the appropriate inputEncoding to the <see cref="Program.ECC"/>.
+        /// </summary>
+        /// <param name="arg">The command line argument to read</param>
+        /// <returns></returns>
+        public static bool ProcessInputEncodingCLArg(string arg)
         {
             string switchName = CLARG_InputEncoding;
             if (!arg.IsSwitch(switchName))
@@ -69,7 +39,13 @@ namespace EncodingConverter.Commands
 
             return true;
         }
-        bool ProcessOutputEncodingCLArg(string arg)
+
+        /// <summary>
+        /// Reads the argument. If it's an OutputEncoding argument, loads the appropriate outputEncoding to the <see cref="Program.ECC"/>.
+        /// </summary>
+        /// <param name="arg">The command line argument to read</param>
+        /// <returns></returns>
+        public static bool ProcessOutputEncodingCLArg(string arg)
         {
             string switchName = CLARG_OutputEncoding;
             if (!arg.IsSwitch(switchName))
@@ -92,7 +68,8 @@ namespace EncodingConverter.Commands
 
             return true;
         }
-        bool ProcessNoSwitch(string arg)
+
+        public static bool ProcessNoSwitch(string arg)
         {
             if (string.IsNullOrWhiteSpace(Program.ECC.InputFilePath))
             {
@@ -105,7 +82,8 @@ namespace EncodingConverter.Commands
             return true;
         }
 
-        EncodingInfo GetEncodingInfoFromSwitchData(string switchData)
+
+        public static EncodingInfo GetEncodingInfoFromSwitchData(string switchData)
         {
             EncodingInfo encodingInfo;
             int codePage;
@@ -120,7 +98,6 @@ namespace EncodingConverter.Commands
 
             return encodingInfo;
         }
-
 
     }
 }
