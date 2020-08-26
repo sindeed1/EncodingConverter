@@ -21,7 +21,7 @@ namespace EncodingConverter
         public event EventHandler OutputEncodingChanged;
         public event EventHandler InputFilePathChanged;
         public event EventHandler OutputFilePathChanged;
-        
+
         #endregion
         //#region ...Error codes...
         //const int ERR_CONVERT_InputEncodingNull = 1;
@@ -76,11 +76,12 @@ namespace EncodingConverter
         public string PreferredInputEncoding
         {
             get { return _PreferredInputEncoding; }
-            set 
+            set
             {
                 if (_PreferredInputEncoding == value)
                     return;
                 _PreferredInputEncoding = value;
+                Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.PreferredInputEncoding) + ".set:'" + value + "'");
                 OnPreferredInputEncodingChanged();
             }
         }
@@ -96,6 +97,7 @@ namespace EncodingConverter
                 _InputFilePath = value;
                 _InputText = null;
 
+                Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.InputFilePath) + ".set:'" + value + "'");
                 OnInputFilePathChanged();
 
                 //Encoding encoding;
@@ -116,6 +118,7 @@ namespace EncodingConverter
                     return;
 
                 _OutputFilePath = value;
+                Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.OutputFilePath) + ".set:'" + value + "'");
 
                 OnOutputFilePathChanged();
             }
@@ -125,11 +128,12 @@ namespace EncodingConverter
         public bool AutoDetectInputEncoding
         {
             get { return _AutoCheckInputEncoding; }
-            set 
+            set
             {
                 if (_AutoCheckInputEncoding == value)
                     return;
                 _AutoCheckInputEncoding = value;
+                Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.AutoDetectInputEncoding) + ".set:'" + value + "'");
 
                 OnAutoDetectInputEncodingChanged();
             }
@@ -140,11 +144,13 @@ namespace EncodingConverter
             get { return _InputEncoding; }
             set
             {
-                if (_InputEncoding == value
-                    || (_InputEncoding != null && value != null && _InputEncoding.CodePage == value.CodePage))
+                if (Equate(_InputEncoding, value))
                     return;
 
                 _InputEncoding = value;
+                Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.InputEncoding) + ".set: '"
+                    + (value == null ? "NULL" : value.EncodingName + ", CodePage='" + value.CodePage.ToString() + "'")
+                    + "'");
 
                 _InputText = null;
                 OnInputEncodingChanged();
@@ -157,11 +163,13 @@ namespace EncodingConverter
             get { return _OutputEncoding; }
             set
             {
-                if (_OutputEncoding == value
-                    || (_OutputEncoding != null && value != null && _OutputEncoding.CodePage == value.CodePage))
+                if (Equate(_OutputEncoding, value))
                     return;
-                
+
                 _OutputEncoding = value;
+                Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.OutputEncoding) + ".set: '"
+                    + (value == null ? "NULL" : value.EncodingName + ", CodePage='" + value.CodePage.ToString() + "'")
+                    + "'");
 
                 OnOutputEncodingChanged();
             }
@@ -360,6 +368,11 @@ namespace EncodingConverter
             return result;
         }
 
+        bool Equate(Encoding enc1, Encoding enc2)
+        {
+            return (enc1 == enc2)
+                    || (enc1 != null && enc2 != null && enc1.CodePage == enc2.CodePage);
+        }
         #region ...Event invokers...
         protected void OnInputFilePathChanged() { InputFilePathChanged?.Invoke(this, EventArgs.Empty); }
         protected void OnOutputFilePathChanged() { OutputFilePathChanged?.Invoke(this, EventArgs.Empty); }

@@ -29,6 +29,14 @@ namespace EncodingConverter
             }
             return true;
         }
+
+        public static void Foreach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        {
+            foreach (T item in enumerable)
+            {
+                action(item);
+            }
+        }
     }
     static class ExceptionHelper
     {

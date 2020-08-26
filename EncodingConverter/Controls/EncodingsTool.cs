@@ -24,11 +24,14 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using EncodingConverter;
 
 namespace AHD.SM.Controls
 {
     public partial class EncodingsTool : UserControl
     {
+        Encoding _SelectedEncoding;
+
         bool ClearCheck = false;
         /// <summary>
         /// Get or set the encoding
@@ -59,9 +62,13 @@ namespace AHD.SM.Controls
             }
             set
             {
+                if (_SelectedEncoding == value)
+                    return;
+                _SelectedEncoding = value;
+
                 if (value == null)
                 {
-                    listView1.SelectedItems.Clear();
+                    listView1.Items.Cast<ListViewItem_Encoding>().Foreach(x => x.Checked = false);
                     return;
                 }
                 foreach (ListViewItem_Encoding item in listView1.Items)
