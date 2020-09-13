@@ -1,6 +1,6 @@
 ﻿namespace EncodingConverter.Controls
 {
-    partial class EncodingsTool2
+    partial class EncodingsViewer
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EncodingsTool2));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EncodingsViewer));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lvAllEncodings = new System.Windows.Forms.ListView();
             this.columnHeader1_encodingName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2_body = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6_codepage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -42,7 +42,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1_selectedEncoding = new System.Windows.Forms.ToolStripLabel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.listView2 = new System.Windows.Forms.ListView();
+            this.lvFavoriteEncodings = new System.Windows.Forms.ListView();
             this.columnHeader3_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4_body = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5_codepage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -72,7 +72,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.listView1);
+            this.tabPage1.Controls.Add(this.lvAllEncodings);
             this.tabPage1.Controls.Add(this.toolStrip1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -82,26 +82,26 @@
             this.tabPage1.Text = "All encodings";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // lvAllEncodings
             // 
-            this.listView1.CheckBoxes = true;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvAllEncodings.CheckBoxes = true;
+            this.lvAllEncodings.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1_encodingName,
             this.columnHeader2_body,
             this.columnHeader6_codepage});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(3, 28);
-            this.listView1.MultiSelect = false;
-            this.listView1.Name = "listView1";
-            this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(518, 256);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.VirtualMode = true;
+            this.lvAllEncodings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvAllEncodings.FullRowSelect = true;
+            this.lvAllEncodings.GridLines = true;
+            this.lvAllEncodings.HideSelection = false;
+            this.lvAllEncodings.Location = new System.Drawing.Point(3, 28);
+            this.lvAllEncodings.MultiSelect = false;
+            this.lvAllEncodings.Name = "lvAllEncodings";
+            this.lvAllEncodings.ShowItemToolTips = true;
+            this.lvAllEncodings.Size = new System.Drawing.Size(518, 256);
+            this.lvAllEncodings.TabIndex = 0;
+            this.lvAllEncodings.UseCompatibleStateImageBehavior = false;
+            this.lvAllEncodings.View = System.Windows.Forms.View.Details;
+            this.lvAllEncodings.VirtualMode = true;
             // 
             // columnHeader1_encodingName
             // 
@@ -167,34 +167,34 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.listView2);
+            this.tabPage2.Controls.Add(this.lvFavoriteEncodings);
             this.tabPage2.Controls.Add(this.toolStrip2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(412, 188);
+            this.tabPage2.Size = new System.Drawing.Size(524, 287);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Favorite encodings";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // listView2
+            // lvFavoriteEncodings
             // 
-            this.listView2.CheckBoxes = true;
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvFavoriteEncodings.CheckBoxes = true;
+            this.lvFavoriteEncodings.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader3_name,
             this.columnHeader4_body,
             this.columnHeader5_codepage});
-            this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView2.GridLines = true;
-            this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(3, 28);
-            this.listView2.MultiSelect = false;
-            this.listView2.Name = "listView2";
-            this.listView2.ShowItemToolTips = true;
-            this.listView2.Size = new System.Drawing.Size(406, 157);
-            this.listView2.TabIndex = 1;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
+            this.lvFavoriteEncodings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvFavoriteEncodings.GridLines = true;
+            this.lvFavoriteEncodings.HideSelection = false;
+            this.lvFavoriteEncodings.Location = new System.Drawing.Point(3, 28);
+            this.lvFavoriteEncodings.MultiSelect = false;
+            this.lvFavoriteEncodings.Name = "lvFavoriteEncodings";
+            this.lvFavoriteEncodings.ShowItemToolTips = true;
+            this.lvFavoriteEncodings.Size = new System.Drawing.Size(518, 256);
+            this.lvFavoriteEncodings.TabIndex = 1;
+            this.lvFavoriteEncodings.UseCompatibleStateImageBehavior = false;
+            this.lvFavoriteEncodings.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader3_name
             // 
@@ -222,7 +222,7 @@
             this.toolStripLabel1_selectedEncodingFavorites});
             this.toolStrip2.Location = new System.Drawing.Point(3, 3);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(406, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(518, 25);
             this.toolStrip2.TabIndex = 2;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -259,12 +259,12 @@
             this.toolStripLabel1_selectedEncodingFavorites.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripLabel1_selectedEncodingFavorites.ToolTipText = "Selected encoding name";
             // 
-            // EncodingsTool2
+            // EncodingsViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tabControl1);
-            this.Name = "EncodingsTool2";
+            this.Name = "EncodingsViewer";
             this.Size = new System.Drawing.Size(532, 313);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -283,7 +283,7 @@
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lvAllEncodings;
         private System.Windows.Forms.ColumnHeader columnHeader1_encodingName;
         private System.Windows.Forms.ColumnHeader columnHeader2_body;
         private System.Windows.Forms.ColumnHeader columnHeader6_codepage;
@@ -294,7 +294,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1_selectedEncoding;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.ListView lvFavoriteEncodings;
         private System.Windows.Forms.ColumnHeader columnHeader3_name;
         private System.Windows.Forms.ColumnHeader columnHeader4_body;
         private System.Windows.Forms.ColumnHeader columnHeader5_codepage;
