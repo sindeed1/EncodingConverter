@@ -70,18 +70,21 @@
   <ItemGroup>
     <Compile Include="CommandLine.cs" />
     <Compile Include="Commands\ConvertCommand.cs" />
+    <Compile Include="Commands\DetectEncodingCommad.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ShowUICommand.cs" />
     <Compile Include="Controls\ControlsBase.cs" />
-    <Compile Include="Controls\EncodingsTool.cs" />
-    <Compile Include="Controls\EncodingsTool.Designer.cs">
-      <DependentUpon>EncodingsTool.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\EncodingsTool1.cs">
+    <Compile Include="Controls\EncodingsToolOriginal.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\EncodingsTool1.Designer.cs">
-      <DependentUpon>EncodingsTool1.cs</DependentUpon>
+    <Compile Include="Controls\EncodingsToolOriginal.Designer.cs">
+      <DependentUpon>EncodingsToolOriginal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EncodingsToolVirtual1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EncodingsToolVirtual1.Designer.cs">
+      <DependentUpon>EncodingsToolVirtual1.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EncodingsTool2.cs">
       <SubType>UserControl</SubType>
@@ -114,11 +117,11 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\EncodingsTool.resx">
-      <DependentUpon>EncodingsTool.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\EncodingsToolOriginal.resx">
+      <DependentUpon>EncodingsToolOriginal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EncodingsTool1.resx">
-      <DependentUpon>EncodingsTool1.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\EncodingsToolVirtual1.resx">
+      <DependentUpon>EncodingsToolVirtual1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EncodingsTool2.resx">
       <DependentUpon>EncodingsTool2.cs</DependentUpon>

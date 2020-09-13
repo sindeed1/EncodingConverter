@@ -37,6 +37,14 @@ namespace EncodingConverter
                 action(item);
             }
         }
+        public static void For<T>(this IList<T> list, Action<T> action)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                action(list[i]);
+            }
+        }
+
     }
     static class ExceptionHelper
     {
@@ -77,7 +85,7 @@ namespace EncodingConverter
                 string arg = args[i].ToLower();
                 if (!arg.IsSwitch())
                 {
-                    defaultSwitch(arg);
+                    defaultSwitch?.Invoke(arg);
                     ////If it's not a switch then it should be the input file:
                     //this._InputFilePath = arg;
                     continue;
@@ -94,7 +102,7 @@ namespace EncodingConverter
                 }//j _CommandLineSwitches
 
                 if (!switchFound)
-                    defaultSwitch(arg);
+                    defaultSwitch?.Invoke(arg);
             }//i args
         }
 

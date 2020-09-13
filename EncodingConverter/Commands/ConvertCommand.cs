@@ -23,9 +23,9 @@ namespace EncodingConverter.Commands
 
         public bool Execute(string[] args, int argsStartIndex)
         {
-            string switchName = CLARG_Convert;
-            if (!args[0].IsSwitch(switchName))
-                return false;
+            //string switchName = CLARG_Convert;
+            //if (!args[0].IsSwitch(switchName))
+            //    return false;
 
             InitCommonSwitches();
 

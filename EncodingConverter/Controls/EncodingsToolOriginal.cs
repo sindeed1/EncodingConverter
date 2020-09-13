@@ -87,21 +87,30 @@ namespace AHD.SM.Controls
             InitializeComponent();
             ClearCheck = true;
             //fill up encodings
+            ListView lv;
+            //lv = listView1;
+            //lv.BeginUpdate();
             foreach (EncodingInfo ei in Encoding.GetEncodings())
             {
                 ListViewItem_Encoding item = new ListViewItem_Encoding();
                 item.Encoding = ei.GetEncoding();
                 listView1.Items.Add(item);
             }
+            //lv.EndUpdate();
+
             //fill up favorites
             if (ControlsBase.Settings.FavoriteEncodings == null)
                 ControlsBase.Settings.FavoriteEncodings = new EncodingsCollection();
+            
+            //lv = listView2;
+            //lv.BeginUpdate();
             foreach (int ei in ControlsBase.Settings.FavoriteEncodings)
             {
                 ListViewItem_Encoding item = new ListViewItem_Encoding();
                 item.Encoding = Encoding.GetEncoding(ei);
                 listView2.Items.Add(item);
             }
+            //lv.EndUpdate();
             ClearCheck = false;
         }
         ~EncodingsTool()
@@ -169,7 +178,7 @@ namespace AHD.SM.Controls
             listView1.Items.Clear();
             if (toolStripTextBox1.Text.Length == 0)
             {
-                listView1.BeginUpdate();
+                //listView1.BeginUpdate();
                 //fill up encodings
                 foreach (EncodingInfo ei in Encoding.GetEncodings())
                 {
@@ -177,10 +186,10 @@ namespace AHD.SM.Controls
                     item.Encoding = ei.GetEncoding();
                     listView1.Items.Add(item);
                 }
-                listView1.EndUpdate();
+                //listView1.EndUpdate();
                 return;
             }
-            listView1.BeginUpdate();
+            //listView1.BeginUpdate();
             for (int i = 0; i < Encoding.GetEncodings().Length; i++)
             {
                 EncodingInfo en = Encoding.GetEncodings()[i];
@@ -199,7 +208,7 @@ namespace AHD.SM.Controls
                     }
                 }
             }
-            listView1.EndUpdate();
+            //listView1.EndUpdate();
             if (listView1.Items.Count > 0)
                 listView1.Items[0].Checked = true;
             ClearCheck = false;
@@ -253,10 +262,11 @@ namespace AHD.SM.Controls
                 return;
 
             ClearCheck = true;
-            foreach (ListViewItem item in listView1.Items)
-            {
-                item.Checked = false;
-            }
+            listView1.Items.Cast<ListViewItem>().Foreach(x => x.Checked = false);
+            //foreach (ListViewItem item in listView1.Items)
+            //{
+            //    item.Checked = false;
+            //}
             e.Item.Checked = true;
             ClearCheck = false;
             toolStripLabel1_selectedEncoding.Text = e.Item.Text;
