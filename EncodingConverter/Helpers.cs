@@ -1,5 +1,6 @@
 ﻿using EncodingConverter.Commands;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -38,6 +39,20 @@ namespace EncodingConverter
             }
         }
         public static void For<T>(this IList<T> list, Action<T> action)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                action(list[i]);
+            }
+        }
+        public static void Foreach(this IEnumerable enumerable, Action<object> action)
+        {
+            foreach (object item in enumerable)
+            {
+                action(item);
+            }
+        }
+        public static void For(this IList list, Action<object> action)
         {
             for (int i = 0; i < list.Count; i++)
             {

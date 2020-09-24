@@ -11,7 +11,7 @@ namespace EncodingConverter.Commands
     class ShowUICommand : ICommandLineCommand
     {
         const string CL_Name = "showui";
-        const string CLARG_FORM = "form:";
+        const string CLARG_FORM = "-form:";
         const string CLARG_SWITCH = "-";
         const string CLARG_InputEncoding = "ie:";
         const string CLARG_OutputEncoding = "oe:";
@@ -19,6 +19,7 @@ namespace EncodingConverter.Commands
         Func<string, bool>[] _CommonCommandLineSwitches;
 
         Form _Form;
+        Type _FormType;
 
         public string Name => CL_Name;
 
@@ -45,8 +46,12 @@ namespace EncodingConverter.Commands
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (_Form == null)
-                _Form = new FormMain2();
+            if (_FormType == null)
+                InitForm(typeof(FormMain2));
+            else
+            {
+                InitForm(_FormType);
+            }
             Application.Run(_Form);
         }
 
@@ -62,6 +67,11 @@ namespace EncodingConverter.Commands
             _CommonCommandLineSwitches[i++] = CommandLine.ProcessOutputEncodingCLArg;
         }
 
+        void InitForm(Type formType)
+        {
+            var ini = formType.GetConstructor(Type.EmptyTypes);
+            _Form = (Form)ini.Invoke(null);
+        }
         bool ProcessFormCLArg(string arg)
         {
             string switchName = CLARG_FORM;
@@ -74,11 +84,18 @@ namespace EncodingConverter.Commands
             
             if (switchData == nameof(Forms.FormMain2).ToLower())
             {
-                _Form = new Forms.FormMain2();
+                _FormType = typeof(FormMain2);
+                //_Form = new Forms.FormMain2();
             }
             else if (switchData == nameof(AEC.FormMain).ToLower())
             {
-                _Form = new AEC.FormMain();
+                _FormType = typeof(AEC.FormMain);
+                //_Form = new AEC.FormMain();
+            }
+            else if (switchData == nameof(MainForm3).ToLower())
+            {
+                _FormType = typeof(MainForm3);
+                //_Form = new FormTestEncodingViewer();
             }
             else
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,140 +8,149 @@ using System.Windows.Forms;
 
 namespace EncodingConverter.Controls
 {
-    class SearchableListView : ListView
+    /// <summary>
+    /// A <see cref="ListView"/> with a text search system.
+    /// </summary>
+    /// <typeparam name="T">Type of source items witch are used to generate <see cref="ListViewItem"/>s</typeparam>
+    class SearchableListView<T> : ListView
     {
-        ListViewItem _OldCheckedItem;
+        static char[] _SplitChars = { ' ' };
 
-        private EncodingInfo[] _MainSource;
-        EncodingInfo[] encodingInfos;
+        T[] _CurrentSource;
 
+        Func<T, ListViewItem> _ObjectToListViewItemConverter;
+        Func<T, string> _ObjectToSearchableTextConverter;
+        //Func<object, bool> _Predicate;
+        T[] _SourceList;
         private string _SearchText;
 
-        private LVIEncoding[] myCache; //array to cache items for the virtual list
-        private int firstItem; //stores the index of the first item in the cache
 
-        private EncodingInfo _SelectedEncoding;
+        #region ...Events...
+        public event EventHandler SearchTextChanged;
+        #endregion
 
-        public  EncodingInfo SelectedEncoding
+        #region ...Properties...
+        [DefaultValue(null)]
+        public Func<T, ListViewItem> ObjectToListViewItemConverter
         {
-            get { return _SelectedEncoding; }
-            set { _SelectedEncoding = value; }
+            get { return _ObjectToListViewItemConverter; }
+            set
+            {
+                if (_ObjectToListViewItemConverter == value)
+                    return;
+
+                _ObjectToListViewItemConverter = value;
+
+                RefreshSearchText();
+            }
         }
 
+        [DefaultValue(null)]
+        public Func<T, string> ObjectToSearchableTextConverter
+        {
+            get { return _ObjectToSearchableTextConverter; }
+            set
+            {
+                if (_ObjectToSearchableTextConverter == value)
+                    return;
 
+                _ObjectToSearchableTextConverter = value;
+
+                RefreshSearchText();
+            }
+        }
+
+        [DefaultValue(null)]
+        public T[] SourceList
+        {
+            get { return _SourceList; }
+            set
+            {
+                if (_SourceList == value)
+                    return;
+                _SourceList = value;
+                RefreshSearchText();
+            }
+        }
+
+        [DefaultValue(null)]
         public string SearchText
         {
             get { return _SearchText; }
-            set 
+            set
             {
-                _SearchText = value;
-
-                this.Items.Clear();
-                string searchText = _SearchText.Trim();
-                if (searchText.Length == 0)
+                if (_SearchText == value)
                 {
-                    encodingInfos = _MainSource;
                     return;
                 }
+                _SearchText = value;
 
-                var result = encodingInfos.Where(x => x.Name.Length >= searchText.Length && x.Name.Contains(searchText));
-                encodingInfos = result.ToArray();
-                if (this.Items.Count > 0)
-                    this.Items[0].Checked = true;
+                RefreshSearchText();
+                OnSearchEventChanged();
             }
         }
+        #endregion
 
-
-        public EncodingInfo[] Source
+        #region ...Event invokers...
+        protected virtual void OnSearchEventChanged() { SearchTextChanged?.Invoke(this, EventArgs.Empty); }
+        #endregion
+        void RefreshSearchText()
         {
-            get { return _MainSource; }
-            set { _MainSource = value; }
-        }
-
-
-        protected override void OnCacheVirtualItems(CacheVirtualItemsEventArgs e)
-        {
-            base.OnCacheVirtualItems(e);
-            //We've gotten a request to refresh the cache.
-            //First check if it's really necessary.
-            if (myCache != null && e.StartIndex >= firstItem && e.EndIndex <= firstItem + myCache.Length)
+            if (_SearchText == null || _ObjectToSearchableTextConverter == null)
             {
-                //If the newly requested cache is a subset of the old cache, 
-                //no need to rebuild everything, so do nothing.
+                this.CurrentSource = _SourceList;
                 return;
             }
 
-            //Now we need to rebuild the cache.
-            firstItem = e.StartIndex;
-            int length = e.EndIndex - e.StartIndex + 1; //indexes are inclusive
-            myCache = GetLVIENcodings(encodingInfos, firstItem, length);
-        }
-        protected override void OnRetrieveVirtualItem(RetrieveVirtualItemEventArgs e)
-        {
-            base.OnRetrieveVirtualItem(e);
-            //Caching is not required but improves performance on large sets.
-            //To leave out caching, don't connect the CacheVirtualItems event 
-            //and make sure myCache is null.
-
-            //check to see if the requested item is currently in the cache
-            if (myCache != null && e.ItemIndex >= firstItem && e.ItemIndex < firstItem + myCache.Length)
+            string searchText = _SearchText.Trim();
+            if (searchText.Length == 0)
             {
-                //A cache hit, so get the ListViewItem from the cache instead of making a new one.
-                e.Item = myCache[e.ItemIndex - firstItem];
+                this.CurrentSource = _SourceList;
+                return;
             }
-            else
+
+            var searchStrings = searchText.Split(_SplitChars, StringSplitOptions.RemoveEmptyEntries);
+            var result = _SourceList.Where(x => _ObjectToSearchableTextConverter(x).Contains(searchStrings));
+            this.CurrentSource = result.ToArray();
+        }
+
+        [DefaultValue(null)]
+        public T[] CurrentSource
+        {
+            get { return _CurrentSource; }
+            set
             {
-                //A cache miss, so create a new ListViewItem and pass it back.
-                e.Item = new LVIEncoding(encodingInfos[e.ItemIndex]);// new Controls.SyncFileFramesViewerItem(_WorkData.SyncFile.SynchedFrames[e.ItemIndex], _WorkData.SyncFile);
+                if (value == _CurrentSource)
+                {
+                    return;
+                }
+                this.Items.Clear();
+                _CurrentSource = value;
+                if (_CurrentSource == null || _CurrentSource.Length == 0
+                    || _ObjectToListViewItemConverter == null)
+                {
+                    return;
+                }
+                this.Items.AddRange(_CurrentSource.Select(_ObjectToListViewItemConverter).ToArray());
             }
         }
 
-        protected override void OnItemChecked(ItemCheckedEventArgs e)
-        {
-            base.OnItemChecked(e);
-            if (_OldCheckedItem != null)
-                _OldCheckedItem.Checked = false;
+        //void SetCurrentSource(object[] newCurrentSource)
+        //{
+        //    if (newCurrentSource == _CurrentSource)
+        //    {
+        //        return;
+        //    }
+        //    this.Items.Clear();
+        //    _CurrentSource = newCurrentSource;
+        //    if (_CurrentSource == null || _CurrentSource.Length == 0
+        //        || _ObjectToListViewItemConverter == null)
+        //    {
+        //        return;
+        //    }
+        //    this.Items.AddRange(_CurrentSource.Select(_ObjectToListViewItemConverter).ToArray());
+        //}
 
-            _OldCheckedItem = e.Item;
-        }
-        protected override void OnVisibleChanged(EventArgs e)
-        {
-            base.OnVisibleChanged(e);
-            _OldCheckedItem.EnsureVisible();
-        }
-
-
-        LVIEncoding[] GetLVIENcodings(EncodingInfo[] source, int startIndex, int length)
-        {
-            EncodingInfo[] efs = new EncodingInfo[length];
-            Array.Copy(source, startIndex, efs, 0, length);
-            return efs.Select(x => new LVIEncoding(x)).ToArray();
-        }
 
     }
-
-    public class LVIEncoding : ListViewItem
-    {
-        EncodingInfo encoding;
-        #region ...ctor...
-        //public LVIEncoding() { }
-        public LVIEncoding(EncodingInfo encoding) { this.Encoding = encoding; }
-        #endregion
-        public EncodingInfo Encoding { get { return encoding; } set { encoding = value; RefreshText(); } }
-        public void RefreshText()
-        {
-            SubItems.Clear();
-            this.Text = (encoding.Name);
-            //SubItems.Add(encoding.Name);
-            SubItems.Add(encoding.DisplayName);
-            SubItems.Add(encoding.CodePage.ToString());
-
-            //this.Text = (encoding.EncodingName);
-            //SubItems.Add(encoding.BodyName);
-            //SubItems.Add(encoding.CodePage.ToString());
-
-
-        }
-    }
-
 }

@@ -79,6 +79,16 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete {
+            get {
+                object obj = ResourceManager.GetObject("delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to *.*.
         /// </summary>
         internal static string Filter_AllFiles {
@@ -151,6 +161,16 @@ namespace EncodingConverter.Properties {
         internal static string Message_PleaseBrowseWhereToSaveTheFileFirst {
             get {
                 return ResourceManager.GetString("Message_PleaseBrowseWhereToSaveTheFileFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap star {
+            get {
+                object obj = ResourceManager.GetObject("star", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

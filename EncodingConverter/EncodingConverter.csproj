@@ -73,6 +73,12 @@
     <Compile Include="Commands\DetectEncodingCommad.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ShowUICommand.cs" />
+    <Compile Include="Controls\SearchableEncodingListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SearchableListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ControlsBase.cs" />
     <Compile Include="Controls\EncodingsToolOriginal.cs">
       <SubType>UserControl</SubType>
@@ -86,21 +92,21 @@
     <Compile Include="Controls\EncodingsToolVirtual1.Designer.cs">
       <DependentUpon>EncodingsToolVirtual1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EncodingsTool2.cs">
+    <Compile Include="Controls\EncodingsViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\EncodingsTool2.Designer.cs">
-      <DependentUpon>EncodingsTool2.cs</DependentUpon>
+    <Compile Include="Controls\EncodingsViewer.Designer.cs">
+      <DependentUpon>EncodingsViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SearchableListView.cs">
+    <Compile Include="Controls\SearchableVirtualListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="EncodingConverterCore.cs" />
-    <Compile Include="Forms\Form1.cs">
+    <Compile Include="Forms\MainForm3.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\MainForm3.Designer.cs">
+      <DependentUpon>MainForm3.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormMain.cs">
       <SubType>Form</SubType>
@@ -114,6 +120,7 @@
     <Compile Include="Forms\FormMain2.Designer.cs">
       <DependentUpon>FormMain2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\WinFormsHelpers.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,11 +130,11 @@
     <EmbeddedResource Include="Controls\EncodingsToolVirtual1.resx">
       <DependentUpon>EncodingsToolVirtual1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EncodingsTool2.resx">
-      <DependentUpon>EncodingsTool2.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\EncodingsViewer.resx">
+      <DependentUpon>EncodingsViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MainForm3.resx">
+      <DependentUpon>MainForm3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -163,6 +170,12 @@
       <Project>{860f5b46-35a3-4590-8c19-83f735b785fb}</Project>
       <Name>EncodingTools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
