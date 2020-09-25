@@ -54,7 +54,7 @@ namespace EncodingConverter.Controls
             //this.ObjectToListViewItemConverter = x => new LVIEncoding((EncodingInfo)x);
             //this.ObjectToSearchableTextConverter = x => ((LVIEncoding)x).Encoding.DisplayName;
             this.ObjectToListViewItemConverter = x => new LVIEncoding(x);
-            this.ObjectToSearchableTextConverter = x => x.DisplayName;
+            this.ObjectToSearchableTextConverter = x => x.DisplayName.ToLower();
         }
 
         [DefaultValue(null)]

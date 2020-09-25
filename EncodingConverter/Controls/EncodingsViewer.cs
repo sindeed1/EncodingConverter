@@ -66,7 +66,7 @@ namespace EncodingConverter.Controls
         }
         private void TstbSearchEncodings_TextChanged(object sender, EventArgs e)
         {
-            this.lvAllEncodings.SearchText = this.tstbSearchEncodings.Text;
+            this.lvAllEncodings.SearchText = this.tstbSearchEncodings.Text.ToLower();
             SetSelectedEncodingInfo(this.SelectedEncodingInfo);//To re-select the encoding after search.
         }
 

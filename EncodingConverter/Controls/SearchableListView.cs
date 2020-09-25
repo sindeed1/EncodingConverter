@@ -102,7 +102,7 @@ namespace EncodingConverter.Controls
                 return;
             }
 
-            string searchText = _SearchText.Trim();
+            string searchText = _SearchText.Trim();//.ToLower();
             if (searchText.Length == 0)
             {
                 this.CurrentSource = _SourceList;
