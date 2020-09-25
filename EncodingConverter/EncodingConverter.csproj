@@ -7,7 +7,7 @@
     <ProjectGuid>{6584B852-BD57-49EF-BDE9-DD2D0A39B685}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>EncodingConverter</RootNamespace>
-    <AssemblyName>EC</AssemblyName>
+    <AssemblyName>enco</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

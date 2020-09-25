@@ -47,7 +47,7 @@ namespace EncodingConverter.Commands
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             if (_FormType == null)
-                InitForm(typeof(FormMain2));
+                InitForm(typeof(MainForm3));
             else
             {
                 InitForm(_FormType);

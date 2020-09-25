@@ -30,14 +30,11 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbInput = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.txtCompanionFile = new System.Windows.Forms.TextBox();
             this.splitContainerInput = new System.Windows.Forms.SplitContainer();
             this.label7 = new System.Windows.Forms.Label();
             this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
             this.chkAutoDetect = new System.Windows.Forms.CheckBox();
+            this.evInputEncoding = new EncodingConverter.Controls.EncodingsViewer();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.richTextBox_in = new System.Windows.Forms.RichTextBox();
@@ -49,6 +46,7 @@
             this.txtOutputPathFormat = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainerOutput = new System.Windows.Forms.SplitContainer();
+            this.evOutputEncoding = new EncodingConverter.Controls.EncodingsViewer();
             this.label4 = new System.Windows.Forms.Label();
             this.richTextBox_out = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -59,8 +57,6 @@
             this.linkLanguage = new System.Windows.Forms.LinkLabel();
             this.linkHelp = new System.Windows.Forms.LinkLabel();
             this.linkAbout = new System.Windows.Forms.LinkLabel();
-            this.evInputEncoding = new EncodingConverter.Controls.EncodingsViewer();
-            this.evOutputEncoding = new EncodingConverter.Controls.EncodingsViewer();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -100,10 +96,6 @@
             // 
             // gbInput
             // 
-            this.gbInput.Controls.Add(this.label9);
-            this.gbInput.Controls.Add(this.label8);
-            this.gbInput.Controls.Add(this.textBox1);
-            this.gbInput.Controls.Add(this.txtCompanionFile);
             this.gbInput.Controls.Add(this.splitContainerInput);
             this.gbInput.Controls.Add(this.btnOpen);
             this.gbInput.Controls.Add(this.txtInputPath);
@@ -115,51 +107,13 @@
             this.gbInput.TabStop = false;
             this.gbInput.Text = "Input";
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label9.Location = new System.Drawing.Point(6, 77);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(79, 13);
-            this.label9.TabIndex = 12;
-            this.label9.Text = "Companion file:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label8.Location = new System.Drawing.Point(6, 50);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(150, 13);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "Companion file search pattern:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(87, 73);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(232, 20);
-            this.textBox1.TabIndex = 9;
-            // 
-            // txtCompanionFile
-            // 
-            this.txtCompanionFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCompanionFile.Location = new System.Drawing.Point(162, 47);
-            this.txtCompanionFile.Name = "txtCompanionFile";
-            this.txtCompanionFile.Size = new System.Drawing.Size(157, 20);
-            this.txtCompanionFile.TabIndex = 8;
-            // 
             // splitContainerInput
             // 
             this.splitContainerInput.AllowDrop = true;
             this.splitContainerInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerInput.Location = new System.Drawing.Point(6, 105);
+            this.splitContainerInput.Location = new System.Drawing.Point(6, 47);
             this.splitContainerInput.Name = "splitContainerInput";
             this.splitContainerInput.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -176,8 +130,8 @@
             // 
             this.splitContainerInput.Panel2.Controls.Add(this.richTextBox_in);
             this.splitContainerInput.Panel2.Controls.Add(this.label2);
-            this.splitContainerInput.Size = new System.Drawing.Size(313, 316);
-            this.splitContainerInput.SplitterDistance = 181;
+            this.splitContainerInput.Size = new System.Drawing.Size(313, 374);
+            this.splitContainerInput.SplitterDistance = 214;
             this.splitContainerInput.TabIndex = 7;
             // 
             // label7
@@ -215,6 +169,17 @@
             this.chkAutoDetect.Text = "&Auto detect";
             this.chkAutoDetect.UseVisualStyleBackColor = true;
             // 
+            // evInputEncoding
+            // 
+            this.evInputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.evInputEncoding.Location = new System.Drawing.Point(3, 46);
+            this.evInputEncoding.Name = "evInputEncoding";
+            this.evInputEncoding.SelectedEncodingInfo = null;
+            this.evInputEncoding.Size = new System.Drawing.Size(310, 169);
+            this.evInputEncoding.TabIndex = 2;
+            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
@@ -244,7 +209,7 @@
             this.richTextBox_in.Location = new System.Drawing.Point(0, 23);
             this.richTextBox_in.Name = "richTextBox_in";
             this.richTextBox_in.ReadOnly = true;
-            this.richTextBox_in.Size = new System.Drawing.Size(313, 108);
+            this.richTextBox_in.Size = new System.Drawing.Size(313, 133);
             this.richTextBox_in.TabIndex = 4;
             this.richTextBox_in.Text = "";
             this.richTextBox_in.WordWrap = false;
@@ -349,6 +314,17 @@
             this.splitContainerOutput.Size = new System.Drawing.Size(307, 344);
             this.splitContainerOutput.SplitterDistance = 189;
             this.splitContainerOutput.TabIndex = 7;
+            // 
+            // evOutputEncoding
+            // 
+            this.evOutputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.evOutputEncoding.Location = new System.Drawing.Point(0, 16);
+            this.evOutputEncoding.Name = "evOutputEncoding";
+            this.evOutputEncoding.SelectedEncodingInfo = null;
+            this.evOutputEncoding.Size = new System.Drawing.Size(307, 170);
+            this.evOutputEncoding.TabIndex = 2;
             // 
             // label4
             // 
@@ -461,29 +437,7 @@
             this.linkAbout.TabStop = true;
             this.linkAbout.Text = "About";
             // 
-            // evInputEncoding
-            // 
-            this.evInputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.evInputEncoding.Location = new System.Drawing.Point(3, 46);
-            this.evInputEncoding.Name = "evInputEncoding";
-            this.evInputEncoding.SelectedEncodingInfo = null;
-            this.evInputEncoding.Size = new System.Drawing.Size(310, 136);
-            this.evInputEncoding.TabIndex = 2;
-            // 
-            // evOutputEncoding
-            // 
-            this.evOutputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.evOutputEncoding.Location = new System.Drawing.Point(0, 16);
-            this.evOutputEncoding.Name = "evOutputEncoding";
-            this.evOutputEncoding.SelectedEncodingInfo = null;
-            this.evOutputEncoding.Size = new System.Drawing.Size(307, 170);
-            this.evOutputEncoding.TabIndex = 2;
-            // 
-            // FormTestEncodingViewer
+            // MainForm3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -493,8 +447,8 @@
             this.Controls.Add(this.linkLanguage);
             this.Controls.Add(this.linkHelp);
             this.Controls.Add(this.linkAbout);
-            this.Name = "FormTestEncodingViewer";
-            this.Text = "FormMain2";
+            this.Name = "MainForm3";
+            this.Text = "Encoding Converter";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -524,10 +478,6 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox gbInput;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox txtCompanionFile;
         private System.Windows.Forms.SplitContainer splitContainerInput;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtPreferredInputEncoding;
