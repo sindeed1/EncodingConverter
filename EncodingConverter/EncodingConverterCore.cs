@@ -95,18 +95,11 @@ namespace EncodingConverter
                     return;
 
                 _InputFilePath = value;
-                _InputText = null;
 
-                Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.InputFilePath) + ".set:'" + value + "'");
-                OnInputFilePathChanged();
-
-                //Encoding encoding;
-                if (_AutoCheckInputEncoding)
-                {
-                    this.InputEncoding = DetectInputEncdoing(_InputFilePath, _PreferredInputEncoding);
-                }
+                RefreshInputFielPath();
 
                 OnInputTextChanged();
+
             }
         }
         public string OutputFilePath
@@ -264,6 +257,19 @@ namespace EncodingConverter
             }
             // Done !!
             Console.WriteLine("Conversion finished successfully.");
+        }
+        public void RefreshInputFielPath()
+        {
+            _InputText = null;
+
+            Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.InputFilePath) + ".set:'" + _InputFilePath + "'");
+            OnInputFilePathChanged();
+
+            //Encoding encoding;
+            if (_AutoCheckInputEncoding)
+            {
+                this.InputEncoding = DetectInputEncdoing(_InputFilePath, _PreferredInputEncoding);
+            }
         }
         public static void Convert(string inputFile, Encoding inputEncoding, string outputFile, Encoding outputEncoding)
         {

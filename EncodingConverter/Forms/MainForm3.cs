@@ -164,7 +164,15 @@ namespace EncodingConverter.Forms
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if (files == null || files.Length <= 0)
                 return;
-            Program.ECC.InputFilePath = files[0];
+            string file = files[0];
+            if (file?.Trim().ToLower() == Program.ECC.InputFilePath?.Trim().ToLower())
+            {
+                Program.ECC.RefreshInputFielPath();
+            }
+            else
+            {
+                Program.ECC.InputFilePath = files[0];
+            }
         }
         private void InputControl_DragEnter(object sender, DragEventArgs e)
         {
