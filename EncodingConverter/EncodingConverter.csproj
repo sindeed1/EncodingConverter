@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="Forms\WinFormsHelpers.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="OutputPathFormatter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\EncodingsToolOriginal.resx">

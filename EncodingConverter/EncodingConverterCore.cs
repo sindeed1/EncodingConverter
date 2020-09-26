@@ -32,7 +32,6 @@ namespace EncodingConverter
         EncodingInfo[] _Encodings;
 
         bool isDetectingInputEncoding;
-        object[] _OutputPathFormattingParameters;
 
 
         string _InputFilePath;
@@ -51,7 +50,6 @@ namespace EncodingConverter
         public EncodingConverterCore()
         {
             _Encodings = Encoding.GetEncodings();
-            _OutputPathFormattingParameters = new object[23];
         }
         #endregion
 
@@ -95,18 +93,11 @@ namespace EncodingConverter
                     return;
 
                 _InputFilePath = value;
-                _InputText = null;
 
-                Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.InputFilePath) + ".set:'" + value + "'");
-                OnInputFilePathChanged();
-
-                //Encoding encoding;
-                if (_AutoCheckInputEncoding)
-                {
-                    this.InputEncoding = DetectInputEncdoing(_InputFilePath, _PreferredInputEncoding);
-                }
+                RefreshInputFielPath();
 
                 OnInputTextChanged();
+
             }
         }
         public string OutputFilePath
@@ -265,6 +256,19 @@ namespace EncodingConverter
             // Done !!
             Console.WriteLine("Conversion finished successfully.");
         }
+        public void RefreshInputFielPath()
+        {
+            _InputText = null;
+
+            Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.InputFilePath) + ".set:'" + _InputFilePath + "'");
+            OnInputFilePathChanged();
+
+            //Encoding encoding;
+            if (_AutoCheckInputEncoding)
+            {
+                this.InputEncoding = DetectInputEncdoing(_InputFilePath, _PreferredInputEncoding);
+            }
+        }
         public static void Convert(string inputFile, Encoding inputEncoding, string outputFile, Encoding outputEncoding)
         {
             string text;
@@ -320,52 +324,6 @@ namespace EncodingConverter
             //encodingsTool_input.SelectedEncoding = encoding;
             //richTextBox_in.Lines = File.ReadAllLines(txtInputPath.Text, encoding);
             //isDetectingInputEncoding = false;
-        }
-
-
-        string FormatOutputpath(string inputPath, Encoding inputEncoding, Encoding outputEncoding)
-        {
-            string formatString = Program.Settings.OutputFilePathFormatString;
-            FileInfo file = new FileInfo(inputPath);
-            string directory = file.DirectoryName;
-            Trace.TraceInformation("Old current directory '" + Directory.GetCurrentDirectory() + "'");
-            Directory.SetCurrentDirectory(directory);
-            Trace.TraceInformation("New current directory '" + Directory.GetCurrentDirectory() + "'");
-
-            string fileExtention = file.Extension;
-            string fileName = file.Name;
-            fileName = fileName.Substring(0, fileName.Length - fileExtention.Length);
-            fileExtention = fileExtention.TrimStart('.');
-
-            _OutputPathFormattingParameters[0] = directory;                     //{0} directory path
-            _OutputPathFormattingParameters[1] = fileName;                      //{1} file name without extension
-            _OutputPathFormattingParameters[2] = fileExtention;                 //{2} extension
-                                                                                //{3-9} reserved and empty
-            _OutputPathFormattingParameters[10] = outputEncoding.EncodingName;   //{10} Output encoding name
-            _OutputPathFormattingParameters[11] = outputEncoding.BodyName;       //{11} Output encoding Body name
-            _OutputPathFormattingParameters[12] = outputEncoding.CodePage;       //{12} Output encoding Code page
-                                                                                 //{13-19} reserved and empty
-            _OutputPathFormattingParameters[20] = inputEncoding.EncodingName;    //{20} Input encoding name
-            _OutputPathFormattingParameters[21] = inputEncoding.BodyName;        //{21} Input encoding Body name
-            _OutputPathFormattingParameters[22] = inputEncoding.CodePage;        //{22} Input encoding Code page
-
-            string result;
-            result = string.Format(formatString, _OutputPathFormattingParameters);
-            //, directory                     //{0} directory path
-            //, fileName                      //{1} file name without extension
-            //, fileExtention                 //{2} extension
-            //, "", "", "", "", "", "", ""    //{3-9} reserved and empty
-            //, outputEncoding.EncodingName   //{10} Output encoding name
-            //, outputEncoding.BodyName       //{11} Output encoding Body name
-            //, outputEncoding.CodePage       //{12} Output encoding Code page
-            //, "", "", "", "", "", "", ""    //{13-19} reserved and empty
-            //, inputEncoding.EncodingName   //{20} Input encoding name
-            //, inputEncoding.BodyName       //{21} Input encoding Body name
-            //, inputEncoding.CodePage       //{22} Input encoding Code page
-            ////, "", "", "", "", "", "", ""    //{23-29} reserved and empty
-            //);
-
-            return result;
         }
 
         bool Equate(Encoding enc1, Encoding enc2)

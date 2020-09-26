@@ -89,7 +89,7 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to *.*.
+        ///   Looks up a localized string similar to All files (*.*)|*.*.
         /// </summary>
         internal static string Filter_AllFiles {
             get {

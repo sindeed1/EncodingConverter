@@ -8,22 +8,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Net.Http.Headers;
 
 namespace EncodingConverter.Forms
 {
     public partial class MainForm3 : Form
     {
         EncodingInfo[] encodingInfos;
+        Lazy<SaveFileDialog> _SFD;
+        Lazy<OpenFileDialog> _OFD;
 
+        OutputPathFormatter _OFF;
         #region ...ctor...
         public MainForm3()
         {
             InitializeComponent();
+            _OFF = new OutputPathFormatter(Program.ECC);
             AddEventHandlers();
+
 
             encodingInfos = Encoding.GetEncodings();
             evInputEncoding.EncodingInfos = encodingInfos;
             evOutputEncoding.EncodingInfos = encodingInfos;
+
+            _OFD = new Lazy<OpenFileDialog>();
+            _SFD = new Lazy<SaveFileDialog>();
         }
         void AddEventHandlers()
         {
@@ -67,6 +76,9 @@ namespace EncodingConverter.Forms
                 , x => ECC.OutputEncodingChanged += x)
                 .UpdateObj2To1();
 
+            txtOutputPathFormat.BindText(new PropertyLink<string>(() => _OFF.FormatString, x => _OFF.FormatString = x)
+                , null).UpdateObj2To1();
+
             this.splitContainerInput.DragEnter += InputControl_DragEnter;
             this.splitContainerInput.DragDrop += InputControl_DragDrop;
 
@@ -76,11 +88,15 @@ namespace EncodingConverter.Forms
             this.btnChangeOutputFile.Click += this.btnChangeOutputFile_Click;
             this.linkLabel1.LinkClicked += this.linkLabel1_LinkClicked;
             this.btnSave.Click += this.btnSave_Click;
+            this.btnOpen.Click += BtnOpen_Click;
+            this.btnApplyOutputFormatting.Click += BtnApplyOutputFormatting_Click;
             //this.encodingsTool_input.SelectedEncodingChanged += this.encodingsTool_input_SelectedEncodingChanged;
             //this.encodingsTool_output.SelectedEncodingChanged += this.encodingsTool_output_SelectedEncodingChanged;
 
             this.FormClosed += FormMain_FormClosed;
         }
+
+
         #endregion
 
         #region ...Event handlers...
@@ -138,15 +154,27 @@ namespace EncodingConverter.Forms
         }
         private void btnChangeOutputFile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sav = new SaveFileDialog();
-            sav.Title = Program.ResourceManager.GetString("Message_BrowseWhereYouWantToSaveTheFile");
-            sav.Filter = Program.ResourceManager.GetString("Filter_AllFiles");
-            sav.FileName = txtOutputPath.Text;
-            if (sav.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+            //SaveFileDialog sav = new SaveFileDialog();
+            _SFD.Value.Title = Properties.Resources.Message_BrowseWhereYouWantToSaveTheFile;// Program.ResourceManager.GetString("Message_BrowseWhereYouWantToSaveTheFile");
+            _SFD.Value.Filter = Properties.Resources.Filter_AllFiles;// Program.ResourceManager.GetString("Filter_AllFiles");
+            _SFD.Value.FileName = txtOutputPath.Text;
+            if (_SFD.Value.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
-                txtOutputPath.Text = sav.FileName;
+                txtOutputPath.Text = _SFD.Value.FileName;
             }
         }
+        private void BtnOpen_Click(object sender, EventArgs e)
+        {
+            //OpenFileDialog op = new OpenFileDialog();
+            _OFD.Value.Title = Properties.Resources.Message_OpenTheFileYouWantToConvertEncodingFor;// Program.ResourceManager.GetString("Message_OpenTheFileYouWantToConvertEncodingFor");
+            _OFD.Value.Filter = Properties.Resources.Filter_AllFiles;// Program.ResourceManager.GetString("Filter_AllFiles");
+            _OFD.Value.FileName = txtInputPath.Text;
+            if (_OFD.Value.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+            {
+                ChangeInputFile(_OFD.Value.FileName);
+            }
+        }
+
         private void linkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             //string helpFile = ".\\" + Program.CultureInfo.Name + "\\Help.chm";
@@ -164,7 +192,16 @@ namespace EncodingConverter.Forms
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if (files == null || files.Length <= 0)
                 return;
-            Program.ECC.InputFilePath = files[0];
+            string file = files[0];
+            ChangeInputFile(file);
+            //if (file?.Trim().ToLower() == Program.ECC.InputFilePath?.Trim().ToLower())
+            //{
+            //    Program.ECC.RefreshInputFielPath();
+            //}
+            //else
+            //{
+            //    Program.ECC.InputFilePath = files[0];
+            //}
         }
         private void InputControl_DragEnter(object sender, DragEventArgs e)
         {
@@ -178,7 +215,25 @@ namespace EncodingConverter.Forms
             //FrmLanguage frm = new FrmLanguage();
             //frm.ShowDialog();
         }
+        private void BtnApplyOutputFormatting_Click(object sender, EventArgs e)
+        {
+            this.txtOutputPath.Text = _OFF.FormatOutputpath();
+        }
 
         #endregion
+
+        void ChangeInputFile(string file)
+        {
+            if (file?.Trim().ToLower() == Program.ECC.InputFilePath?.Trim().ToLower())
+            {
+                Program.ECC.RefreshInputFielPath();
+            }
+            else
+            {
+                Program.ECC.InputFilePath = file;
+                //Program.ECC.OutputFilePath = EncodingHelper.FormatOutputpath(file, Program.ECC.InputEncoding, Program.ECC.OutputEncoding);
+            }
+        }
+
     }
 }
