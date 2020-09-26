@@ -57,6 +57,10 @@
             this.linkLanguage = new System.Windows.Forms.LinkLabel();
             this.linkHelp = new System.Windows.Forms.LinkLabel();
             this.linkAbout = new System.Windows.Forms.LinkLabel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtCompanionFile = new System.Windows.Forms.TextBox();
+            this.txtCompanionFileSearchPattern = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -96,6 +100,10 @@
             // 
             // gbInput
             // 
+            this.gbInput.Controls.Add(this.label9);
+            this.gbInput.Controls.Add(this.label8);
+            this.gbInput.Controls.Add(this.txtCompanionFile);
+            this.gbInput.Controls.Add(this.txtCompanionFileSearchPattern);
             this.gbInput.Controls.Add(this.splitContainerInput);
             this.gbInput.Controls.Add(this.btnOpen);
             this.gbInput.Controls.Add(this.txtInputPath);
@@ -113,7 +121,7 @@
             this.splitContainerInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerInput.Location = new System.Drawing.Point(6, 47);
+            this.splitContainerInput.Location = new System.Drawing.Point(6, 99);
             this.splitContainerInput.Name = "splitContainerInput";
             this.splitContainerInput.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -130,8 +138,8 @@
             // 
             this.splitContainerInput.Panel2.Controls.Add(this.richTextBox_in);
             this.splitContainerInput.Panel2.Controls.Add(this.label2);
-            this.splitContainerInput.Size = new System.Drawing.Size(313, 374);
-            this.splitContainerInput.SplitterDistance = 214;
+            this.splitContainerInput.Size = new System.Drawing.Size(313, 322);
+            this.splitContainerInput.SplitterDistance = 184;
             this.splitContainerInput.TabIndex = 7;
             // 
             // label7
@@ -177,7 +185,7 @@
             this.evInputEncoding.Location = new System.Drawing.Point(3, 46);
             this.evInputEncoding.Name = "evInputEncoding";
             this.evInputEncoding.SelectedEncodingInfo = null;
-            this.evInputEncoding.Size = new System.Drawing.Size(310, 169);
+            this.evInputEncoding.Size = new System.Drawing.Size(310, 139);
             this.evInputEncoding.TabIndex = 2;
             // 
             // linkLabel1
@@ -209,7 +217,7 @@
             this.richTextBox_in.Location = new System.Drawing.Point(0, 23);
             this.richTextBox_in.Name = "richTextBox_in";
             this.richTextBox_in.ReadOnly = true;
-            this.richTextBox_in.Size = new System.Drawing.Size(313, 133);
+            this.richTextBox_in.Size = new System.Drawing.Size(313, 111);
             this.richTextBox_in.TabIndex = 4;
             this.richTextBox_in.Text = "";
             this.richTextBox_in.WordWrap = false;
@@ -298,7 +306,7 @@
             this.splitContainerOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerOutput.Location = new System.Drawing.Point(6, 77);
+            this.splitContainerOutput.Location = new System.Drawing.Point(6, 73);
             this.splitContainerOutput.Name = "splitContainerOutput";
             this.splitContainerOutput.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -311,8 +319,8 @@
             // 
             this.splitContainerOutput.Panel2.Controls.Add(this.richTextBox_out);
             this.splitContainerOutput.Panel2.Controls.Add(this.label3);
-            this.splitContainerOutput.Size = new System.Drawing.Size(307, 344);
-            this.splitContainerOutput.SplitterDistance = 189;
+            this.splitContainerOutput.Size = new System.Drawing.Size(307, 348);
+            this.splitContainerOutput.SplitterDistance = 191;
             this.splitContainerOutput.TabIndex = 7;
             // 
             // evOutputEncoding
@@ -323,7 +331,7 @@
             this.evOutputEncoding.Location = new System.Drawing.Point(0, 16);
             this.evOutputEncoding.Name = "evOutputEncoding";
             this.evOutputEncoding.SelectedEncodingInfo = null;
-            this.evOutputEncoding.Size = new System.Drawing.Size(307, 170);
+            this.evOutputEncoding.Size = new System.Drawing.Size(307, 172);
             this.evOutputEncoding.TabIndex = 2;
             // 
             // label4
@@ -344,7 +352,7 @@
             this.richTextBox_out.Location = new System.Drawing.Point(0, 21);
             this.richTextBox_out.Name = "richTextBox_out";
             this.richTextBox_out.ReadOnly = true;
-            this.richTextBox_out.Size = new System.Drawing.Size(307, 127);
+            this.richTextBox_out.Size = new System.Drawing.Size(307, 129);
             this.richTextBox_out.TabIndex = 4;
             this.richTextBox_out.Text = "";
             this.richTextBox_out.WordWrap = false;
@@ -363,7 +371,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label5.Location = new System.Drawing.Point(6, 54);
+            this.label5.Location = new System.Drawing.Point(7, 50);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(47, 13);
             this.label5.TabIndex = 6;
@@ -373,7 +381,7 @@
             // 
             this.btnChangeOutputFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChangeOutputFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnChangeOutputFile.Location = new System.Drawing.Point(235, 48);
+            this.btnChangeOutputFile.Location = new System.Drawing.Point(235, 45);
             this.btnChangeOutputFile.Name = "btnChangeOutputFile";
             this.btnChangeOutputFile.Size = new System.Drawing.Size(78, 23);
             this.btnChangeOutputFile.TabIndex = 0;
@@ -384,7 +392,7 @@
             // 
             this.txtOutputPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOutputPath.Location = new System.Drawing.Point(60, 51);
+            this.txtOutputPath.Location = new System.Drawing.Point(60, 47);
             this.txtOutputPath.Name = "txtOutputPath";
             this.txtOutputPath.ReadOnly = true;
             this.txtOutputPath.Size = new System.Drawing.Size(169, 20);
@@ -436,6 +444,44 @@
             this.linkAbout.TabIndex = 12;
             this.linkAbout.TabStop = true;
             this.linkAbout.Text = "About";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label9.Location = new System.Drawing.Point(6, 77);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(79, 13);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Companion file:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label8.Location = new System.Drawing.Point(6, 50);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(150, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Companion file search pattern:";
+            // 
+            // txtCompanionFile
+            // 
+            this.txtCompanionFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCompanionFile.Location = new System.Drawing.Point(87, 73);
+            this.txtCompanionFile.Name = "txtCompanionFile";
+            this.txtCompanionFile.Size = new System.Drawing.Size(232, 20);
+            this.txtCompanionFile.TabIndex = 14;
+            // 
+            // txtCompanionFileSearchPattern
+            // 
+            this.txtCompanionFileSearchPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCompanionFileSearchPattern.Location = new System.Drawing.Point(162, 47);
+            this.txtCompanionFileSearchPattern.Name = "txtCompanionFileSearchPattern";
+            this.txtCompanionFileSearchPattern.Size = new System.Drawing.Size(157, 20);
+            this.txtCompanionFileSearchPattern.TabIndex = 13;
             // 
             // MainForm3
             // 
@@ -505,6 +551,10 @@
         private System.Windows.Forms.LinkLabel linkLanguage;
         private System.Windows.Forms.LinkLabel linkHelp;
         private System.Windows.Forms.LinkLabel linkAbout;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtCompanionFile;
+        private System.Windows.Forms.TextBox txtCompanionFileSearchPattern;
     }
 }
 

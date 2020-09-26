@@ -78,6 +78,9 @@ namespace EncodingConverter.Forms
 
             txtOutputPathFormat.BindText(new PropertyLink<string>(() => _OFF.FormatString, x => _OFF.FormatString = x)
                 , null).UpdateObj2To1();
+            txtCompanionFileSearchPattern.BindText(new PropertyLink<string>(() => _OFF.CompanionFileSearchPattern, x => _OFF.CompanionFileSearchPattern = x)
+                , null).UpdateObj2To1();
+            txtCompanionFileSearchPattern.TextChanged += TxtCompanionFileSearchPattern_TextChanged;
 
             this.splitContainerInput.DragEnter += InputControl_DragEnter;
             this.splitContainerInput.DragDrop += InputControl_DragDrop;
@@ -96,11 +99,18 @@ namespace EncodingConverter.Forms
             this.FormClosed += FormMain_FormClosed;
         }
 
-
+        private void TxtCompanionFileSearchPattern_TextChanged(object sender, EventArgs e)
+        {
+            txtCompanionFile.Text = _OFF.CompanionFile;
+        }
         #endregion
 
         #region ...Event handlers...
-        private void ECC_InputTextChanged(object sender, EventArgs e) { if (File.Exists(Program.ECC.InputFilePath)) richTextBox_in.Text = Program.ECC.InputText; }
+        private void ECC_InputTextChanged(object sender, EventArgs e) 
+        {
+            if (File.Exists(Program.ECC.InputFilePath)) richTextBox_in.Text = Program.ECC.InputText;
+            txtCompanionFile.Text = _OFF.CompanionFile;
+        }
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             Program.Settings.Save();

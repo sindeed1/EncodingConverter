@@ -32,6 +32,7 @@ namespace EncodingConverter
 
         private string _FormatString;
         private string _CompanionFileSearchPattern;
+        private string _CompanionFile;
 
         #region ...ctor...
         public OutputPathFormatter() : this(null, null, null) { }
@@ -46,6 +47,17 @@ namespace EncodingConverter
         }
         #endregion
 
+
+        public string CompanionFile
+        {
+            get { return _CompanionFile; }
+            set
+            {
+                _CompanionFile = value;
+
+
+            }
+        }
 
         public string CompanionFileSearchPattern
         {
@@ -123,6 +135,7 @@ namespace EncodingConverter
                 //directory = fileExtention = fileName = "";
                 FillPathParemeters(_OutputPathFormattingParameters, 0, null);
                 FillPathParemeters(_OutputPathFormattingParameters, 30, null);
+                _CompanionFile = "";
             }
             else
             {
@@ -140,6 +153,7 @@ namespace EncodingConverter
                     var commps = dir.EnumerateFiles(_CompanionFileSearchPattern, SearchOption.TopDirectoryOnly);
                     var comp = commps.FirstOrDefault();
                     FillPathParemeters(_OutputPathFormattingParameters, 30, comp);
+                    _CompanionFile = comp.FullName;
                 }
 
                 //fileExtention = file.Extension;
