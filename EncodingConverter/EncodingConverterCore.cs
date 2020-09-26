@@ -294,7 +294,7 @@ namespace EncodingConverter
                 stream?.Close();
             }
 
-            preferredString = preferredString.Trim();
+            preferredString = preferredString?.Trim();
             Encoding encoding;
             if (preferredString == null || preferredString.Length <= 0)
             {
