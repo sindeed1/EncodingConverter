@@ -30,6 +30,10 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbInput = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtCompanionFile = new System.Windows.Forms.TextBox();
+            this.txtCompanionFileSearchPattern = new System.Windows.Forms.TextBox();
             this.splitContainerInput = new System.Windows.Forms.SplitContainer();
             this.label7 = new System.Windows.Forms.Label();
             this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
@@ -54,13 +58,7 @@
             this.btnChangeOutputFile = new System.Windows.Forms.Button();
             this.txtOutputPath = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.linkLanguage = new System.Windows.Forms.LinkLabel();
-            this.linkHelp = new System.Windows.Forms.LinkLabel();
             this.linkAbout = new System.Windows.Forms.LinkLabel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtCompanionFile = new System.Windows.Forms.TextBox();
-            this.txtCompanionFileSearchPattern = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -114,6 +112,46 @@
             this.gbInput.TabIndex = 4;
             this.gbInput.TabStop = false;
             this.gbInput.Text = "Input";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label9.Location = new System.Drawing.Point(6, 77);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(79, 13);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Companion file:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label8.Location = new System.Drawing.Point(6, 50);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(150, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Companion file search pattern:";
+            // 
+            // txtCompanionFile
+            // 
+            this.txtCompanionFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCompanionFile.Location = new System.Drawing.Point(87, 73);
+            this.txtCompanionFile.Name = "txtCompanionFile";
+            this.txtCompanionFile.Size = new System.Drawing.Size(232, 20);
+            this.txtCompanionFile.TabIndex = 14;
+            // 
+            // txtCompanionFileSearchPattern
+            // 
+            this.txtCompanionFileSearchPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCompanionFileSearchPattern.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "CompanionFileSearchPattern", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtCompanionFileSearchPattern.Location = new System.Drawing.Point(162, 47);
+            this.txtCompanionFileSearchPattern.Name = "txtCompanionFileSearchPattern";
+            this.txtCompanionFileSearchPattern.Size = new System.Drawing.Size(157, 20);
+            this.txtCompanionFileSearchPattern.TabIndex = 13;
+            this.txtCompanionFileSearchPattern.Text = global::EncodingConverter.Properties.Settings.Default.CompanionFileSearchPattern;
             // 
             // splitContainerInput
             // 
@@ -409,30 +447,6 @@
             this.btnSave.Text = "Convert and &Save";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
-            // linkLanguage
-            // 
-            this.linkLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.linkLanguage.AutoSize = true;
-            this.linkLanguage.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.linkLanguage.Location = new System.Drawing.Point(90, 440);
-            this.linkLanguage.Name = "linkLanguage";
-            this.linkLanguage.Size = new System.Drawing.Size(55, 13);
-            this.linkLanguage.TabIndex = 14;
-            this.linkLanguage.TabStop = true;
-            this.linkLanguage.Text = "Language";
-            // 
-            // linkHelp
-            // 
-            this.linkHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.linkHelp.AutoSize = true;
-            this.linkHelp.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.linkHelp.Location = new System.Drawing.Point(55, 440);
-            this.linkHelp.Name = "linkHelp";
-            this.linkHelp.Size = new System.Drawing.Size(29, 13);
-            this.linkHelp.TabIndex = 13;
-            this.linkHelp.TabStop = true;
-            this.linkHelp.Text = "Help";
-            // 
             // linkAbout
             // 
             this.linkAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -445,44 +459,6 @@
             this.linkAbout.TabStop = true;
             this.linkAbout.Text = "About";
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label9.Location = new System.Drawing.Point(6, 77);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(79, 13);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "Companion file:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label8.Location = new System.Drawing.Point(6, 50);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(150, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Companion file search pattern:";
-            // 
-            // txtCompanionFile
-            // 
-            this.txtCompanionFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCompanionFile.Location = new System.Drawing.Point(87, 73);
-            this.txtCompanionFile.Name = "txtCompanionFile";
-            this.txtCompanionFile.Size = new System.Drawing.Size(232, 20);
-            this.txtCompanionFile.TabIndex = 14;
-            // 
-            // txtCompanionFileSearchPattern
-            // 
-            this.txtCompanionFileSearchPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCompanionFileSearchPattern.Location = new System.Drawing.Point(162, 47);
-            this.txtCompanionFileSearchPattern.Name = "txtCompanionFileSearchPattern";
-            this.txtCompanionFileSearchPattern.Size = new System.Drawing.Size(157, 20);
-            this.txtCompanionFileSearchPattern.TabIndex = 13;
-            // 
             // MainForm3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -490,8 +466,6 @@
             this.ClientSize = new System.Drawing.Size(649, 465);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.linkLanguage);
-            this.Controls.Add(this.linkHelp);
             this.Controls.Add(this.linkAbout);
             this.Name = "MainForm3";
             this.Text = "Encoding Converter";
@@ -548,8 +522,6 @@
         private System.Windows.Forms.Button btnChangeOutputFile;
         private System.Windows.Forms.TextBox txtOutputPath;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.LinkLabel linkLanguage;
-        private System.Windows.Forms.LinkLabel linkHelp;
         private System.Windows.Forms.LinkLabel linkAbout;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;

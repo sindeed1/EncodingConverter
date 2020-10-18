@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EncodingConverter.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="FavoriteEncodings" Type="AHD.SM.Controls.EncodingsCollection" Scope="User">
+    <Setting Name="FavoriteEncodings" Type="EncodingConverter.EncodingsCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OutputFilePathFormatString" Type="System.String" Scope="User">
@@ -21,7 +21,10 @@
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
     <Setting Name="MainForm_SpliContainer_SplitterDistance" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">322</Value>
+      <Value Profile="(Default)">323</Value>
+    </Setting>
+    <Setting Name="CompanionFileSearchPattern" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

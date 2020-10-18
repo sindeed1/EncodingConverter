@@ -10,6 +10,7 @@ using System.IO;
 
 namespace EncodingConverter
 {
+    public class EncodingsCollection : List<int> { }
     static class Helper
     {
         /// <summary>

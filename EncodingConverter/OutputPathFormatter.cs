@@ -27,11 +27,17 @@ namespace EncodingConverter
 
     class OutputPathFormatter
     {
+        static char[] _SplitChars = { '|' };
+
+        public event EventHandler FormatStringChanged;
+        public event EventHandler CompanionFileSearchPatternChanged;
+
         private EncodingConverterCore _ECC;
         private object[] _OutputPathFormattingParameters;
 
         private string _FormatString;
         private string _CompanionFileSearchPattern;
+        private string[] _CompanionFileSearchPatterns;
         private string _CompanionFile;
 
         #region ...ctor...
@@ -68,8 +74,9 @@ namespace EncodingConverter
                     return;
 
                 _CompanionFileSearchPattern = value;
-
+                _CompanionFileSearchPatterns = _CompanionFileSearchPattern.Split(_SplitChars, StringSplitOptions.RemoveEmptyEntries);
                 UpdateFormattedText();
+                CompanionFileSearchPatternChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -84,6 +91,7 @@ namespace EncodingConverter
                 }
                 _FormatString = value;
                 UpdateFormattedText();
+                FormatStringChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -130,7 +138,7 @@ namespace EncodingConverter
             //string fileExtention;
             //string fileName;
 
-            if (string.IsNullOrEmpty(inputPath))
+            if (string.IsNullOrWhiteSpace(inputPath))
             {
                 //directory = fileExtention = fileName = "";
                 FillPathParemeters(_OutputPathFormattingParameters, 0, null);
@@ -147,13 +155,24 @@ namespace EncodingConverter
 
                 FillPathParemeters(_OutputPathFormattingParameters, 0, file);
 
-                if (!string.IsNullOrWhiteSpace(_CompanionFileSearchPattern))
+                if (!string.IsNullOrWhiteSpace(_CompanionFileSearchPattern) && _CompanionFileSearchPatterns != null)
                 {
                     var dir = file.Directory;
-                    var commps = dir.EnumerateFiles(_CompanionFileSearchPattern, SearchOption.TopDirectoryOnly);
-                    var comp = commps.FirstOrDefault();
-                    FillPathParemeters(_OutputPathFormattingParameters, 30, comp);
-                    _CompanionFile = comp.FullName;
+                    FileInfo compFile = null;
+                    for (int i = 0; i < _CompanionFileSearchPatterns.Length; i++)
+                    {
+                        var searchPattern = _CompanionFileSearchPatterns[i];
+                        var commpFiles = dir.EnumerateFiles(searchPattern, SearchOption.TopDirectoryOnly);
+                        compFile = commpFiles.FirstOrDefault();
+                        if (compFile != null)
+                        {
+                            break;
+                        }
+                    }
+                    //var commps = dir.EnumerateFiles(_CompanionFileSearchPattern, SearchOption.TopDirectoryOnly);
+                    //var comp = commps.FirstOrDefault();
+                    FillPathParemeters(_OutputPathFormattingParameters, 30, compFile);
+                    _CompanionFile = compFile?.FullName;
                 }
 
                 //fileExtention = file.Extension;

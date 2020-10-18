@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Net.Http.Headers;
+using System.Diagnostics;
 
 namespace EncodingConverter.Forms
 {
@@ -39,36 +39,37 @@ namespace EncodingConverter.Forms
             //Binding to Settings:
             //Bind(this, nameof(this.ClientSize), Properties.Settings.Default, nameof(Properties.Settings.Default.MainFormSize));
             //Bind(splitContainer1, nameof(splitContainer1.SplitterDistance), Properties.Settings.Default, nameof(Properties.Settings.Default.MainForm_SpliContainer_SplitterDistance));
-            this.DataBindings.Add(new System.Windows.Forms.Binding("ClientSize", global::EncodingConverter.Properties.Settings.Default, "MainFormSize", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.splitContainer1.DataBindings.Add(new System.Windows.Forms.Binding("SplitterDistance", global::EncodingConverter.Properties.Settings.Default, "MainForm_SpliContainer_SplitterDistance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            //this.DataBindings.Add(new Binding("ClientSize", Properties.Settings.Default,  "MainFormSize", true, DataSourceUpdateMode.OnPropertyChanged));
+            //this.splitContainer1.DataBindings.Add(new Binding("SplitterDistance", Properties.Settings.Default, "MainForm_SpliContainer_SplitterDistance", true, DataSourceUpdateMode.OnPropertyChanged));
 
+            this.Load += MainForm3_Load;
 
             //Binding to Encoding converter core:
-
             EncodingConverterCore ECC = Program.ECC;
             WinFormsHelpers.Bind(new PropertyLink<bool>(() => chkAutoDetect.Checked, x => chkAutoDetect.Checked = x)
-                , x => chkAutoDetect.CheckedChanged += x
+                , new EventLink(chkAutoDetect, nameof(CheckBox.CheckedChanged))
                 , new PropertyLink<bool>(() => ECC.AutoDetectInputEncoding, x => ECC.AutoDetectInputEncoding = x)
-                , x => ECC.AutoDetectInputEncodingChanged += x)
+                , new EventLink(ECC, nameof(ECC.AutoDetectInputEncodingChanged)))
                 .UpdateObj2To1();
             txtPreferredInputEncoding.BindText(new PropertyLink<string>(() => ECC.PreferredInputEncoding, x => ECC.PreferredInputEncoding = x)
-                , x => ECC.PreferredInputEncodingChanged += x)
+                , new EventLink(ECC, nameof(ECC.PreferredInputEncodingChanged)))
                 .UpdateObj2To1();
             txtInputPath.BindText(new PropertyLink<string>(() => ECC.InputFilePath, x => ECC.InputFilePath = x)
-                , x => ECC.InputFilePathChanged += x)
+                , new EventLink(ECC, nameof(ECC.InputFilePathChanged)))
                 .UpdateObj2To1();
             txtOutputPath.BindText(new PropertyLink<string>(() => ECC.OutputFilePath, x => ECC.OutputFilePath = x)
-                , x => ECC.OutputFilePathChanged += x)
+                , new EventLink(ECC, nameof(ECC.OutputFilePathChanged)))
                 .UpdateObj2To1();
-            ECC.InputTextChanged += ECC_InputTextChanged; //One way  update.
+            ECC.InputTextChanged += ECC_InputTextChanged; //One way update.
             if (File.Exists(ECC.InputFilePath))
             {
                 richTextBox_in.Text = ECC.InputText;
             }
+
             WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evInputEncoding.SelectedEncodingInfo, x => evInputEncoding.SelectedEncodingInfo = x)
-                , x => evInputEncoding.SelectedEncodingInfoChanged += x
+                , new EventLink(evInputEncoding, nameof(evInputEncoding.SelectedEncodingInfoChanged))
                 , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.InputEncoding.CodePage), x => ECC.InputEncoding = x.GetEncoding())
-                , x => ECC.InputEncodingChanged += x)
+                , new EventLink(ECC, nameof(ECC.InputEncodingChanged)))
                 .UpdateObj2To1();
             WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evOutputEncoding.SelectedEncodingInfo, x => evOutputEncoding.SelectedEncodingInfo = x)
                 , x => evOutputEncoding.SelectedEncodingInfoChanged += x
@@ -77,17 +78,15 @@ namespace EncodingConverter.Forms
                 .UpdateObj2To1();
 
             txtOutputPathFormat.BindText(new PropertyLink<string>(() => _OFF.FormatString, x => _OFF.FormatString = x)
-                , null).UpdateObj2To1();
+                , new EventLink(_OFF, nameof(_OFF.FormatStringChanged))).UpdateObj2To1();
             txtCompanionFileSearchPattern.BindText(new PropertyLink<string>(() => _OFF.CompanionFileSearchPattern, x => _OFF.CompanionFileSearchPattern = x)
-                , null).UpdateObj2To1();
+                , new EventLink(_OFF, nameof(_OFF.CompanionFileSearchPatternChanged))).UpdateObj2To1();
             txtCompanionFileSearchPattern.TextChanged += TxtCompanionFileSearchPattern_TextChanged;
 
             this.splitContainerInput.DragEnter += InputControl_DragEnter;
             this.splitContainerInput.DragDrop += InputControl_DragDrop;
 
-            this.linkLanguage.LinkClicked += this.linkLanguage_LinkClicked;
             this.linkAbout.LinkClicked += this.linkAbout_LinkClicked;
-            this.linkHelp.LinkClicked += this.linkHelp_LinkClicked;
             this.btnChangeOutputFile.Click += this.btnChangeOutputFile_Click;
             this.linkLabel1.LinkClicked += this.linkLabel1_LinkClicked;
             this.btnSave.Click += this.btnSave_Click;
@@ -99,14 +98,42 @@ namespace EncodingConverter.Forms
             this.FormClosed += FormMain_FormClosed;
         }
 
+        private void MainForm3_Load(object sender, EventArgs e)
+        {
+            Properties.Settings defSet = Properties.Settings.Default;
+            this.DataBindings.Add(new Binding("ClientSize"
+                                            , Properties.Settings.Default
+                                            , nameof(Properties.Settings.Default.MainFormSize)
+                                            , true
+                                            , DataSourceUpdateMode.OnPropertyChanged));
+            //this.splitContainer1.DataBindings.Add(new Binding("SplitterDistance"
+            //                                                , Properties.Settings.Default
+            //                                                , nameof(Properties.Settings.Default.MainForm_SpliContainer_SplitterDistance)
+            //                                                , true
+            //                                                , DataSourceUpdateMode.OnPropertyChanged));
+            //splitContainer1.SplitterMoved += SplitContainer1_SplitterMoved;
+            //Trying to bind 'splitContainer1.SplitterDistance' to 'Properties.Settings.Default.MainForm_SpliContainer_SplitterDistance' with 'splitContainer1.SplitterMoved' as activator
+            WinFormsHelpers.Bind(new PropertyLink<int>(() => splitContainer1.SplitterDistance, x => { if (x != splitContainer1.SplitterDistance) splitContainer1.SplitterDistance = x; })
+                , x => splitContainer1.SplitterMoved += (s, es) => x(s, EventArgs.Empty)
+                , new PropertyLink<int>(() => defSet.MainForm_SpliContainer_SplitterDistance, x => defSet.MainForm_SpliContainer_SplitterDistance = x)
+                , x => defSet.PropertyChanged += (s, es) => { if (es.PropertyName == nameof(defSet.MainForm_SpliContainer_SplitterDistance)) x(s, EventArgs.Empty); })
+                .UpdateObj2To1();
+        }
+
+        #endregion
+
+        #region ...Event handlers...
+        //private void SplitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        //{
+        //    Trace.WriteLine("Splitter moved.");
+        //    Properties.Settings.Default.MainForm_SpliContainer_SplitterDistance = splitContainer1.SplitterDistance;
+        //}
         private void TxtCompanionFileSearchPattern_TextChanged(object sender, EventArgs e)
         {
             txtCompanionFile.Text = _OFF.CompanionFile;
         }
-        #endregion
 
-        #region ...Event handlers...
-        private void ECC_InputTextChanged(object sender, EventArgs e) 
+        private void ECC_InputTextChanged(object sender, EventArgs e)
         {
             if (File.Exists(Program.ECC.InputFilePath)) richTextBox_in.Text = Program.ECC.InputText;
             txtCompanionFile.Text = _OFF.CompanionFile;
