@@ -30,10 +30,10 @@ namespace EncodingConverter.Controls
             this.columnHeader5_codepage = new System.Windows.Forms.ColumnHeader();
 
             this.columnHeader3_name.Text = "Name";
-            this.columnHeader3_name.Width = 225;
+            this.columnHeader3_name.Width = 120;
 
             this.columnHeader4_body.Text = "Body Name";
-            this.columnHeader4_body.Width = 93;
+            this.columnHeader4_body.Width = 225;
 
             this.columnHeader5_codepage.Text = "Code Page";
             this.columnHeader5_codepage.Width = 70;

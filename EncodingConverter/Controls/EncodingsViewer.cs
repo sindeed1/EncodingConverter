@@ -35,6 +35,22 @@ namespace EncodingConverter.Controls
             lvFavoriteEncodings.SelectedEncodingChanged += LvFavoriteEncodings_SelectedEncodingChanged;
             tstbSearchEncodings.TextChanged += TstbSearchEncodings_TextChanged;
             tsbAddToFavorites.Click += TsbAddToFavorites_Click;
+            tsbRemoveFavoriteEncoding.Click += TsbRemoveFavoriteEncoding_Click;
+        }
+
+        private void TsbRemoveFavoriteEncoding_Click(object sender, EventArgs e)
+        {
+            EncodingInfo[] newInfos;
+            if (_SelectedEncodingInfo == null)
+                return;
+            if (lvFavoriteEncodings.SourceEncodings == null)
+                return;
+
+            if (lvFavoriteEncodings.SourceEncodings.FirstOrDefault(x => x == _SelectedEncodingInfo) == null)
+                return;
+
+            newInfos = lvFavoriteEncodings.SourceEncodings.Where(x => x.CodePage != _SelectedEncodingInfo.CodePage).ToArray();// new EncodingInfo[lvFavoriteEncodings.SourceEncodings.Length - 1];
+            this.FavoriteEncodingInfos = newInfos;
         }
 
         private void TsbAddToFavorites_Click(object sender, EventArgs e)

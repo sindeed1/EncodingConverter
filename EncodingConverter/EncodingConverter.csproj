@@ -147,9 +147,6 @@
     <Compile Include="OutputPathFormatter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\EncodingsViewer.resx">
-      <DependentUpon>EncodingsViewer.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm3.resx">
       <DependentUpon>MainForm3.cs</DependentUpon>
     </EmbeddedResource>

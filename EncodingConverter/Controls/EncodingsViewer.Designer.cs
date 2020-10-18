@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EncodingsViewer));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.lvAllEncodings = new EncodingConverter.Controls.SearchableEncodingListView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbAddToFavorites = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -38,13 +38,14 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.lblSelectedEncoding = new System.Windows.Forms.ToolStripLabel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.lvFavoriteEncodings = new EncodingConverter.Controls.SearchableEncodingListView();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.tsbRemoveFavoriteEncoding = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tstbSearchFavorites = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.lblSelectedEncodingFavorites = new System.Windows.Forms.ToolStripLabel();
+            this.lvAllEncodings = new EncodingConverter.Controls.SearchableEncodingListView();
+            this.lvFavoriteEncodings = new EncodingConverter.Controls.SearchableEncodingListView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -74,21 +75,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "All encodings";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // lvAllEncodings
-            // 
-            this.lvAllEncodings.CheckBoxes = true;
-            this.lvAllEncodings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvAllEncodings.GridLines = true;
-            this.lvAllEncodings.HideSelection = false;
-            this.lvAllEncodings.Location = new System.Drawing.Point(3, 28);
-            this.lvAllEncodings.MultiSelect = false;
-            this.lvAllEncodings.Name = "lvAllEncodings";
-            this.lvAllEncodings.ShowItemToolTips = true;
-            this.lvAllEncodings.Size = new System.Drawing.Size(518, 256);
-            this.lvAllEncodings.TabIndex = 2;
-            this.lvAllEncodings.UseCompatibleStateImageBehavior = false;
-            this.lvAllEncodings.View = System.Windows.Forms.View.Details;
             // 
             // toolStrip1
             // 
@@ -149,26 +135,11 @@
             this.tabPage2.Text = "Favorite encodings";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // lvFavoriteEncodings
-            // 
-            this.lvFavoriteEncodings.CheckBoxes = true;
-            this.lvFavoriteEncodings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvFavoriteEncodings.GridLines = true;
-            this.lvFavoriteEncodings.HideSelection = false;
-            this.lvFavoriteEncodings.Location = new System.Drawing.Point(3, 28);
-            this.lvFavoriteEncodings.MultiSelect = false;
-            this.lvFavoriteEncodings.Name = "lvFavoriteEncodings";
-            this.lvFavoriteEncodings.ShowItemToolTips = true;
-            this.lvFavoriteEncodings.Size = new System.Drawing.Size(518, 256);
-            this.lvFavoriteEncodings.TabIndex = 3;
-            this.lvFavoriteEncodings.UseCompatibleStateImageBehavior = false;
-            this.lvFavoriteEncodings.View = System.Windows.Forms.View.Details;
-            // 
             // toolStrip2
             // 
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton3,
+            this.tsbRemoveFavoriteEncoding,
             this.toolStripSeparator2,
             this.tstbSearchFavorites,
             this.toolStripSeparator4,
@@ -179,15 +150,15 @@
             this.toolStrip2.TabIndex = 2;
             this.toolStrip2.Text = "toolStrip2";
             // 
-            // toolStripButton3
+            // tsbRemoveFavoriteEncoding
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::EncodingConverter.Properties.Resources.delete;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "toolStripButton1";
-            this.toolStripButton3.ToolTipText = "Remove selected";
+            this.tsbRemoveFavoriteEncoding.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbRemoveFavoriteEncoding.Image = global::EncodingConverter.Properties.Resources.delete;
+            this.tsbRemoveFavoriteEncoding.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbRemoveFavoriteEncoding.Name = "tsbRemoveFavoriteEncoding";
+            this.tsbRemoveFavoriteEncoding.Size = new System.Drawing.Size(23, 22);
+            this.tsbRemoveFavoriteEncoding.Text = "toolStripButton1";
+            this.tsbRemoveFavoriteEncoding.ToolTipText = "Remove selected";
             // 
             // toolStripSeparator2
             // 
@@ -211,6 +182,36 @@
             this.lblSelectedEncodingFavorites.Size = new System.Drawing.Size(0, 22);
             this.lblSelectedEncodingFavorites.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblSelectedEncodingFavorites.ToolTipText = "Selected encoding name";
+            // 
+            // lvAllEncodings
+            // 
+            this.lvAllEncodings.CheckBoxes = true;
+            this.lvAllEncodings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvAllEncodings.GridLines = true;
+            this.lvAllEncodings.HideSelection = false;
+            this.lvAllEncodings.Location = new System.Drawing.Point(3, 28);
+            this.lvAllEncodings.MultiSelect = false;
+            this.lvAllEncodings.Name = "lvAllEncodings";
+            this.lvAllEncodings.ShowItemToolTips = true;
+            this.lvAllEncodings.Size = new System.Drawing.Size(518, 256);
+            this.lvAllEncodings.TabIndex = 2;
+            this.lvAllEncodings.UseCompatibleStateImageBehavior = false;
+            this.lvAllEncodings.View = System.Windows.Forms.View.Details;
+            // 
+            // lvFavoriteEncodings
+            // 
+            this.lvFavoriteEncodings.CheckBoxes = true;
+            this.lvFavoriteEncodings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvFavoriteEncodings.GridLines = true;
+            this.lvFavoriteEncodings.HideSelection = false;
+            this.lvFavoriteEncodings.Location = new System.Drawing.Point(3, 28);
+            this.lvFavoriteEncodings.MultiSelect = false;
+            this.lvFavoriteEncodings.Name = "lvFavoriteEncodings";
+            this.lvFavoriteEncodings.ShowItemToolTips = true;
+            this.lvFavoriteEncodings.Size = new System.Drawing.Size(518, 256);
+            this.lvFavoriteEncodings.TabIndex = 3;
+            this.lvFavoriteEncodings.UseCompatibleStateImageBehavior = false;
+            this.lvFavoriteEncodings.View = System.Windows.Forms.View.Details;
             // 
             // EncodingsViewer
             // 
@@ -244,7 +245,7 @@
         private System.Windows.Forms.ToolStripLabel lblSelectedEncoding;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStrip toolStrip2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton tsbRemoveFavoriteEncoding;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripTextBox tstbSearchFavorites;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
