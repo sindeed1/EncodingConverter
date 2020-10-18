@@ -72,16 +72,19 @@ namespace EncodingConverter.Forms
                 , new EventLink(ECC, nameof(ECC.InputEncodingChanged)))
                 .UpdateObj2To1();
             WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evOutputEncoding.SelectedEncodingInfo, x => evOutputEncoding.SelectedEncodingInfo = x)
-                , x => evOutputEncoding.SelectedEncodingInfoChanged += x
+                , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
                 , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.OutputEncoding.CodePage), x => ECC.OutputEncoding = x.GetEncoding())
-                , x => ECC.OutputEncodingChanged += x)
+                , new EventLink(ECC, nameof(ECC.OutputEncodingChanged)))
                 .UpdateObj2To1();
 
             txtOutputPathFormat.BindText(new PropertyLink<string>(() => _OFF.FormatString, x => _OFF.FormatString = x)
                 , new EventLink(_OFF, nameof(_OFF.FormatStringChanged))).UpdateObj2To1();
             txtCompanionFileSearchPattern.BindText(new PropertyLink<string>(() => _OFF.CompanionFileSearchPattern, x => _OFF.CompanionFileSearchPattern = x)
                 , new EventLink(_OFF, nameof(_OFF.CompanionFileSearchPatternChanged))).UpdateObj2To1();
-            txtCompanionFileSearchPattern.TextChanged += TxtCompanionFileSearchPattern_TextChanged;
+
+            txtCompanionFile.BindText(new PropertyLink<string>(() => _OFF.CompanionFile, x => _OFF.CompanionFile = x)
+                , new EventLink(_OFF, nameof(_OFF.CompanionFileChanged))).UpdateObj2To1();
+            //txtCompanionFileSearchPattern.TextChanged += TxtCompanionFileSearchPattern_TextChanged;
 
             this.splitContainerInput.DragEnter += InputControl_DragEnter;
             this.splitContainerInput.DragDrop += InputControl_DragDrop;
@@ -113,14 +116,28 @@ namespace EncodingConverter.Forms
             //                                                , DataSourceUpdateMode.OnPropertyChanged));
             //splitContainer1.SplitterMoved += SplitContainer1_SplitterMoved;
             //Trying to bind 'splitContainer1.SplitterDistance' to 'Properties.Settings.Default.MainForm_SpliContainer_SplitterDistance' with 'splitContainer1.SplitterMoved' as activator
+            defSet.PropertyChanged += DefSet_PropertyChanged;
             WinFormsHelpers.Bind(new PropertyLink<int>(() => splitContainer1.SplitterDistance, x => { if (x != splitContainer1.SplitterDistance) splitContainer1.SplitterDistance = x; })
-                , x => splitContainer1.SplitterMoved += (s, es) => x(s, EventArgs.Empty)
+                , new EventLink(splitContainer1, nameof(splitContainer1.SplitterMoved))// x => splitContainer1.SplitterMoved += (s, es) => x(s, EventArgs.Empty)
                 , new PropertyLink<int>(() => defSet.MainForm_SpliContainer_SplitterDistance, x => defSet.MainForm_SpliContainer_SplitterDistance = x)
-                , x => defSet.PropertyChanged += (s, es) => { if (es.PropertyName == nameof(defSet.MainForm_SpliContainer_SplitterDistance)) x(s, EventArgs.Empty); })
+                , new EventLink(this, nameof(this.DefSetSplitterDistanceChanged)))// x => defSet.PropertyChanged += (s, es) => { if (es.PropertyName == nameof(defSet.MainForm_SpliContainer_SplitterDistance)) x(s, EventArgs.Empty); })
                 .UpdateObj2To1();
+
+            //WinFormsHelpers.Bind(new PropertyLink<int>(() => splitContainer1.SplitterDistance, x => { if (x != splitContainer1.SplitterDistance) splitContainer1.SplitterDistance = x; })
+            //    , x => splitContainer1.SplitterMoved += (s, es) => x(s, EventArgs.Empty)
+            //    , new PropertyLink<int>(() => defSet.MainForm_SpliContainer_SplitterDistance, x => defSet.MainForm_SpliContainer_SplitterDistance = x)
+            //    , x => defSet.PropertyChanged += (s, es) => { if (es.PropertyName == nameof(defSet.MainForm_SpliContainer_SplitterDistance)) x(s, EventArgs.Empty); })
+            //    .UpdateObj2To1();
+        }
+
+        private void DefSet_PropertyChanged(object sender, PropertyChangedEventArgs es)
+        {
+            if (es.PropertyName == nameof(Properties.Settings.Default.MainForm_SpliContainer_SplitterDistance))
+                DefSetSplitterDistanceChanged?.Invoke();
         }
 
         #endregion
+        public event Action DefSetSplitterDistanceChanged;
 
         #region ...Event handlers...
         //private void SplitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
@@ -128,15 +145,15 @@ namespace EncodingConverter.Forms
         //    Trace.WriteLine("Splitter moved.");
         //    Properties.Settings.Default.MainForm_SpliContainer_SplitterDistance = splitContainer1.SplitterDistance;
         //}
-        private void TxtCompanionFileSearchPattern_TextChanged(object sender, EventArgs e)
-        {
-            txtCompanionFile.Text = _OFF.CompanionFile;
-        }
+        //private void TxtCompanionFileSearchPattern_TextChanged(object sender, EventArgs e)
+        //{
+        //    txtCompanionFile.Text = _OFF.CompanionFile;
+        //}
 
         private void ECC_InputTextChanged(object sender, EventArgs e)
         {
             if (File.Exists(Program.ECC.InputFilePath)) richTextBox_in.Text = Program.ECC.InputText;
-            txtCompanionFile.Text = _OFF.CompanionFile;
+            //txtCompanionFile.Text = _OFF.CompanionFile;
         }
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {

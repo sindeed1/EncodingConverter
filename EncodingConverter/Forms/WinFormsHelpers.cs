@@ -12,6 +12,8 @@ namespace EncodingConverter.Forms
 {
     static class WinFormsHelpers
     {
+        static EventInfo _ControlTextChangedEventInfo = typeof(Control).GetEvent(nameof(Control.TextChanged));
+
         public static Binding Bind(this Control control, string propertyNameOfControl, object dataSource, string propertyOfDataSource)
         {
             Binding binding = new Binding(propertyNameOfControl, dataSource, propertyOfDataSource, true, DataSourceUpdateMode.OnPropertyChanged);
@@ -23,13 +25,6 @@ namespace EncodingConverter.Forms
             UpdateLock<T> binding = new UpdateLock<T>(property1, wireObj1ChangeEvent, property2, wireObj2ChangeEvent);
             return binding;
         }
-        public static UpdateLock<String> BindText(this Control textBox, PropertyLink<String> property2, Action<EventHandler> wireObj2ChangeEvent)
-        {
-            PropertyLink<String> property1 = new PropertyLink<String>(() => textBox.Text, x => textBox.Text = x);
-
-            UpdateLock<String> binding = new UpdateLock<String>(property1, x => textBox.TextChanged += x, property2, wireObj2ChangeEvent);
-            return binding;
-        }
         public static UpdateLock<T> Bind<T>(PropertyLink<T> property1, EventLink obj1ChangeEvent, PropertyLink<T> property2, EventLink obj2ChangeEvent)
         {
             UpdateLock<T> binding = new UpdateLock<T>(property1, obj1ChangeEvent, property2, obj2ChangeEvent);
@@ -38,17 +33,21 @@ namespace EncodingConverter.Forms
         public static UpdateLock<String> BindText(this Control textBox, PropertyLink<String> property2, EventLink obj2ChangeEvent)
         {
             PropertyLink<String> property1 = new PropertyLink<String>(() => textBox.Text, x => textBox.Text = x);
-            EventLink textChangeEventLinks = new EventLink(textBox, nameof(Control.TextChanged));
+            EventLink textChangeEventLinks = new EventLink(textBox, _ControlTextChangedEventInfo);
 
             UpdateLock<String> binding = new UpdateLock<String>(property1, textChangeEventLinks, property2, obj2ChangeEvent);
             return binding;
         }
 
-        public static UpdateLock<String> BindTextOneWay(this Control textBox, PropertyLink<String> property2, Action<EventHandler> wireObj2ChangeEvent)
+        public static OneWayUpdater<String> BindTextAsDestination(this Control textBox, PropertyLink<String> property2, EventLink obj2ChangeEvent)
         {
-            PropertyLink<String> property1 = new PropertyLink<String>(() => textBox.Text, x => textBox.Text = x);
-
-            UpdateLock<String> binding = new UpdateLock<String>(property1, x => textBox.TextChanged += x, property2, wireObj2ChangeEvent);
+            OneWayUpdater<String> binding = new OneWayUpdater<String>(property2.Get, x => textBox.Text = x, obj2ChangeEvent);
+            return binding;
+        }
+        public static OneWayUpdater<String> BindTextAsSource(this Control textBox, PropertyLink<String> destinationPropertyLink)
+        {
+            EventLink textChangeEventLinks = new EventLink(textBox, _ControlTextChangedEventInfo);
+            OneWayUpdater<String> binding = new OneWayUpdater<String>(() => textBox.Text, destinationPropertyLink.Set, textChangeEventLinks);
             return binding;
         }
 
@@ -118,6 +117,16 @@ namespace EncodingConverter.Forms
             var body = Expression.Call(Expression.Constant(d), d.GetType().GetMethod("Invoke"));
             var lambda = Expression.Lambda(body, parameters.ToArray());
             return Delegate.CreateDelegate(handlerType, lambda.Compile(), "Invoke", false);
+        }
+        public static Delegate CreateHandler(this MethodInfo method, Action d)
+        {
+            var eventParams = method.GetParameters();
+            
+            //lambda: (object x0, EventArgs x1) => d()
+            var parameters = eventParams.Select(p => Expression.Parameter(p.ParameterType, "x"));
+            var body = Expression.Call(Expression.Constant(d), d.GetType().GetMethod("Invoke"));
+            var lambda = Expression.Lambda(body, parameters.ToArray());
+            return lambda.Compile();// Delegate.CreateDelegate(method.DeclaringType, lambda.Compile(), "Invoke", false);
         }
 
         ////void delegate with one parameter

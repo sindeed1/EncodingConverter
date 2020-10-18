@@ -31,6 +31,7 @@ namespace EncodingConverter
 
         public event EventHandler FormatStringChanged;
         public event EventHandler CompanionFileSearchPatternChanged;
+        public event EventHandler CompanionFileChanged;
 
         private EncodingConverterCore _ECC;
         private object[] _OutputPathFormattingParameters;
@@ -59,9 +60,10 @@ namespace EncodingConverter
             get { return _CompanionFile; }
             set
             {
+                if (_CompanionFile == value)
+                    return;
                 _CompanionFile = value;
-
-
+                CompanionFileChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -143,7 +145,8 @@ namespace EncodingConverter
                 //directory = fileExtention = fileName = "";
                 FillPathParemeters(_OutputPathFormattingParameters, 0, null);
                 FillPathParemeters(_OutputPathFormattingParameters, 30, null);
-                _CompanionFile = "";
+                //_CompanionFile = "";
+                this.CompanionFile = "";
             }
             else
             {
@@ -172,7 +175,8 @@ namespace EncodingConverter
                     //var commps = dir.EnumerateFiles(_CompanionFileSearchPattern, SearchOption.TopDirectoryOnly);
                     //var comp = commps.FirstOrDefault();
                     FillPathParemeters(_OutputPathFormattingParameters, 30, compFile);
-                    _CompanionFile = compFile?.FullName;
+                    //_CompanionFile = compFile?.FullName;
+                    this.CompanionFile = compFile?.FullName;
                 }
 
                 //fileExtention = file.Extension;
