@@ -10,7 +10,11 @@ using System.IO;
 
 namespace EncodingConverter
 {
-    public class EncodingsCollection : List<int> { }
+    public class EncodingsCollection : List<int>
+    {
+        public EncodingsCollection() { }
+        public EncodingsCollection(int capacity) : base(capacity) { }
+    }
     static class Helper
     {
         /// <summary>

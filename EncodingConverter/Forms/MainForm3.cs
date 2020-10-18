@@ -31,6 +31,10 @@ namespace EncodingConverter.Forms
             evInputEncoding.EncodingInfos = encodingInfos;
             evOutputEncoding.EncodingInfos = encodingInfos;
 
+            EncodingInfo[] favs = Properties.Settings.Default.FavoriteEncodings?.Select(cp => encodingInfos.FirstOrDefault(enc => enc.CodePage == cp)).ToArray();
+            evInputEncoding.FavoriteEncodingInfos = favs;
+            evOutputEncoding.FavoriteEncodingInfos = favs;
+
             _OFD = new Lazy<OpenFileDialog>();
             _SFD = new Lazy<SaveFileDialog>();
         }
@@ -98,6 +102,23 @@ namespace EncodingConverter.Forms
             //this.encodingsTool_input.SelectedEncodingChanged += this.encodingsTool_input_SelectedEncodingChanged;
             //this.encodingsTool_output.SelectedEncodingChanged += this.encodingsTool_output_SelectedEncodingChanged;
 
+            //Bind favorite encoding of OutputEncodingsViewer to favorite encoding of InputEncodingsViewer
+            var OutputEncodingFavsPropLink = new PropertyLink<EncodingInfo[]>(() => evOutputEncoding.FavoriteEncodingInfos, x => evOutputEncoding.FavoriteEncodingInfos = x);
+            var evLink = new EventLink(evOutputEncoding, nameof(evOutputEncoding.FavoriteEncodingInfosChanged));
+
+            WinFormsHelpers.Bind(OutputEncodingFavsPropLink
+                , evLink
+                , new PropertyLink<EncodingInfo[]>(() => evInputEncoding.FavoriteEncodingInfos, x => evInputEncoding.FavoriteEncodingInfos = x)
+                , new EventLink(evInputEncoding, nameof(evInputEncoding.FavoriteEncodingInfosChanged)))
+                ;
+
+            //WinFormsHelpers.Bind(OutputEncodingFavsPropLink
+            //    , evLink
+            //    , new PropertyLink<EncodingsCollection>(() => evInputEncoding.FavoriteEncodingInfos, x => evInputEncoding.FavoriteEncodingInfos = x)
+            //    , new EventLink(evInputEncoding, nameof(evInputEncoding.FavoriteEncodingInfosChanged)))
+            //    ;
+
+
             this.FormClosed += FormMain_FormClosed;
         }
 
@@ -157,6 +178,9 @@ namespace EncodingConverter.Forms
         }
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
+            EncodingsCollection favs = new EncodingsCollection(evOutputEncoding.FavoriteEncodingInfos.Length);
+            favs.AddRange(evOutputEncoding.FavoriteEncodingInfos.Select(x => x.CodePage));
+            Properties.Settings.Default.FavoriteEncodings = favs;
             Program.Settings.Save();
         }
         private void btnSave_Click(object sender, EventArgs e)

@@ -16,6 +16,8 @@ namespace EncodingConverter.Controls
 
         private EncodingInfo _SelectedEncodingInfo;
 
+        public event EventHandler FavoriteEncodingInfosChanged;
+
         #region ...Events...
         public event EventHandler SelectedEncodingInfoChanged;
         #endregion
@@ -32,6 +34,29 @@ namespace EncodingConverter.Controls
             lvAllEncodings.SelectedEncodingChanged += LvAllEncodings_SelectedEncodingChanged;
             lvFavoriteEncodings.SelectedEncodingChanged += LvFavoriteEncodings_SelectedEncodingChanged;
             tstbSearchEncodings.TextChanged += TstbSearchEncodings_TextChanged;
+            tsbAddToFavorites.Click += TsbAddToFavorites_Click;
+        }
+
+        private void TsbAddToFavorites_Click(object sender, EventArgs e)
+        {
+            EncodingInfo[] newInfos;
+            if (lvFavoriteEncodings.SourceEncodings == null)
+            {
+                newInfos = new EncodingInfo[1];
+                newInfos[0] = _SelectedEncodingInfo;
+                this.FavoriteEncodingInfos = newInfos;
+            }
+            else
+            {
+                var res = lvFavoriteEncodings.SourceEncodings.FirstOrDefault(x => x == _SelectedEncodingInfo);
+                if (res == null)
+                {
+                    newInfos = new EncodingInfo[lvFavoriteEncodings.SourceEncodings.Length + 1];
+                    Array.Copy(lvFavoriteEncodings.SourceEncodings, newInfos, lvFavoriteEncodings.SourceEncodings.Length);
+                    newInfos[newInfos.Length - 1] = _SelectedEncodingInfo;
+                    this.FavoriteEncodingInfos = newInfos;
+                }
+            }
         }
 
 
@@ -95,8 +120,20 @@ namespace EncodingConverter.Controls
         }
         [DefaultValue(null)]
         public EncodingInfo[] EncodingInfos { get { return lvAllEncodings.SourceEncodings; } set { lvAllEncodings.SourceEncodings = value; } }
+
+        [SettingsBindable(true)]
         [DefaultValue(null)]
-        public EncodingInfo[] FavoriteEncodingInfos { get { return lvFavoriteEncodings.SourceEncodings; } set { lvFavoriteEncodings.SourceEncodings = value; } }
+        public EncodingInfo[] FavoriteEncodingInfos
+        {
+            get { return lvFavoriteEncodings.SourceEncodings; }
+            set
+            {
+                if (lvFavoriteEncodings.SourceEncodings == value)
+                    return;
+                lvFavoriteEncodings.SourceEncodings = value;
+                FavoriteEncodingInfosChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
 
         protected virtual void OnSelectedEncodingInfoChanged() { SelectedEncodingInfoChanged?.Invoke(this, EventArgs.Empty); }
