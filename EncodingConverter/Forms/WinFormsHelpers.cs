@@ -20,11 +20,6 @@ namespace EncodingConverter.Forms
             control.DataBindings.Add(binding);
             return binding;
         }
-        public static UpdateLock<T> Bind<T>(PropertyLink<T> property1, Action<EventHandler> wireObj1ChangeEvent, PropertyLink<T> property2, Action<EventHandler> wireObj2ChangeEvent)
-        {
-            UpdateLock<T> binding = new UpdateLock<T>(property1, wireObj1ChangeEvent, property2, wireObj2ChangeEvent);
-            return binding;
-        }
         public static UpdateLock<T> Bind<T>(PropertyLink<T> property1, EventLink obj1ChangeEvent, PropertyLink<T> property2, EventLink obj2ChangeEvent)
         {
             UpdateLock<T> binding = new UpdateLock<T>(property1, obj1ChangeEvent, property2, obj2ChangeEvent);
@@ -213,14 +208,10 @@ namespace EncodingConverter.Forms
     {
         PropertyLink<T> _Obj1PropertyLink;
         EventLink _Obj1EventLink;
-        Action<EventHandler> _WireObj1ChangeEvent;
-        Action<EventHandler> _UnWireObj1ChangeEvent;
 
 
         PropertyLink<T> _Obj2PropertyLink;
         EventLink _Obj2EventLink;
-        Action<EventHandler> _WireObj2ChangeEvent;
-        Action<EventHandler> _UnWireObj2ChangeEvent;
 
         Delegate _Obj1EventProxy;
         Delegate _Obj2EventProxy;
@@ -242,45 +233,45 @@ namespace EncodingConverter.Forms
             _Obj1EventProxy = _Obj1EventLink?.AddHandler(this.UpdateObj1To2);
             _Obj2EventProxy = _Obj2EventLink?.AddHandler(this.UpdateObj2To1);
         }
-        public UpdateLock(PropertyLink<T> obj1PropertyLink
-            , Action<EventHandler> wireObj1ChangeEvent
-            //, Action<EventHandler> unWireObj1ChangeEvent
-            , PropertyLink<T> obj2PropertyLink
-            , Action<EventHandler> wireObj2ChangeEvent
-            //, Action<EventHandler> unWireObj2ChangeEvent
-            )
-        {
-            _Obj1PropertyLink = obj1PropertyLink;
-            _WireObj1ChangeEvent = wireObj1ChangeEvent;
-            //_UnWireObj1ChangeEvent = unWireObj1ChangeEvent;
+        //public UpdateLock(PropertyLink<T> obj1PropertyLink
+        //    , Action<EventHandler> wireObj1ChangeEvent
+        //    //, Action<EventHandler> unWireObj1ChangeEvent
+        //    , PropertyLink<T> obj2PropertyLink
+        //    , Action<EventHandler> wireObj2ChangeEvent
+        //    //, Action<EventHandler> unWireObj2ChangeEvent
+        //    )
+        //{
+        //    _Obj1PropertyLink = obj1PropertyLink;
+        //    _WireObj1ChangeEvent = wireObj1ChangeEvent;
+        //    //_UnWireObj1ChangeEvent = unWireObj1ChangeEvent;
 
-            _Obj2PropertyLink = obj2PropertyLink;
-            _WireObj2ChangeEvent = wireObj2ChangeEvent;
-            //_UnWireObj2ChangeEvent = unWireObj2ChangeEvent;
-
-
-            _WireObj1ChangeEvent?.Invoke(this.UpdateObj1To2);
-            _WireObj2ChangeEvent?.Invoke(this.UpdateObj2To1);
-        }
-        public UpdateLock(PropertyLink<T> obj1PropertyLink
-            , Action<Action> wireObj1ChangeEvent
-            //, Action<EventHandler> unWireObj1ChangeEvent
-            , PropertyLink<T> obj2PropertyLink
-            , Action<Action> wireObj2ChangeEvent
-            //, Action<EventHandler> unWireObj2ChangeEvent
-            )
-        {
-            _Obj1PropertyLink = obj1PropertyLink;
-            //_UnWireObj1ChangeEvent = unWireObj1ChangeEvent;
-
-            _Obj2PropertyLink = obj2PropertyLink;
-            //_UnWireObj2ChangeEvent = unWireObj2ChangeEvent;
+        //    _Obj2PropertyLink = obj2PropertyLink;
+        //    _WireObj2ChangeEvent = wireObj2ChangeEvent;
+        //    //_UnWireObj2ChangeEvent = unWireObj2ChangeEvent;
 
 
-            wireObj1ChangeEvent?.Invoke(this.UpdateObj1To2);
-            wireObj2ChangeEvent?.Invoke(this.UpdateObj2To1);
+        //    _WireObj1ChangeEvent?.Invoke(this.UpdateObj1To2);
+        //    _WireObj2ChangeEvent?.Invoke(this.UpdateObj2To1);
+        //}
+        //public UpdateLock(PropertyLink<T> obj1PropertyLink
+        //    , Action<Action> wireObj1ChangeEvent
+        //    //, Action<EventHandler> unWireObj1ChangeEvent
+        //    , PropertyLink<T> obj2PropertyLink
+        //    , Action<Action> wireObj2ChangeEvent
+        //    //, Action<EventHandler> unWireObj2ChangeEvent
+        //    )
+        //{
+        //    _Obj1PropertyLink = obj1PropertyLink;
+        //    //_UnWireObj1ChangeEvent = unWireObj1ChangeEvent;
 
-        }
+        //    _Obj2PropertyLink = obj2PropertyLink;
+        //    //_UnWireObj2ChangeEvent = unWireObj2ChangeEvent;
+
+
+        //    wireObj1ChangeEvent?.Invoke(this.UpdateObj1To2);
+        //    wireObj2ChangeEvent?.Invoke(this.UpdateObj2To1);
+
+        //}
         #endregion
 
         void UpdateObj1To2(object sender, EventArgs e) { UpdateObj1To2(); }

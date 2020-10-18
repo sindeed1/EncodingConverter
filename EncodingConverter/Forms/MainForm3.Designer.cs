@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -59,6 +60,7 @@
             this.txtOutputPath = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.linkAbout = new System.Windows.Forms.LinkLabel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -527,6 +529,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtCompanionFile;
         private System.Windows.Forms.TextBox txtCompanionFileSearchPattern;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
