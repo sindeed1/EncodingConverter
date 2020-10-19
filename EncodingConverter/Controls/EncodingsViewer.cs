@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EncodingConverter.Forms;
 
 namespace EncodingConverter.Controls
 {
@@ -27,6 +28,14 @@ namespace EncodingConverter.Controls
         {
             InitializeComponent();
             AddEventHandlers();
+
+            //Link 'lvFavoriteEncodings.SelectedEncoding' to 'lblSelectedEncodingFavorites.Text':
+            OneWayUpdater<string> SelFavEnc = new OneWayUpdater<string>(() => this.lvFavoriteEncodings.SelectedEncoding?.DisplayName, x => lblSelectedEncodingFavorites.Text = x
+            , new EventLink(lvFavoriteEncodings, nameof(lvFavoriteEncodings.SelectedEncodingChanged)));
+
+            //Link 'lvAllEncodings.SelectedEncoding' to 'lblSelectedEncoding.Text':
+            OneWayUpdater<string> SelEnc = new OneWayUpdater<string>(() => this.lvAllEncodings.SelectedEncoding?.DisplayName, x => lblSelectedEncoding.Text = x
+                , new EventLink(lvAllEncodings, nameof(lvAllEncodings.SelectedEncodingChanged)));
 
         }
         void AddEventHandlers()
@@ -86,9 +95,9 @@ namespace EncodingConverter.Controls
                 return;
             _UpdatingSelectedEncoding = true;
 
-            lblSelectedEncoding.Text = lvAllEncodings.SelectedEncoding.DisplayName;
+            //lblSelectedEncoding.Text = lvAllEncodings.SelectedEncoding.DisplayName;
             this.SelectedEncodingInfo = lvAllEncodings.SelectedEncoding;
-            lvFavoriteEncodings.SelectedEncoding = null;
+            //lvFavoriteEncodings.SelectedEncoding = null;
 
             _UpdatingSelectedEncoding = false;
         }
@@ -99,9 +108,9 @@ namespace EncodingConverter.Controls
 
             _UpdatingSelectedEncoding = true;
 
-            lblSelectedEncodingFavorites.Text = lvFavoriteEncodings.SelectedEncoding.DisplayName;
+            //lblSelectedEncodingFavorites.Text = lvFavoriteEncodings.SelectedEncoding.DisplayName;
             this.SelectedEncodingInfo = lvFavoriteEncodings.SelectedEncoding;
-            lvAllEncodings.SelectedEncoding = null;
+            //lvAllEncodings.SelectedEncoding = null;
 
             _UpdatingSelectedEncoding = false;
         }
@@ -133,6 +142,7 @@ namespace EncodingConverter.Controls
         {
             _SelectedEncodingInfo = encodingInfo;
             this.lvAllEncodings.SelectedEncoding = _SelectedEncodingInfo;
+            this.lvFavoriteEncodings.SelectedEncoding = _SelectedEncodingInfo;
         }
         [DefaultValue(null)]
         public EncodingInfo[] EncodingInfos { get { return lvAllEncodings.SourceEncodings; } set { lvAllEncodings.SourceEncodings = value; } }

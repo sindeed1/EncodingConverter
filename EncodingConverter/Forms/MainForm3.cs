@@ -26,6 +26,7 @@ namespace EncodingConverter.Forms
             _OFF = new OutputPathFormatter(Program.ECC);
             AddEventHandlers();
 
+            this.gbInput.AllowDrop = true;
 
             encodingInfos = Encoding.GetEncodings();
             evInputEncoding.EncodingInfos = encodingInfos;
@@ -46,21 +47,24 @@ namespace EncodingConverter.Forms
             //this.DataBindings.Add(new Binding("ClientSize", Properties.Settings.Default,  "MainFormSize", true, DataSourceUpdateMode.OnPropertyChanged));
             //this.splitContainer1.DataBindings.Add(new Binding("SplitterDistance", Properties.Settings.Default, "MainForm_SpliContainer_SplitterDistance", true, DataSourceUpdateMode.OnPropertyChanged));
 
-            this.Load += MainForm3_Load;
 
             //Binding to Encoding converter core:
             EncodingConverterCore ECC = Program.ECC;
+            //Bind 'ECC.AutoDetectInputEncoding' to 'chkAutoDetect.Checked':
             WinFormsHelpers.Bind(new PropertyLink<bool>(() => chkAutoDetect.Checked, x => chkAutoDetect.Checked = x)
                 , new EventLink(chkAutoDetect, nameof(CheckBox.CheckedChanged))
                 , new PropertyLink<bool>(() => ECC.AutoDetectInputEncoding, x => ECC.AutoDetectInputEncoding = x)
                 , new EventLink(ECC, nameof(ECC.AutoDetectInputEncodingChanged)))
                 .UpdateObj2To1();
+            //Bind 'ECC.PreferredInputEncoding' to 'txtPreferredInputEncoding':
             txtPreferredInputEncoding.BindText(new PropertyLink<string>(() => ECC.PreferredInputEncoding, x => ECC.PreferredInputEncoding = x)
                 , new EventLink(ECC, nameof(ECC.PreferredInputEncodingChanged)))
                 .UpdateObj2To1();
+            //Bind 'ECC.InputFilePath' to 'txtInputPath':
             txtInputPath.BindText(new PropertyLink<string>(() => ECC.InputFilePath, x => ECC.InputFilePath = x)
                 , new EventLink(ECC, nameof(ECC.InputFilePathChanged)))
                 .UpdateObj2To1();
+            //Bind 'ECC.OutputFilePath' to 'txtOutputPath':
             txtOutputPath.BindText(new PropertyLink<string>(() => ECC.OutputFilePath, x => ECC.OutputFilePath = x)
                 , new EventLink(ECC, nameof(ECC.OutputFilePathChanged)))
                 .UpdateObj2To1();
@@ -70,16 +74,26 @@ namespace EncodingConverter.Forms
                 richTextBox_in.Text = ECC.InputText;
             }
 
+            var inputEncodingEventLink = new EventLink(ECC, nameof(ECC.InputEncodingChanged));
+            //Bind 'ECC.InputEncoding' to 'evInputEncoding.SelectedEncodingInfo':
             WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evInputEncoding.SelectedEncodingInfo, x => evInputEncoding.SelectedEncodingInfo = x)
                 , new EventLink(evInputEncoding, nameof(evInputEncoding.SelectedEncodingInfoChanged))
-                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.InputEncoding.CodePage), x => ECC.InputEncoding = x.GetEncoding())
-                , new EventLink(ECC, nameof(ECC.InputEncodingChanged)))
+                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.InputEncoding.CodePage), x => ECC.InputEncoding = x?.GetEncoding())
+                , inputEncodingEventLink)
                 .UpdateObj2To1();
+            //Bind 'ECC.InputEncoding' to 'lblInputEncoding':
+            lblInputEncoding.BindTextAsDestination(() => ECC.InputEncoding?.EncodingName, inputEncodingEventLink).Update();
+
+            //Bind 'ECC.OutputEncoding' to 'evOutputEncoding.SelectedEncodingInfo':
+            var outputEncodingEventLink = new EventLink(ECC, nameof(ECC.OutputEncodingChanged));
             WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evOutputEncoding.SelectedEncodingInfo, x => evOutputEncoding.SelectedEncodingInfo = x)
                 , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
-                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.OutputEncoding.CodePage), x => ECC.OutputEncoding = x.GetEncoding())
-                , new EventLink(ECC, nameof(ECC.OutputEncodingChanged)))
+                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.OutputEncoding.CodePage), x => ECC.OutputEncoding = x?.GetEncoding())
+                , outputEncodingEventLink)
                 .UpdateObj2To1();
+            //Bind 'ECC.OutputEncoding' to 'lblOutputEncoding':
+            lblOutputEncoding.BindTextAsDestination(() => ECC.OutputEncoding?.EncodingName, outputEncodingEventLink).Update();
+
 
             txtOutputPathFormat.BindText(new PropertyLink<string>(() => _OFF.FormatString, x => _OFF.FormatString = x)
                 , new EventLink(_OFF, nameof(_OFF.FormatStringChanged))).UpdateObj2To1();
@@ -88,19 +102,7 @@ namespace EncodingConverter.Forms
 
             txtCompanionFile.BindText(new PropertyLink<string>(() => _OFF.CompanionFile, x => _OFF.CompanionFile = x)
                 , new EventLink(_OFF, nameof(_OFF.CompanionFileChanged))).UpdateObj2To1();
-            //txtCompanionFileSearchPattern.TextChanged += TxtCompanionFileSearchPattern_TextChanged;
 
-            this.splitContainerInput.DragEnter += InputControl_DragEnter;
-            this.splitContainerInput.DragDrop += InputControl_DragDrop;
-
-            this.linkAbout.LinkClicked += this.linkAbout_LinkClicked;
-            this.btnChangeOutputFile.Click += this.btnChangeOutputFile_Click;
-            this.linkLabel1.LinkClicked += this.linkLabel1_LinkClicked;
-            this.btnSave.Click += this.btnSave_Click;
-            this.btnOpen.Click += BtnOpen_Click;
-            this.btnApplyOutputFormatting.Click += BtnApplyOutputFormatting_Click;
-            //this.encodingsTool_input.SelectedEncodingChanged += this.encodingsTool_input_SelectedEncodingChanged;
-            //this.encodingsTool_output.SelectedEncodingChanged += this.encodingsTool_output_SelectedEncodingChanged;
 
             //Bind favorite encoding of OutputEncodingsViewer to favorite encoding of InputEncodingsViewer
             var OutputEncodingFavsPropLink = new PropertyLink<EncodingInfo[]>(() => evOutputEncoding.FavoriteEncodingInfos, x => evOutputEncoding.FavoriteEncodingInfos = x);
@@ -118,7 +120,18 @@ namespace EncodingConverter.Forms
             //    , new EventLink(evInputEncoding, nameof(evInputEncoding.FavoriteEncodingInfosChanged)))
             //    ;
 
+            this.gbInput.DragEnter += InputControl_DragEnter;
+            this.gbInput.DragDrop += InputControl_DragDrop;
 
+            this.linkAbout.LinkClicked += this.linkAbout_LinkClicked;
+            this.btnChangeOutputFile.Click += this.btnChangeOutputFile_Click;
+            this.linkLabel1.LinkClicked += this.linkLabel1_LinkClicked;
+            this.btnSave.Click += this.btnSave_Click;
+            this.btnOpen.Click += BtnOpen_Click;
+            this.btnApplyOutputFormatting.Click += BtnApplyOutputFormatting_Click;
+
+
+            this.Load += MainForm3_Load;
             this.FormClosed += FormMain_FormClosed;
         }
 
@@ -188,13 +201,13 @@ namespace EncodingConverter.Forms
             if (!File.Exists(txtInputPath.Text))
             {
                 MessageBox.Show(Properties.Resources.Message_PleaseBrowseForInputFileFirst
-                    , "AHD Encoding Converter");
+                    , Properties.Resources.ProgramTitel);
                 return;
             }
             if (txtOutputPath.Text.Length == 0)
             {
                 MessageBox.Show(Properties.Resources.Message_PleaseBrowseWhereToSaveTheFileFirst
-                    , "AHD Encoding Converter");
+                    , Properties.Resources.ProgramTitel);
                 return;
             }
             if (evInputEncoding.SelectedEncodingInfo == null)
@@ -212,19 +225,19 @@ namespace EncodingConverter.Forms
             }
             catch (System.Security.SecurityException ex)
             {
-                MessageBox.Show("The program doesn't have the permission to perform the conversion." + ex.ToText());
+                MessageBox.Show(Properties.Resources.Message_Err_NoPermissionToPerformConversion + ex.ToText());
                 return;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Couldn't complete the conversion because of the following error: " + ex.ToText());
+                MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText());
                 ex.WriteToTrace();
                 return;
             }
 
             // Done !!
             DialogResult res = MessageBox.Show(this, Properties.Resources.Message_Done,
-                "AHD Encoding Converter", MessageBoxButtons.OK);
+                Properties.Resources.ProgramTitel, MessageBoxButtons.OK);
         }
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -263,7 +276,8 @@ namespace EncodingConverter.Forms
         }
         private void linkAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //MessageDialog.ShowMessage(Program.ResourceManager.GetString("Message_About"), "About AHD Encoding Converter " + Application.ProductVersion);
+            DialogResult res = MessageBox.Show(this, Properties.Resources.Message_About,
+                Properties.Resources.ProgramTitel, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void InputControl_DragDrop(object sender, DragEventArgs e)
         {

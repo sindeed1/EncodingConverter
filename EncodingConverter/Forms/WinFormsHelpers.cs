@@ -39,10 +39,21 @@ namespace EncodingConverter.Forms
             OneWayUpdater<String> binding = new OneWayUpdater<String>(property2.Get, x => textBox.Text = x, obj2ChangeEvent);
             return binding;
         }
+        public static OneWayUpdater<String> BindTextAsDestination(this Control textBox, Func<string> sourceGetter, EventLink obj2ChangeEvent)
+        {
+            OneWayUpdater<String> binding = new OneWayUpdater<String>(sourceGetter, x => textBox.Text = x, obj2ChangeEvent);
+            return binding;
+        }
         public static OneWayUpdater<String> BindTextAsSource(this Control textBox, PropertyLink<String> destinationPropertyLink)
         {
             EventLink textChangeEventLinks = new EventLink(textBox, _ControlTextChangedEventInfo);
             OneWayUpdater<String> binding = new OneWayUpdater<String>(() => textBox.Text, destinationPropertyLink.Set, textChangeEventLinks);
+            return binding;
+        }
+        public static OneWayUpdater<String> BindTextAsSource(this Control textBox, Action<String> destinationSetter)
+        {
+            EventLink textChangeEventLinks = new EventLink(textBox, _ControlTextChangedEventInfo);
+            OneWayUpdater<String> binding = new OneWayUpdater<String>(() => textBox.Text, destinationSetter, textChangeEventLinks);
             return binding;
         }
 
@@ -164,7 +175,7 @@ namespace EncodingConverter.Forms
         {
             SourceGetter = sourceGetter;
             DestinationSetter = destinationSetter;
-            _UpdateEvent = updateEvent;
+            this.UpdateEvent = updateEvent;
         }
         public EventLink UpdateEvent
         {

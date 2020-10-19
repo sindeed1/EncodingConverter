@@ -98,11 +98,10 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright © Ala Ibrahim Hadid 2009 - 2015
+        ///   Looks up a localized string similar to Ammar J. Alhamwi
         ///
-        ///AHD Encoding Converter is a part of AHD Subtitles Maker Professional.
-        ///AHD Subtitles Maker Professional is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-        ///AHD Subtitles Maker Professional is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  [rest of string was truncated]&quot;;.
+        ///Inspired by &quot;AHD Encoding Converter&quot; by Ala Ibrahim Hadid
+        ///Encoding Converter is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE..
         /// </summary>
         internal static string Message_About {
             get {
@@ -125,6 +124,24 @@ namespace EncodingConverter.Properties {
         internal static string Message_Done {
             get {
                 return ResourceManager.GetString("Message_Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t complete the conversion because of the following error:.
+        /// </summary>
+        internal static string Message_Err_ConversionFailedForTheFollowingError {
+            get {
+                return ResourceManager.GetString("Message_Err_ConversionFailedForTheFollowingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The program doesn&apos;t have the permission to perform the conversion..
+        /// </summary>
+        internal static string Message_Err_NoPermissionToPerformConversion {
+            get {
+                return ResourceManager.GetString("Message_Err_NoPermissionToPerformConversion", resourceCulture);
             }
         }
         
@@ -161,6 +178,15 @@ namespace EncodingConverter.Properties {
         internal static string Message_PleaseBrowseWhereToSaveTheFileFirst {
             get {
                 return ResourceManager.GetString("Message_PleaseBrowseWhereToSaveTheFileFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encoding Converter.
+        /// </summary>
+        internal static string ProgramTitel {
+            get {
+                return ResourceManager.GetString("ProgramTitel", resourceCulture);
             }
         }
         

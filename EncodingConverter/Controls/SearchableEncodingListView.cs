@@ -18,6 +18,7 @@ namespace EncodingConverter.Controls
         bool _UpdatingSelectedEncoding;
 
         private EncodingInfo _SelectedEncoding;
+        EncodingInfo _TempEnc;//Used to preserve the selected encoding between changed in the current 'base.CurrentSource'
 
         #region ...Events...
         public event EventHandler SelectedEncodingChanged;
@@ -53,7 +54,7 @@ namespace EncodingConverter.Controls
 
             //this.ObjectToListViewItemConverter = x => new LVIEncoding((EncodingInfo)x);
             //this.ObjectToSearchableTextConverter = x => ((LVIEncoding)x).Encoding.DisplayName;
-            this.ObjectToListViewItemConverter = x => new LVIEncoding(x);
+            this.ObjectToListViewItemConverter = x => new LVIEncoding(x);//, x == _SelectedEncoding);
             this.ObjectToSearchableTextConverter = x => x.DisplayName.ToLower();
         }
 
@@ -74,11 +75,6 @@ namespace EncodingConverter.Controls
             get
             {
                 return _SelectedEncoding;
-                if (this.CheckedIndices.Count == 0)
-                {
-                    return null;
-                }
-                return ((LVIEncoding)this.Items[this.CheckedIndices[0]]).Encoding;
             }
             set
             {
@@ -90,19 +86,63 @@ namespace EncodingConverter.Controls
                 _UpdatingSelectedEncoding = true;
                 if (value == null)
                 {
+                    //Uncheck all:
                     var checkedItems = this.CheckedItems.Cast<LVIEncoding>();//Get all checked item.
-                    checkedItems.Foreach(x => x.Checked = false);//Uncheck the items
+                    checkedItems.Foreach(x => x.Checked = false);//Uncheck all items
 
-                    _SelectedEncoding = value;//Means _SelectedEncoding = null
-                    return;
+                    //_SelectedEncoding = value;//Means _SelectedEncoding = null
+                }
+                else
+                {
+                    //Get first item to match the encoding page:
+                    var selectedItem = this.Items.Cast<LVIEncoding>().FirstOrDefault(x => x.Encoding.CodePage == value.CodePage);
+                    if (selectedItem == null)
+                    {
+                        //There is no such an encoding at the currently displayed items.
+                        //Current policy is to ignore the request:
+                        _UpdatingSelectedEncoding = false;
+                        return;
+                    }
+
+                    if (this.CheckedIndices.Count > 0)
+                    {
+                        var checkedItems = this.CheckedItems.Cast<LVIEncoding>();
+                        checkedItems.Foreach(x => x.Checked = false);
+                    }
+                    selectedItem.Checked = true;
                 }
 
+                _SelectedEncoding = value;
+
+                _UpdatingSelectedEncoding = false;
+
+                OnSelectedEncodingChanged();
+            }
+        }
+
+        void SetSelectedEncoding(EncodingInfo value)
+        {
+            if (_UpdatingSelectedEncoding)
+                return;
+
+            _UpdatingSelectedEncoding = true;
+            if (value == null)
+            {
+                //Uncheck all:
+                var checkedItems = this.CheckedItems.Cast<LVIEncoding>();//Get all checked item.
+                checkedItems.Foreach(x => x.Checked = false);//Uncheck all items
+
+                //_SelectedEncoding = value;//Means _SelectedEncoding = null
+            }
+            else
+            {
                 //Get first item to match the encoding page:
                 var selectedItem = this.Items.Cast<LVIEncoding>().FirstOrDefault(x => x.Encoding.CodePage == value.CodePage);
                 if (selectedItem == null)
                 {
                     //There is no such an encoding at the currently displayed items.
                     //Current policy is to ignore the request:
+                    _UpdatingSelectedEncoding = false;
                     return;
                 }
 
@@ -112,18 +152,33 @@ namespace EncodingConverter.Controls
                     checkedItems.Foreach(x => x.Checked = false);
                 }
                 selectedItem.Checked = true;
-
-                _SelectedEncoding = value;
-                
-                _UpdatingSelectedEncoding = false;
-
-                OnSelectedEncodingChanged();
             }
+
+            _SelectedEncoding = value;
+
+            _UpdatingSelectedEncoding = false;
         }
 
         protected virtual void OnSelectedEncodingChanged() { SelectedEncodingChanged?.Invoke(this, EventArgs.Empty); }
 
+        protected override void OnCurrentSourceChanged()
+        {
+            base.OnCurrentSourceChanged();
+            if (this.CurrentSource == null || this.CurrentSource.Length == 0)
+            {
+                this.SelectedEncoding = null;
+            }
+            else
+            {
+                this.SelectedEncoding = _TempEnc;
+            }
+        }
 
+        protected override void OnCurrentSourceChanging()
+        {
+            base.OnCurrentSourceChanging();
+            _TempEnc = _SelectedEncoding;
+        }
         protected override void OnItemChecked(ItemCheckedEventArgs e)
         {
             base.OnItemChecked(e);

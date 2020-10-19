@@ -35,8 +35,12 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txtCompanionFile = new System.Windows.Forms.TextBox();
+            this.txtCompanionFileSearchPattern = new System.Windows.Forms.TextBox();
             this.splitContainerInput = new System.Windows.Forms.SplitContainer();
+            this.lblInputEncoding = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
+            this.chkAutoDetect = new System.Windows.Forms.CheckBox();
             this.evInputEncoding = new EncodingConverter.Controls.EncodingsViewer();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,8 +50,10 @@
             this.txtInputPath = new System.Windows.Forms.TextBox();
             this.gbOutput = new System.Windows.Forms.GroupBox();
             this.btnApplyOutputFormatting = new System.Windows.Forms.Button();
+            this.txtOutputPathFormat = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainerOutput = new System.Windows.Forms.SplitContainer();
+            this.lblOutputEncoding = new System.Windows.Forms.Label();
             this.evOutputEncoding = new EncodingConverter.Controls.EncodingsViewer();
             this.label4 = new System.Windows.Forms.Label();
             this.richTextBox_out = new System.Windows.Forms.RichTextBox();
@@ -57,11 +63,8 @@
             this.txtOutputPath = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.linkAbout = new System.Windows.Forms.LinkLabel();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.txtCompanionFileSearchPattern = new System.Windows.Forms.TextBox();
-            this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
-            this.chkAutoDetect = new System.Windows.Forms.CheckBox();
-            this.txtOutputPathFormat = new System.Windows.Forms.TextBox();
+            this.ttLongRead = new System.Windows.Forms.ToolTip(this.components);
+            this.tooltipNormal = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -144,11 +147,22 @@
             this.txtCompanionFile.Name = "txtCompanionFile";
             this.txtCompanionFile.Size = new System.Drawing.Size(232, 20);
             this.txtCompanionFile.TabIndex = 14;
-            this.toolTip1.SetToolTip(this.txtCompanionFile, "The companion file that could be used to format the output path.");
+            this.tooltipNormal.SetToolTip(this.txtCompanionFile, "The companion file that could be used to format the output path.");
+            // 
+            // txtCompanionFileSearchPattern
+            // 
+            this.txtCompanionFileSearchPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCompanionFileSearchPattern.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "CompanionFileSearchPattern", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtCompanionFileSearchPattern.Location = new System.Drawing.Point(162, 47);
+            this.txtCompanionFileSearchPattern.Name = "txtCompanionFileSearchPattern";
+            this.txtCompanionFileSearchPattern.Size = new System.Drawing.Size(157, 20);
+            this.txtCompanionFileSearchPattern.TabIndex = 13;
+            this.txtCompanionFileSearchPattern.Text = global::EncodingConverter.Properties.Settings.Default.CompanionFileSearchPattern;
+            this.ttLongRead.SetToolTip(this.txtCompanionFileSearchPattern, resources.GetString("txtCompanionFileSearchPattern.ToolTip"));
             // 
             // splitContainerInput
             // 
-            this.splitContainerInput.AllowDrop = true;
             this.splitContainerInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -158,6 +172,7 @@
             // 
             // splitContainerInput.Panel1
             // 
+            this.splitContainerInput.Panel1.Controls.Add(this.lblInputEncoding);
             this.splitContainerInput.Panel1.Controls.Add(this.label7);
             this.splitContainerInput.Panel1.Controls.Add(this.txtPreferredInputEncoding);
             this.splitContainerInput.Panel1.Controls.Add(this.chkAutoDetect);
@@ -173,15 +188,51 @@
             this.splitContainerInput.SplitterDistance = 184;
             this.splitContainerInput.TabIndex = 7;
             // 
+            // lblInputEncoding
+            // 
+            this.lblInputEncoding.AutoSize = true;
+            this.lblInputEncoding.Location = new System.Drawing.Point(120, 0);
+            this.lblInputEncoding.Name = "lblInputEncoding";
+            this.lblInputEncoding.Size = new System.Drawing.Size(78, 13);
+            this.lblInputEncoding.TabIndex = 4;
+            this.lblInputEncoding.Text = "Input encoding";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label7.Location = new System.Drawing.Point(149, 17);
+            this.label7.Location = new System.Drawing.Point(149, 24);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(100, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "Preferred encoding:";
+            // 
+            // txtPreferredInputEncoding
+            // 
+            this.txtPreferredInputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPreferredInputEncoding.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "PreferredInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtPreferredInputEncoding.Location = new System.Drawing.Point(252, 21);
+            this.txtPreferredInputEncoding.Name = "txtPreferredInputEncoding";
+            this.txtPreferredInputEncoding.Size = new System.Drawing.Size(58, 20);
+            this.txtPreferredInputEncoding.TabIndex = 8;
+            this.txtPreferredInputEncoding.Text = global::EncodingConverter.Properties.Settings.Default.PreferredInputEncoding;
+            this.tooltipNormal.SetToolTip(this.txtPreferredInputEncoding, "When detecting the encoding, the program will try to find the encoding that match" +
+        "es the given text");
+            // 
+            // chkAutoDetect
+            // 
+            this.chkAutoDetect.AutoSize = true;
+            this.chkAutoDetect.Checked = global::EncodingConverter.Properties.Settings.Default.AutoDetectInputEncoding;
+            this.chkAutoDetect.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkAutoDetect.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EncodingConverter.Properties.Settings.Default, "AutoDetectInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkAutoDetect.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chkAutoDetect.Location = new System.Drawing.Point(3, 23);
+            this.chkAutoDetect.Name = "chkAutoDetect";
+            this.chkAutoDetect.Size = new System.Drawing.Size(81, 17);
+            this.chkAutoDetect.TabIndex = 7;
+            this.chkAutoDetect.Text = "&Auto detect";
+            this.chkAutoDetect.UseVisualStyleBackColor = true;
             // 
             // evInputEncoding
             // 
@@ -198,7 +249,7 @@
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.linkLabel1.Location = new System.Drawing.Point(93, 17);
+            this.linkLabel1.Location = new System.Drawing.Point(90, 24);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(39, 13);
             this.linkLabel1.TabIndex = 6;
@@ -286,6 +337,18 @@
             this.btnApplyOutputFormatting.Text = "Apply";
             this.btnApplyOutputFormatting.UseVisualStyleBackColor = true;
             // 
+            // txtOutputPathFormat
+            // 
+            this.txtOutputPathFormat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtOutputPathFormat.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "OutputFilePathFormatString", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtOutputPathFormat.Location = new System.Drawing.Point(110, 21);
+            this.txtOutputPathFormat.Name = "txtOutputPathFormat";
+            this.txtOutputPathFormat.Size = new System.Drawing.Size(119, 20);
+            this.txtOutputPathFormat.TabIndex = 9;
+            this.txtOutputPathFormat.Text = global::EncodingConverter.Properties.Settings.Default.OutputFilePathFormatString;
+            this.ttLongRead.SetToolTip(this.txtOutputPathFormat, resources.GetString("txtOutputPathFormat.ToolTip"));
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -307,6 +370,7 @@
             // 
             // splitContainerOutput.Panel1
             // 
+            this.splitContainerOutput.Panel1.Controls.Add(this.lblOutputEncoding);
             this.splitContainerOutput.Panel1.Controls.Add(this.evOutputEncoding);
             this.splitContainerOutput.Panel1.Controls.Add(this.label4);
             // 
@@ -318,15 +382,24 @@
             this.splitContainerOutput.SplitterDistance = 191;
             this.splitContainerOutput.TabIndex = 7;
             // 
+            // lblOutputEncoding
+            // 
+            this.lblOutputEncoding.AutoSize = true;
+            this.lblOutputEncoding.Location = new System.Drawing.Point(129, 0);
+            this.lblOutputEncoding.Name = "lblOutputEncoding";
+            this.lblOutputEncoding.Size = new System.Drawing.Size(83, 13);
+            this.lblOutputEncoding.TabIndex = 4;
+            this.lblOutputEncoding.Text = "Outputencoding";
+            // 
             // evOutputEncoding
             // 
             this.evOutputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.evOutputEncoding.Location = new System.Drawing.Point(0, 16);
+            this.evOutputEncoding.Location = new System.Drawing.Point(0, 26);
             this.evOutputEncoding.Name = "evOutputEncoding";
             this.evOutputEncoding.SelectedEncodingInfo = null;
-            this.evOutputEncoding.Size = new System.Drawing.Size(307, 172);
+            this.evOutputEncoding.Size = new System.Drawing.Size(307, 162);
             this.evOutputEncoding.TabIndex = 2;
             // 
             // label4
@@ -416,56 +489,12 @@
             this.linkAbout.TabStop = true;
             this.linkAbout.Text = "About";
             // 
-            // txtCompanionFileSearchPattern
+            // ttLongRead
             // 
-            this.txtCompanionFileSearchPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCompanionFileSearchPattern.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "CompanionFileSearchPattern", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtCompanionFileSearchPattern.Location = new System.Drawing.Point(162, 47);
-            this.txtCompanionFileSearchPattern.Name = "txtCompanionFileSearchPattern";
-            this.txtCompanionFileSearchPattern.Size = new System.Drawing.Size(157, 20);
-            this.txtCompanionFileSearchPattern.TabIndex = 13;
-            this.txtCompanionFileSearchPattern.Text = global::EncodingConverter.Properties.Settings.Default.CompanionFileSearchPattern;
-            this.toolTip1.SetToolTip(this.txtCompanionFileSearchPattern, resources.GetString("txtCompanionFileSearchPattern.ToolTip"));
-            // 
-            // txtPreferredInputEncoding
-            // 
-            this.txtPreferredInputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPreferredInputEncoding.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "PreferredInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtPreferredInputEncoding.Location = new System.Drawing.Point(255, 14);
-            this.txtPreferredInputEncoding.Name = "txtPreferredInputEncoding";
-            this.txtPreferredInputEncoding.Size = new System.Drawing.Size(58, 20);
-            this.txtPreferredInputEncoding.TabIndex = 8;
-            this.txtPreferredInputEncoding.Text = global::EncodingConverter.Properties.Settings.Default.PreferredInputEncoding;
-            this.toolTip1.SetToolTip(this.txtPreferredInputEncoding, "When detecting the encoding, the program will try to find the encoding that match" +
-        "es the given text");
-            // 
-            // chkAutoDetect
-            // 
-            this.chkAutoDetect.AutoSize = true;
-            this.chkAutoDetect.Checked = global::EncodingConverter.Properties.Settings.Default.AutoDetectInputEncoding;
-            this.chkAutoDetect.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutoDetect.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EncodingConverter.Properties.Settings.Default, "AutoDetectInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkAutoDetect.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkAutoDetect.Location = new System.Drawing.Point(6, 16);
-            this.chkAutoDetect.Name = "chkAutoDetect";
-            this.chkAutoDetect.Size = new System.Drawing.Size(81, 17);
-            this.chkAutoDetect.TabIndex = 7;
-            this.chkAutoDetect.Text = "&Auto detect";
-            this.chkAutoDetect.UseVisualStyleBackColor = true;
-            // 
-            // txtOutputPathFormat
-            // 
-            this.txtOutputPathFormat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOutputPathFormat.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "OutputFilePathFormatString", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtOutputPathFormat.Location = new System.Drawing.Point(110, 21);
-            this.txtOutputPathFormat.Name = "txtOutputPathFormat";
-            this.txtOutputPathFormat.Size = new System.Drawing.Size(119, 20);
-            this.txtOutputPathFormat.TabIndex = 9;
-            this.txtOutputPathFormat.Text = global::EncodingConverter.Properties.Settings.Default.OutputFilePathFormatString;
-            this.toolTip1.SetToolTip(this.txtOutputPathFormat, resources.GetString("txtOutputPathFormat.ToolTip"));
+            this.ttLongRead.AutomaticDelay = 50;
+            this.ttLongRead.AutoPopDelay = 20000;
+            this.ttLongRead.InitialDelay = 50;
+            this.ttLongRead.ReshowDelay = 10;
             // 
             // MainForm3
             // 
@@ -535,7 +564,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtCompanionFile;
         private System.Windows.Forms.TextBox txtCompanionFileSearchPattern;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip ttLongRead;
+        private System.Windows.Forms.Label lblInputEncoding;
+        private System.Windows.Forms.Label lblOutputEncoding;
+        private System.Windows.Forms.ToolTip tooltipNormal;
     }
 }
 

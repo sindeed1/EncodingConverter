@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace EncodingConverter.Controls
 
         private EncodingInfo _SelectedEncoding;
 
-        public  EncodingInfo SelectedEncoding
+        public EncodingInfo SelectedEncoding
         {
             get { return _SelectedEncoding; }
             set { _SelectedEncoding = value; }
@@ -31,7 +32,7 @@ namespace EncodingConverter.Controls
         public string SearchText
         {
             get { return _SearchText; }
-            set 
+            set
             {
                 _SearchText = value;
 
@@ -125,6 +126,16 @@ namespace EncodingConverter.Controls
         #region ...ctor...
         //public LVIEncoding() { }
         public LVIEncoding(EncodingInfo encoding) { this.Encoding = encoding; }
+        public LVIEncoding(EncodingInfo encoding, bool @checked)
+        {
+            this.Encoding = encoding; 
+            this.Checked = @checked;
+
+            if (@checked == true)
+            {
+                Trace.WriteLine("True");
+            }
+        }
         #endregion
         public EncodingInfo Encoding { get { return encoding; } set { encoding = value; RefreshText(); } }
         public void RefreshText()
