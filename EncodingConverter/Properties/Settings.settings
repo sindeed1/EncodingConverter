@@ -6,7 +6,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OutputFilePathFormatString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">{0}\{1}-{10}.{2}</Value>
+      <Value Profile="(Default)">{30}\{31}-{10}.{2}</Value>
     </Setting>
     <Setting Name="AutoDetectInputEncoding" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -24,7 +24,7 @@
       <Value Profile="(Default)">323</Value>
     </Setting>
     <Setting Name="CompanionFileSearchPattern" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">*.mp4|*.mkv|*.avi</Value>
     </Setting>
   </Settings>
 </SettingsFile>

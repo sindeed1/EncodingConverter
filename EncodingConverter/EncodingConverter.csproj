@@ -58,6 +58,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Encoding Converter 32x32.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -174,13 +177,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Encoding Converter.pdn" />
     <None Include="Resources\star.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\delete.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Encoding Converter 32x32.ico" />
     <Content Include="EncodingTools\readme.txt" />
+    <Content Include="Resources\Encoding Converter.png" />
+    <Content Include="Resources\Icon1.ico" />
+    <None Include="Resources\Encoding Converter 32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

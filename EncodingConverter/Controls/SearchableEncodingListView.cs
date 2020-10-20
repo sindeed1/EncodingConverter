@@ -174,9 +174,9 @@ namespace EncodingConverter.Controls
             }
         }
 
-        protected override void OnCurrentSourceChanging()
+        protected override void OnCurrentSourceChanging(EncodingInfo[] newCurrentSource)
         {
-            base.OnCurrentSourceChanging();
+            base.OnCurrentSourceChanging(newCurrentSource);
             _TempEnc = _SelectedEncoding;
         }
         protected override void OnItemChecked(ItemCheckedEventArgs e)

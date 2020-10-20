@@ -126,16 +126,11 @@ namespace EncodingConverter.Controls
         #region ...ctor...
         //public LVIEncoding() { }
         public LVIEncoding(EncodingInfo encoding) { this.Encoding = encoding; }
-        public LVIEncoding(EncodingInfo encoding, bool @checked)
-        {
-            this.Encoding = encoding; 
-            this.Checked = @checked;
-
-            if (@checked == true)
-            {
-                Trace.WriteLine("True");
-            }
-        }
+        //public LVIEncoding(EncodingInfo encoding, bool @checked)
+        //{
+        //    this.Encoding = encoding; 
+        //    this.Checked = @checked;
+        //}
         #endregion
         public EncodingInfo Encoding { get { return encoding; } set { encoding = value; RefreshText(); } }
         public void RefreshText()

@@ -41,13 +41,6 @@ namespace EncodingConverter.Forms
         }
         void AddEventHandlers()
         {
-            //Binding to Settings:
-            //Bind(this, nameof(this.ClientSize), Properties.Settings.Default, nameof(Properties.Settings.Default.MainFormSize));
-            //Bind(splitContainer1, nameof(splitContainer1.SplitterDistance), Properties.Settings.Default, nameof(Properties.Settings.Default.MainForm_SpliContainer_SplitterDistance));
-            //this.DataBindings.Add(new Binding("ClientSize", Properties.Settings.Default,  "MainFormSize", true, DataSourceUpdateMode.OnPropertyChanged));
-            //this.splitContainer1.DataBindings.Add(new Binding("SplitterDistance", Properties.Settings.Default, "MainForm_SpliContainer_SplitterDistance", true, DataSourceUpdateMode.OnPropertyChanged));
-
-
             //Binding to Encoding converter core:
             EncodingConverterCore ECC = Program.ECC;
             //Bind 'ECC.AutoDetectInputEncoding' to 'chkAutoDetect.Checked':

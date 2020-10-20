@@ -95,7 +95,7 @@ namespace EncodingConverter.Controls
         #region ...Event invokers...
         protected virtual void OnSearchTextChanged() { SearchTextChanged?.Invoke(this, EventArgs.Empty); }
         protected virtual void OnCurrentSourceChanged() { CurrentSourceChanged?.Invoke(this, EventArgs.Empty); }
-        protected virtual void OnCurrentSourceChanging() { CurrentSourceChanging?.Invoke(this, EventArgs.Empty); }
+        protected virtual void OnCurrentSourceChanging(T[] newCurrentSource) { CurrentSourceChanging?.Invoke(this, EventArgs.Empty); }
         #endregion
         void RefreshSearchText()
         {
@@ -127,7 +127,7 @@ namespace EncodingConverter.Controls
                 {
                     return;
                 }
-                OnCurrentSourceChanging();
+                OnCurrentSourceChanging(value);
                 this.Items.Clear();
                 _CurrentSource = value;
                 if (_CurrentSource != null && _CurrentSource.Length > 0
