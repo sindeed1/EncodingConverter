@@ -33,7 +33,7 @@ namespace EncodingConverter.Forms
             evInputEncoding.EncodingInfos = encodingInfos;
             evOutputEncoding.EncodingInfos = encodingInfos;
 
-            EncodingInfo[] favs = Properties.Settings.Default.FavoriteEncodings?.Select(cp => encodingInfos.FirstOrDefault(enc => enc.CodePage == cp)).ToArray();
+            EncodingInfo[] favs = Properties.Settings.Default.FavoriteEncodings?.Select(cp => encodingInfos.FirstOrDefault(enc => enc.CodePage == cp)).Where(x => x != null).ToArray();
             evInputEncoding.FavoriteEncodingInfos = favs;
             evOutputEncoding.FavoriteEncodingInfos = favs;
 
