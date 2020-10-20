@@ -53,8 +53,6 @@ namespace EncodingConverter.Controls
             this.UseCompatibleStateImageBehavior = false;
             this.View = System.Windows.Forms.View.Details;
 
-            //this.ObjectToListViewItemConverter = x => new LVIEncoding((EncodingInfo)x);
-            //this.ObjectToSearchableTextConverter = x => ((LVIEncoding)x).Encoding.DisplayName;
             this.ObjectToListViewItemConverter = x => new LVIEncoding(x);//, x == _SelectedEncoding);
             this.ObjectToSearchableTextConverter = x => x.DisplayName.ToLower();
         }
@@ -86,6 +84,7 @@ namespace EncodingConverter.Controls
                     return;
 
                 _UpdatingSelectedEncoding = true;
+                this.BeginUpdate();
                 if (value == null)
                 {
                     //Uncheck all:
@@ -112,10 +111,12 @@ namespace EncodingConverter.Controls
                         checkedItems.Foreach(x => x.Checked = false);
                     }
                     selectedItem.Checked = true;
+                    selectedItem.EnsureVisible();
                 }
 
                 _SelectedEncoding = value;
-
+                
+                this.EndUpdate();
                 _UpdatingSelectedEncoding = false;
 
                 OnSelectedEncodingChanged();
@@ -128,12 +129,12 @@ namespace EncodingConverter.Controls
                 return;
 
             _UpdatingSelectedEncoding = true;
+            this.BeginUpdate();
             if (value == null)
             {
                 //Uncheck all:
                 var checkedItems = this.CheckedItems.Cast<LVIEncoding>();//Get all checked item.
                 checkedItems.Foreach(x => x.Checked = false);//Uncheck all items
-
                 //_SelectedEncoding = value;//Means _SelectedEncoding = null
             }
             else
@@ -154,10 +155,12 @@ namespace EncodingConverter.Controls
                     checkedItems.Foreach(x => x.Checked = false);
                 }
                 selectedItem.Checked = true;
+                selectedItem.EnsureVisible();
             }
 
             _SelectedEncoding = value;
 
+            this.EndUpdate();
             _UpdatingSelectedEncoding = false;
         }
 
