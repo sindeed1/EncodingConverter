@@ -59,7 +59,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Encoding Converter 32x32.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Encoding Converter 32x32.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -146,7 +146,8 @@
       <DependentUpon>MainForm3.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\WinFormsHelpers.cs" />
-    <Compile Include="Helpers.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\MethodPropertyLinker.cs" />
     <Compile Include="OutputPathFormatter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -184,8 +185,8 @@
     <None Include="Resources\delete.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Encoding Converter 32x32.ico" />
     <Content Include="EncodingTools\readme.txt" />
+    <None Include="Resources\Encoding Converter 32x32.ico" />
     <Content Include="Resources\Encoding Converter.png" />
     <Content Include="Resources\Icon1.ico" />
     <None Include="Resources\Encoding Converter 32x32.png" />
