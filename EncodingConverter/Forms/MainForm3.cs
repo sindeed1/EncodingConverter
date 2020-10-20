@@ -26,7 +26,8 @@ namespace EncodingConverter.Forms
             _OFF = new OutputPathFormatter(Program.ECC);
             AddEventHandlers();
 
-            //this.Icon = Properties.Resources.Encoding_Converter_32x32;
+            this.Icon = Properties.Resources.Icon_Encoding_Converter_32x32;
+
             this.gbInput.AllowDrop = true;
 
             encodingInfos = Encoding.GetEncodings();

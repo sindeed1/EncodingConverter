@@ -389,7 +389,7 @@
             this.lblOutputEncoding.Name = "lblOutputEncoding";
             this.lblOutputEncoding.Size = new System.Drawing.Size(83, 13);
             this.lblOutputEncoding.TabIndex = 4;
-            this.lblOutputEncoding.Text = "Outputencoding";
+            this.lblOutputEncoding.Text = "OutputEncoding";
             // 
             // evOutputEncoding
             // 
@@ -504,7 +504,6 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.linkAbout);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm3";
             this.Text = "Encoding Converter";
             this.splitContainer1.Panel1.ResumeLayout(false);

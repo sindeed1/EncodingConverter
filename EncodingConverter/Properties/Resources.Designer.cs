@@ -99,21 +99,21 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon Encoding_Converter_32x321 {
-            get {
-                object obj = ResourceManager.GetObject("Encoding_Converter_32x321", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to All files (*.*)|*.*.
         /// </summary>
         internal static string Filter_AllFiles {
             get {
                 return ResourceManager.GetString("Filter_AllFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Icon_Encoding_Converter_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Encoding_Converter_32x32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
