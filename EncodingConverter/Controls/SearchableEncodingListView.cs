@@ -84,7 +84,7 @@ namespace EncodingConverter.Controls
                     return;
 
                 _UpdatingSelectedEncoding = true;
-                this.BeginUpdate();
+                //this.BeginUpdate();
                 if (value == null)
                 {
                     //Uncheck all:
@@ -116,7 +116,7 @@ namespace EncodingConverter.Controls
 
                 _SelectedEncoding = value;
                 
-                this.EndUpdate();
+                //this.EndUpdate();
                 _UpdatingSelectedEncoding = false;
 
                 OnSelectedEncodingChanged();
