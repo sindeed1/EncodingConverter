@@ -219,5 +219,6 @@ namespace EncodingConverter.Controls
             SubItems.Add(encoding.Name);
             SubItems.Add(encoding.CodePage.ToString());
         }
+
     }
 }

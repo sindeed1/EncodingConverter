@@ -41,10 +41,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
             this.chkAutoDetect = new System.Windows.Forms.CheckBox();
-            this.evInputEncoding = new EncodingConverter.Controls.EncodingsViewer();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
-            this.richTextBox_in = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnOpen = new System.Windows.Forms.Button();
             this.txtInputPath = new System.Windows.Forms.TextBox();
@@ -54,7 +52,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainerOutput = new System.Windows.Forms.SplitContainer();
             this.lblOutputEncoding = new System.Windows.Forms.Label();
-            this.evOutputEncoding = new EncodingConverter.Controls.EncodingsViewer();
             this.label4 = new System.Windows.Forms.Label();
             this.richTextBox_out = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -65,6 +62,9 @@
             this.linkAbout = new System.Windows.Forms.LinkLabel();
             this.ttLongRead = new System.Windows.Forms.ToolTip(this.components);
             this.tooltipNormal = new System.Windows.Forms.ToolTip(this.components);
+            this.tbInputText = new System.Windows.Forms.TextBox();
+            this.evInputEncoding = new EncodingConverter.Controls.EncodingsViewer();
+            this.evOutputEncoding = new EncodingConverter.Controls.EncodingsViewer();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -182,7 +182,7 @@
             // 
             // splitContainerInput.Panel2
             // 
-            this.splitContainerInput.Panel2.Controls.Add(this.richTextBox_in);
+            this.splitContainerInput.Panel2.Controls.Add(this.tbInputText);
             this.splitContainerInput.Panel2.Controls.Add(this.label2);
             this.splitContainerInput.Size = new System.Drawing.Size(313, 322);
             this.splitContainerInput.SplitterDistance = 184;
@@ -234,17 +234,6 @@
             this.chkAutoDetect.Text = "&Auto detect";
             this.chkAutoDetect.UseVisualStyleBackColor = true;
             // 
-            // evInputEncoding
-            // 
-            this.evInputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.evInputEncoding.Location = new System.Drawing.Point(3, 46);
-            this.evInputEncoding.Name = "evInputEncoding";
-            this.evInputEncoding.SelectedEncodingInfo = null;
-            this.evInputEncoding.Size = new System.Drawing.Size(310, 139);
-            this.evInputEncoding.TabIndex = 2;
-            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
@@ -265,19 +254,6 @@
             this.label1.Size = new System.Drawing.Size(111, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Select read encoding:";
-            // 
-            // richTextBox_in
-            // 
-            this.richTextBox_in.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox_in.Location = new System.Drawing.Point(0, 23);
-            this.richTextBox_in.Name = "richTextBox_in";
-            this.richTextBox_in.ReadOnly = true;
-            this.richTextBox_in.Size = new System.Drawing.Size(313, 111);
-            this.richTextBox_in.TabIndex = 4;
-            this.richTextBox_in.Text = "";
-            this.richTextBox_in.WordWrap = false;
             // 
             // label2
             // 
@@ -387,20 +363,9 @@
             this.lblOutputEncoding.AutoSize = true;
             this.lblOutputEncoding.Location = new System.Drawing.Point(129, 0);
             this.lblOutputEncoding.Name = "lblOutputEncoding";
-            this.lblOutputEncoding.Size = new System.Drawing.Size(83, 13);
+            this.lblOutputEncoding.Size = new System.Drawing.Size(84, 13);
             this.lblOutputEncoding.TabIndex = 4;
             this.lblOutputEncoding.Text = "OutputEncoding";
-            // 
-            // evOutputEncoding
-            // 
-            this.evOutputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.evOutputEncoding.Location = new System.Drawing.Point(0, 26);
-            this.evOutputEncoding.Name = "evOutputEncoding";
-            this.evOutputEncoding.SelectedEncodingInfo = null;
-            this.evOutputEncoding.Size = new System.Drawing.Size(307, 162);
-            this.evOutputEncoding.TabIndex = 2;
             // 
             // label4
             // 
@@ -496,6 +461,40 @@
             this.ttLongRead.InitialDelay = 50;
             this.ttLongRead.ReshowDelay = 10;
             // 
+            // tbInputText
+            // 
+            this.tbInputText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbInputText.Location = new System.Drawing.Point(0, 23);
+            this.tbInputText.Multiline = true;
+            this.tbInputText.Name = "tbInputText";
+            this.tbInputText.ReadOnly = true;
+            this.tbInputText.Size = new System.Drawing.Size(313, 111);
+            this.tbInputText.TabIndex = 6;
+            // 
+            // evInputEncoding
+            // 
+            this.evInputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.evInputEncoding.Location = new System.Drawing.Point(3, 46);
+            this.evInputEncoding.Name = "evInputEncoding";
+            this.evInputEncoding.SelectedEncodingInfo = null;
+            this.evInputEncoding.Size = new System.Drawing.Size(310, 139);
+            this.evInputEncoding.TabIndex = 2;
+            // 
+            // evOutputEncoding
+            // 
+            this.evOutputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.evOutputEncoding.Location = new System.Drawing.Point(0, 26);
+            this.evOutputEncoding.Name = "evOutputEncoding";
+            this.evOutputEncoding.SelectedEncodingInfo = null;
+            this.evOutputEncoding.Size = new System.Drawing.Size(307, 162);
+            this.evOutputEncoding.TabIndex = 2;
+            // 
             // MainForm3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -542,7 +541,6 @@
         private Controls.EncodingsViewer evInputEncoding;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RichTextBox richTextBox_in;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.TextBox txtInputPath;
@@ -568,6 +566,7 @@
         private System.Windows.Forms.Label lblInputEncoding;
         private System.Windows.Forms.Label lblOutputEncoding;
         private System.Windows.Forms.ToolTip tooltipNormal;
+        private System.Windows.Forms.TextBox tbInputText;
     }
 }
 

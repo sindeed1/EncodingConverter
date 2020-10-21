@@ -66,7 +66,7 @@ namespace EncodingConverter.Forms
             ECC.InputTextChanged += ECC_InputTextChanged; //One way update.
             if (File.Exists(ECC.InputFilePath))
             {
-                richTextBox_in.Text = ECC.InputText;
+                tbInputText.Text = ECC.InputText;
             }
 
             var inputEncodingEventLink = new EventLink(ECC, nameof(ECC.InputEncodingChanged));
@@ -181,7 +181,7 @@ namespace EncodingConverter.Forms
 
         private void ECC_InputTextChanged(object sender, EventArgs e)
         {
-            if (File.Exists(Program.ECC.InputFilePath)) richTextBox_in.Text = Program.ECC.InputText;
+            if (File.Exists(Program.ECC.InputFilePath)) tbInputText.Text = Program.ECC.InputText;
             //txtCompanionFile.Text = _OFF.CompanionFile;
         }
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
