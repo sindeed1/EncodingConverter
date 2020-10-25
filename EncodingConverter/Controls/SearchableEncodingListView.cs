@@ -188,13 +188,18 @@ namespace EncodingConverter.Controls
         {
             base.OnItemChecked(e);
 
-            if (e.Item.Checked)
+            LVIEncoding item = (LVIEncoding)e.Item;
+            if (item.Checked)
             {
-                this.SelectedEncoding = ((LVIEncoding)e.Item).Encoding;
+                if (item.Encoding != this.SelectedEncoding)
+                    this.SelectedEncoding = item.Encoding;
             }
             else
             {
-                this.SelectedEncoding = null;
+                if (item.Encoding == this.SelectedEncoding)
+                {
+                    this.SelectedEncoding = null;
+                }
             }
         }
     }

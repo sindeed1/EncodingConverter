@@ -96,6 +96,9 @@
     <Compile Include="Controls\SearchableVirtualListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ToolStripEncodingViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="EncodingConverterCore.cs" />
     <Compile Include="EncodingTools\EncodingTools.cs" />
     <Compile Include="EncodingTools\Multilang\CMLangConvertCharset.cs" />
@@ -145,6 +148,12 @@
     <Compile Include="Forms\MainForm3.Designer.cs">
       <DependentUpon>MainForm3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MainForm4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm4.Designer.cs">
+      <DependentUpon>MainForm4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\WinFormsHelpers.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Helpers\MethodPropertyLinker.cs" />
@@ -153,6 +162,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\MainForm3.resx">
       <DependentUpon>MainForm3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm4.resx">
+      <DependentUpon>MainForm4.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

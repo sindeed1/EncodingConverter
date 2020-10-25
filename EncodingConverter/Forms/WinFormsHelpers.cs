@@ -57,6 +57,18 @@ namespace EncodingConverter.Forms
             return binding;
         }
 
+        public static OneWayUpdater<String> BindTextAsDestination(this ToolStripItem textBox, Func<string> sourceGetter, EventLink obj2ChangeEvent)
+        {
+            OneWayUpdater<String> binding = new OneWayUpdater<String>(sourceGetter, x => textBox.Text = x, obj2ChangeEvent);
+            return binding;
+        }
+        public static OneWayUpdater<String> BindTextAsSource(this ToolStripItem textBox, Action<String> destinationSetter)
+        {
+            EventLink textChangeEventLinks = new EventLink(textBox, _ControlTextChangedEventInfo);
+            OneWayUpdater<String> binding = new OneWayUpdater<String>(() => textBox.Text, destinationSetter, textChangeEventLinks);
+            return binding;
+        }
+
     }
 
 }

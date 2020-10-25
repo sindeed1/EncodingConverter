@@ -92,13 +92,11 @@ namespace EncodingConverter.Commands
             if (switchData == nameof(MainForm3).ToLower())
             {
                 _FormType = typeof(MainForm3);
-                //_Form = new Forms.FormMain2();
             }
-            //else if (switchData == nameof(AEC.FormMain).ToLower())
-            //{
-            //    _FormType = typeof(AEC.FormMain);
-            //    //_Form = new AEC.FormMain();
-            //}
+            else if (switchData == nameof(MainForm4).ToLower())
+            {
+                _FormType = typeof(MainForm4);
+            }
             //else if (switchData == nameof(MainForm3).ToLower())
             //{
             //    _FormType = typeof(MainForm3);
