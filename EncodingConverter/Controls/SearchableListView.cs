@@ -27,6 +27,8 @@ namespace EncodingConverter.Controls
 
         #region ...Events...
         public event EventHandler SearchTextChanged;
+        public event EventHandler CurrentSourceChanged;
+        public event EventHandler CurrentSourceChanging;
         #endregion
 
         #region ...Properties...
@@ -80,19 +82,20 @@ namespace EncodingConverter.Controls
             set
             {
                 if (_SearchText == value)
-                {
                     return;
-                }
+                
                 _SearchText = value;
 
                 RefreshSearchText();
-                OnSearchEventChanged();
+                OnSearchTextChanged();
             }
         }
         #endregion
 
         #region ...Event invokers...
-        protected virtual void OnSearchEventChanged() { SearchTextChanged?.Invoke(this, EventArgs.Empty); }
+        protected virtual void OnSearchTextChanged() { SearchTextChanged?.Invoke(this, EventArgs.Empty); }
+        protected virtual void OnCurrentSourceChanged() { CurrentSourceChanged?.Invoke(this, EventArgs.Empty); }
+        protected virtual void OnCurrentSourceChanging(T[] newCurrentSource) { CurrentSourceChanging?.Invoke(this, EventArgs.Empty); }
         #endregion
         void RefreshSearchText()
         {
@@ -124,14 +127,17 @@ namespace EncodingConverter.Controls
                 {
                     return;
                 }
+                OnCurrentSourceChanging(value);
                 this.Items.Clear();
                 _CurrentSource = value;
-                if (_CurrentSource == null || _CurrentSource.Length == 0
-                    || _ObjectToListViewItemConverter == null)
+                if (_CurrentSource != null && _CurrentSource.Length > 0
+                    && _ObjectToListViewItemConverter != null)
                 {
-                    return;
+                    //this.BeginUpdate();
+                    this.Items.AddRange(_CurrentSource.Select(_ObjectToListViewItemConverter).ToArray());
+                    //this.EndUpdate();
                 }
-                this.Items.AddRange(_CurrentSource.Select(_ObjectToListViewItemConverter).ToArray());
+                OnCurrentSourceChanged();
             }
         }
 

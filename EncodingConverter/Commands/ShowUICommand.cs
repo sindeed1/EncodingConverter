@@ -1,6 +1,7 @@
 ﻿using EncodingConverter.Forms;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace EncodingConverter.Commands
         const string CLARG_OutputEncoding = "oe:";
 
         Func<string, bool>[] _CommonCommandLineSwitches;
+
+        bool _FormCreated;
 
         Form _Form;
         Type _FormType;
@@ -45,9 +48,13 @@ namespace EncodingConverter.Commands
         void StartUI()
         {
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            if (_Form == null)
+            {
+                Application.SetCompatibleTextRenderingDefault(false);
+            }
+
             if (_FormType == null)
-                InitForm(typeof(MainForm3));
+                InitForm(typeof(MainForm4));
             else
             {
                 InitForm(_FormType);
@@ -81,21 +88,18 @@ namespace EncodingConverter.Commands
             string switchData;
             switchData = arg.GetSwitchData(switchName);//
             switchData = switchData.Trim().ToLower();
-            
-            if (switchData == nameof(Forms.FormMain2).ToLower())
-            {
-                _FormType = typeof(FormMain2);
-                //_Form = new Forms.FormMain2();
-            }
-            else if (switchData == nameof(AEC.FormMain).ToLower())
-            {
-                _FormType = typeof(AEC.FormMain);
-                //_Form = new AEC.FormMain();
-            }
-            else if (switchData == nameof(MainForm3).ToLower())
+
+            if (switchData == nameof(MainForm3).ToLower())
             {
                 _FormType = typeof(MainForm3);
-                //_Form = new FormTestEncodingViewer();
+            }
+            else if (switchData == nameof(MainForm4).ToLower())
+            {
+                _FormType = typeof(MainForm4);
+            }
+            else if (switchData == nameof(MainForm5).ToLower())
+            {
+                _FormType = typeof(MainForm5);
             }
             else
             {

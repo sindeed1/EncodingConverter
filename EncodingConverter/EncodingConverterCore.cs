@@ -302,11 +302,21 @@ namespace EncodingConverter
             Encoding encoding;
             if (preferredString == null || preferredString.Length <= 0)
             {
-                encoding = EncodingTools.DetectInputCodepage(buf);
+                try
+                {
+                    encoding = EncodingTools.DetectInputCodepage(buf);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceWarning("Error by detecting the encoding of the file '" + inputPath + "'.");
+                    ex.WriteToTrace();
+                    encoding = null;
+                }
             }
             else
             {
-                var encodings = EncodingTools.DetectInputCodepages(buf, 10);
+                Encoding[] encodings;
+                encodings = EncodingTools.DetectInputCodepages(buf, 10);
                 var searchStrings = preferredString.ToLower().Split(' ');
                 var prefferedEncodings = encodings.Where(x => x.EncodingName.ToLower().Contains(searchStrings)).ToArray();
                 if (prefferedEncodings == null || prefferedEncodings.Length <= 0)

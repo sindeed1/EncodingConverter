@@ -8,30 +8,80 @@ using System.Diagnostics;
 
 namespace EncodingConverter
 {
+    //, directory                     //{0} directory path
+    //, fileName                      //{1} file name without extension
+    //, fileExtention                 //{2} extension
+    //, "", "", "", "", "", "", ""    //{3-9} reserved and empty
+    //, outputEncoding.EncodingName   //{10} Output encoding name
+    //, outputEncoding.BodyName       //{11} Output encoding Body name
+    //, outputEncoding.CodePage       //{12} Output encoding Code page
+    //, "", "", "", "", "", "", ""    //{13-19} reserved and empty
+    //, inputEncoding.EncodingName    //{20} Input encoding name
+    //, inputEncoding.BodyName        //{21} Input encoding Body name
+    //, inputEncoding.CodePage        //{22} Input encoding Code page
+    //, "", "", "", "", "", "", ""    //{23-29} reserved and empty
+    //, CompanionFile directory       //{30} directory path of the companion file
+    //, CompanionFile fileName        //{31} file name without extension of the companion file
+    //, CompanionFile fileExtention   //{32} extension of the companion file
+    //, "", "", "", "", "", "", ""    //{33-39} reserved and empty
+
     class OutputPathFormatter
     {
+        static char[] _SplitChars = { '|' };
+
+        public event EventHandler FormatStringChanged;
+        public event EventHandler CompanionFileSearchPatternChanged;
+        public event EventHandler CompanionFileChanged;
+
         private EncodingConverterCore _ECC;
         private object[] _OutputPathFormattingParameters;
 
         private string _FormatString;
+        private string _CompanionFileSearchPattern;
+        private string[] _CompanionFileSearchPatterns;
+        private string _CompanionFile;
 
         #region ...ctor...
-        public OutputPathFormatter()
+        public OutputPathFormatter() : this(null, null, null) { }
+        public OutputPathFormatter(EncodingConverterCore ecc) : this(ecc, null, null) { }
+        public OutputPathFormatter(EncodingConverterCore ecc, string formatString) : this(ecc, formatString, null) { }
+        public OutputPathFormatter(EncodingConverterCore ecc, string formatString, string companionFileSearchPattern)
         {
-            _OutputPathFormattingParameters = new object[23];
-        }
-        public OutputPathFormatter(EncodingConverterCore ecc)
-        {
-            _OutputPathFormattingParameters = new object[23];
-            this.ECC = ecc;
-        }
-        public OutputPathFormatter(EncodingConverterCore ecc, string formatString)
-        {
-            _OutputPathFormattingParameters = new object[23];
+            _OutputPathFormattingParameters = new object[33];
             this.ECC = ecc;
             this.FormatString = formatString;
+            this.CompanionFileSearchPattern = companionFileSearchPattern;
         }
         #endregion
+
+
+        public string CompanionFile
+        {
+            get { return _CompanionFile; }
+            set
+            {
+                if (_CompanionFile == value)
+                    return;
+                _CompanionFile = value;
+                CompanionFileChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public string CompanionFileSearchPattern
+        {
+            get { return _CompanionFileSearchPattern; }
+            set
+            {
+                if (_CompanionFileSearchPattern == value)
+                    return;
+
+                _CompanionFileSearchPattern = value;
+                _CompanionFileSearchPatterns = _CompanionFileSearchPattern.Split(_SplitChars, StringSplitOptions.RemoveEmptyEntries);
+                UpdateFormattedText();
+                CompanionFileSearchPatternChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         public string FormatString
         {
             get { return _FormatString; }
@@ -43,6 +93,7 @@ namespace EncodingConverter
                 }
                 _FormatString = value;
                 UpdateFormattedText();
+                FormatStringChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -86,12 +137,16 @@ namespace EncodingConverter
             //string formatString = Program.Settings.OutputFilePathFormatString;
             string inputPath = _ECC.InputFilePath;
             string directory;
-            string fileExtention;
-            string fileName;
+            //string fileExtention;
+            //string fileName;
 
-            if (string.IsNullOrEmpty(inputPath))
+            if (string.IsNullOrWhiteSpace(inputPath))
             {
-                directory = fileExtention = fileName = "";
+                //directory = fileExtention = fileName = "";
+                FillPathParemeters(_OutputPathFormattingParameters, 0, null);
+                FillPathParemeters(_OutputPathFormattingParameters, 30, null);
+                //_CompanionFile = "";
+                this.CompanionFile = "";
             }
             else
             {
@@ -101,17 +156,68 @@ namespace EncodingConverter
                 Directory.SetCurrentDirectory(directory);
                 Trace.TraceInformation("New current directory '" + Directory.GetCurrentDirectory() + "'");
 
+                FillPathParemeters(_OutputPathFormattingParameters, 0, file);
+
+                if (!string.IsNullOrWhiteSpace(_CompanionFileSearchPattern) && _CompanionFileSearchPatterns != null)
+                {
+                    var dir = file.Directory;
+                    FileInfo compFile = null;
+                    for (int i = 0; i < _CompanionFileSearchPatterns.Length; i++)
+                    {
+                        var searchPattern = _CompanionFileSearchPatterns[i];
+                        var commpFiles = dir.EnumerateFiles(searchPattern, SearchOption.TopDirectoryOnly);
+                        compFile = commpFiles.FirstOrDefault();
+                        if (compFile != null)
+                        {
+                            break;
+                        }
+                    }
+                    //var commps = dir.EnumerateFiles(_CompanionFileSearchPattern, SearchOption.TopDirectoryOnly);
+                    //var comp = commps.FirstOrDefault();
+                    FillPathParemeters(_OutputPathFormattingParameters, 30, compFile);
+                    //_CompanionFile = compFile?.FullName;
+                    this.CompanionFile = compFile?.FullName;
+                }
+
+                //fileExtention = file.Extension;
+                //fileName = file.Name;
+                //fileName = fileName.Substring(0, fileName.Length - fileExtention.Length);
+                //fileExtention = fileExtention.TrimStart('.');
+            }
+
+            //_OutputPathFormattingParameters[0] = directory;                     //{0} directory path
+            //_OutputPathFormattingParameters[1] = fileName;                      //{1} file name without extension
+            //_OutputPathFormattingParameters[2] = fileExtention;                 //{2} extension
+
+            //_OutputPathFormattingParameters[0] = directory;                     //{30} directory path
+            //_OutputPathFormattingParameters[1] = fileName;                      //{31} file name without extension
+            //_OutputPathFormattingParameters[2] = fileExtention;                 //{32} extension
+
+            UpdateFormattedText();
+        }
+
+        void FillPathParemeters(object[] parameters, int startingIndex, FileInfo file)
+        {
+            string directory;
+            string fileExtention;
+            string fileName;
+
+            if (file == null)
+            {
+                directory = fileExtention = fileName = "";
+            }
+            else
+            {
+                directory = file.DirectoryName;
                 fileExtention = file.Extension;
                 fileName = file.Name;
                 fileName = fileName.Substring(0, fileName.Length - fileExtention.Length);
                 fileExtention = fileExtention.TrimStart('.');
             }
 
-            _OutputPathFormattingParameters[0] = directory;                     //{0} directory path
-            _OutputPathFormattingParameters[1] = fileName;                      //{1} file name without extension
-            _OutputPathFormattingParameters[2] = fileExtention;                 //{2} extension
-
-            UpdateFormattedText();
+            _OutputPathFormattingParameters[startingIndex] = directory;                     //{0} directory path
+            _OutputPathFormattingParameters[startingIndex + 1] = fileName;                      //{1} file name without extension
+            _OutputPathFormattingParameters[startingIndex + 2] = fileExtention;                 //{2} extension
         }
         private void Ecc_OutputEncodingChanged(object sender, EventArgs e)
         {

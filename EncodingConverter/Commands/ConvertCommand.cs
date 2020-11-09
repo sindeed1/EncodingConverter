@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EncodingConverter.Commands
 {
+    /// <summary>
+    /// Command line command that converts the encoding of a given file to another encoding.
+    /// </summary>
     class ConvertCommand : ICommandLineCommand
     {
         const string CLARG_SWITCH = "-";

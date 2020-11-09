@@ -117,4 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="tooltipNormal.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>114, 17</value>
+  </metadata>
+  <metadata name="ttLongRead.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="txtCompanionFileSearchPattern.ToolTip" xml:space="preserve">
+    <value>Search pattern of the companion file:
+Use wild cards '*' and '?' for characters.
+Use '|' to separate different patterns.
+The program will search using each pattern from first to last and will stop bei the first hit.</value>
+  </data>
+  <data name="txtOutputPathFormat.ToolTip" xml:space="preserve">
+    <value>Formatting parameters:
+File path and name parameters:
+{0} Directory path
+{1} File name without extension
+{2} File extension
+
+Output encoding parameters:
+{10} Output encoding name
+{11} Output encoding Body name
+{12} Output encoding Code page
+
+Input encoding parameters:
+{20} Input encoding name
+{21} Input encoding Body name
+{22} Input encoding Code page
+
+Companion file path and name parameters:
+{30} Directory path
+{31} File name without extension
+{32} File extension</value>
+  </data>
 </root>

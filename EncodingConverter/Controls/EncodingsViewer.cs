@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EncodingConverter.Forms;
 
 namespace EncodingConverter.Controls
 {
@@ -15,6 +16,8 @@ namespace EncodingConverter.Controls
         bool _UpdatingSelectedEncoding;
 
         private EncodingInfo _SelectedEncodingInfo;
+
+        public event EventHandler FavoriteEncodingInfosChanged;
 
         #region ...Events...
         public event EventHandler SelectedEncodingInfoChanged;
@@ -26,12 +29,59 @@ namespace EncodingConverter.Controls
             InitializeComponent();
             AddEventHandlers();
 
+            //Link 'lvFavoriteEncodings.SelectedEncoding' to 'lblSelectedEncodingFavorites.Text':
+            OneWayUpdater<string> SelFavEnc = new OneWayUpdater<string>(() => this.lvFavoriteEncodings.SelectedEncoding?.DisplayName, x => lblSelectedEncodingFavorites.Text = x
+            , new EventLink(lvFavoriteEncodings, nameof(lvFavoriteEncodings.SelectedEncodingChanged)));
+
+            //Link 'lvAllEncodings.SelectedEncoding' to 'lblSelectedEncoding.Text':
+            OneWayUpdater<string> SelEnc = new OneWayUpdater<string>(() => this.lvAllEncodings.SelectedEncoding?.DisplayName, x => lblSelectedEncoding.Text = x
+                , new EventLink(lvAllEncodings, nameof(lvAllEncodings.SelectedEncodingChanged)));
+
         }
         void AddEventHandlers()
         {
             lvAllEncodings.SelectedEncodingChanged += LvAllEncodings_SelectedEncodingChanged;
             lvFavoriteEncodings.SelectedEncodingChanged += LvFavoriteEncodings_SelectedEncodingChanged;
             tstbSearchEncodings.TextChanged += TstbSearchEncodings_TextChanged;
+            tsbAddToFavorites.Click += TsbAddToFavorites_Click;
+            tsbRemoveFavoriteEncoding.Click += TsbRemoveFavoriteEncoding_Click;
+        }
+
+        private void TsbRemoveFavoriteEncoding_Click(object sender, EventArgs e)
+        {
+            EncodingInfo[] newInfos;
+            if (_SelectedEncodingInfo == null)
+                return;
+            if (lvFavoriteEncodings.SourceEncodings == null)
+                return;
+
+            if (lvFavoriteEncodings.SourceEncodings.FirstOrDefault(x => x == _SelectedEncodingInfo) == null)
+                return;
+
+            newInfos = lvFavoriteEncodings.SourceEncodings.Where(x => x.CodePage != _SelectedEncodingInfo.CodePage).ToArray();// new EncodingInfo[lvFavoriteEncodings.SourceEncodings.Length - 1];
+            this.FavoriteEncodingInfos = newInfos;
+        }
+
+        private void TsbAddToFavorites_Click(object sender, EventArgs e)
+        {
+            EncodingInfo[] newInfos;
+            if (lvFavoriteEncodings.SourceEncodings == null)
+            {
+                newInfos = new EncodingInfo[1];
+                newInfos[0] = _SelectedEncodingInfo;
+                this.FavoriteEncodingInfos = newInfos;
+            }
+            else
+            {
+                var res = lvFavoriteEncodings.SourceEncodings.FirstOrDefault(x => x == _SelectedEncodingInfo);
+                if (res == null)
+                {
+                    newInfos = new EncodingInfo[lvFavoriteEncodings.SourceEncodings.Length + 1];
+                    Array.Copy(lvFavoriteEncodings.SourceEncodings, newInfos, lvFavoriteEncodings.SourceEncodings.Length);
+                    newInfos[newInfos.Length - 1] = _SelectedEncodingInfo;
+                    this.FavoriteEncodingInfos = newInfos;
+                }
+            }
         }
 
 
@@ -45,9 +95,9 @@ namespace EncodingConverter.Controls
                 return;
             _UpdatingSelectedEncoding = true;
 
-            lblSelectedEncoding.Text = lvAllEncodings.SelectedEncoding.DisplayName;
+            //lblSelectedEncoding.Text = lvAllEncodings.SelectedEncoding.DisplayName;
             this.SelectedEncodingInfo = lvAllEncodings.SelectedEncoding;
-            lvFavoriteEncodings.SelectedEncoding = null;
+            //lvFavoriteEncodings.SelectedEncoding = null;
 
             _UpdatingSelectedEncoding = false;
         }
@@ -58,9 +108,9 @@ namespace EncodingConverter.Controls
 
             _UpdatingSelectedEncoding = true;
 
-            lblSelectedEncodingFavorites.Text = lvFavoriteEncodings.SelectedEncoding.DisplayName;
+            //lblSelectedEncodingFavorites.Text = lvFavoriteEncodings.SelectedEncoding.DisplayName;
             this.SelectedEncodingInfo = lvFavoriteEncodings.SelectedEncoding;
-            lvAllEncodings.SelectedEncoding = null;
+            //lvAllEncodings.SelectedEncoding = null;
 
             _UpdatingSelectedEncoding = false;
         }
@@ -92,11 +142,24 @@ namespace EncodingConverter.Controls
         {
             _SelectedEncodingInfo = encodingInfo;
             this.lvAllEncodings.SelectedEncoding = _SelectedEncodingInfo;
+            this.lvFavoriteEncodings.SelectedEncoding = _SelectedEncodingInfo;
         }
         [DefaultValue(null)]
         public EncodingInfo[] EncodingInfos { get { return lvAllEncodings.SourceEncodings; } set { lvAllEncodings.SourceEncodings = value; } }
+
+        [SettingsBindable(true)]
         [DefaultValue(null)]
-        public EncodingInfo[] FavoriteEncodingInfos { get { return lvFavoriteEncodings.SourceEncodings; } set { lvFavoriteEncodings.SourceEncodings = value; } }
+        public EncodingInfo[] FavoriteEncodingInfos
+        {
+            get { return lvFavoriteEncodings.SourceEncodings; }
+            set
+            {
+                if (lvFavoriteEncodings.SourceEncodings == value)
+                    return;
+                lvFavoriteEncodings.SourceEncodings = value;
+                FavoriteEncodingInfosChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
 
         protected virtual void OnSelectedEncodingInfoChanged() { SelectedEncodingInfoChanged?.Invoke(this, EventArgs.Empty); }

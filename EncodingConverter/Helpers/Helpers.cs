@@ -3,13 +3,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace EncodingConverter
 {
+    public class EncodingsCollection : List<int>
+    {
+        public EncodingsCollection() { }
+        public EncodingsCollection(int capacity) : base(capacity) { }
+    }
     static class Helper
     {
         /// <summary>

@@ -25,9 +25,9 @@ namespace EncodingConverter.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::AHD.SM.Controls.EncodingsCollection FavoriteEncodings {
+        public global::EncodingConverter.EncodingsCollection FavoriteEncodings {
             get {
-                return ((global::AHD.SM.Controls.EncodingsCollection)(this["FavoriteEncodings"]));
+                return ((global::EncodingConverter.EncodingsCollection)(this["FavoriteEncodings"]));
             }
             set {
                 this["FavoriteEncodings"] = value;
@@ -36,7 +36,7 @@ namespace EncodingConverter.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("{0}\\{1}-{10}.{2}")]
+        [global::System.Configuration.DefaultSettingValueAttribute("{30}\\{31}-{10}.{2}")]
         public string OutputFilePathFormatString {
             get {
                 return ((string)(this["OutputFilePathFormatString"]));
@@ -96,13 +96,25 @@ namespace EncodingConverter.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("322")]
+        [global::System.Configuration.DefaultSettingValueAttribute("323")]
         public int MainForm_SpliContainer_SplitterDistance {
             get {
                 return ((int)(this["MainForm_SpliContainer_SplitterDistance"]));
             }
             set {
                 this["MainForm_SpliContainer_SplitterDistance"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("*.mp4|*.mkv|*.avi")]
+        public string CompanionFileSearchPattern {
+            get {
+                return ((string)(this["CompanionFileSearchPattern"]));
+            }
+            set {
+                this["CompanionFileSearchPattern"] = value;
             }
         }
     }

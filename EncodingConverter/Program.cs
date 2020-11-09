@@ -12,7 +12,7 @@ namespace EncodingConverter
     static class Program
     {
         static EncodingConverterCore _ECC = new EncodingConverterCore();
-
+        static ICommandLineCommand[] _Commands;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -32,22 +32,26 @@ namespace EncodingConverter
             StartUI();
         }
 
-        static ICommandLineCommand[] GetCommands()
+        public static ICommandLineCommand[] GetCommands()
         {
-            ICommandLineCommand[] commands = new ICommandLineCommand[2];
-            int index = 0;
-            commands[index++] = new ConvertCommand();
-            commands[index++] = new ShowUICommand();
+            if (_Commands == null)
+            {
+                _Commands = new ICommandLineCommand[3];
+                int index = 0;
+                _Commands[index++] = new ConvertCommand();
+                _Commands[index++] = new ShowUICommand();
+                _Commands[index++] = new ConsoleCommand();
+            }
 
 
-            return commands;
+            return _Commands;
         }
         static void StartUI()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new AEC.FormMain(args));
-            Application.Run(new Forms.FormMain2());
+            Application.Run(new Forms.MainForm3());
             //Application.Run(new Form1());
         }
         public static System.Resources.ResourceManager ResourceManager { get { return Properties.Resources.ResourceManager; } }

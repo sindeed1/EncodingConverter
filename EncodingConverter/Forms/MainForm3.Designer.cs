@@ -28,16 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm3));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbInput = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtCompanionFile = new System.Windows.Forms.TextBox();
+            this.txtCompanionFileSearchPattern = new System.Windows.Forms.TextBox();
             this.splitContainerInput = new System.Windows.Forms.SplitContainer();
+            this.lblInputEncoding = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
             this.chkAutoDetect = new System.Windows.Forms.CheckBox();
-            this.evInputEncoding = new EncodingConverter.Controls.EncodingsViewer();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
-            this.richTextBox_in = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnOpen = new System.Windows.Forms.Button();
             this.txtInputPath = new System.Windows.Forms.TextBox();
@@ -46,7 +51,7 @@
             this.txtOutputPathFormat = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainerOutput = new System.Windows.Forms.SplitContainer();
-            this.evOutputEncoding = new EncodingConverter.Controls.EncodingsViewer();
+            this.lblOutputEncoding = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.richTextBox_out = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -54,9 +59,12 @@
             this.btnChangeOutputFile = new System.Windows.Forms.Button();
             this.txtOutputPath = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.linkLanguage = new System.Windows.Forms.LinkLabel();
-            this.linkHelp = new System.Windows.Forms.LinkLabel();
             this.linkAbout = new System.Windows.Forms.LinkLabel();
+            this.ttLongRead = new System.Windows.Forms.ToolTip(this.components);
+            this.tooltipNormal = new System.Windows.Forms.ToolTip(this.components);
+            this.tbInputText = new System.Windows.Forms.TextBox();
+            this.evInputEncoding = new EncodingConverter.Controls.EncodingsViewer();
+            this.evOutputEncoding = new EncodingConverter.Controls.EncodingsViewer();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -96,6 +104,10 @@
             // 
             // gbInput
             // 
+            this.gbInput.Controls.Add(this.label9);
+            this.gbInput.Controls.Add(this.label8);
+            this.gbInput.Controls.Add(this.txtCompanionFile);
+            this.gbInput.Controls.Add(this.txtCompanionFileSearchPattern);
             this.gbInput.Controls.Add(this.splitContainerInput);
             this.gbInput.Controls.Add(this.btnOpen);
             this.gbInput.Controls.Add(this.txtInputPath);
@@ -107,18 +119,60 @@
             this.gbInput.TabStop = false;
             this.gbInput.Text = "Input";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label9.Location = new System.Drawing.Point(6, 77);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(79, 13);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Companion file:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label8.Location = new System.Drawing.Point(6, 50);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(150, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Companion file search pattern:";
+            // 
+            // txtCompanionFile
+            // 
+            this.txtCompanionFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCompanionFile.Location = new System.Drawing.Point(87, 73);
+            this.txtCompanionFile.Name = "txtCompanionFile";
+            this.txtCompanionFile.Size = new System.Drawing.Size(232, 20);
+            this.txtCompanionFile.TabIndex = 14;
+            this.tooltipNormal.SetToolTip(this.txtCompanionFile, "The companion file that could be used to format the output path.");
+            // 
+            // txtCompanionFileSearchPattern
+            // 
+            this.txtCompanionFileSearchPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCompanionFileSearchPattern.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "CompanionFileSearchPattern", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtCompanionFileSearchPattern.Location = new System.Drawing.Point(162, 47);
+            this.txtCompanionFileSearchPattern.Name = "txtCompanionFileSearchPattern";
+            this.txtCompanionFileSearchPattern.Size = new System.Drawing.Size(157, 20);
+            this.txtCompanionFileSearchPattern.TabIndex = 13;
+            this.txtCompanionFileSearchPattern.Text = global::EncodingConverter.Properties.Settings.Default.CompanionFileSearchPattern;
+            this.ttLongRead.SetToolTip(this.txtCompanionFileSearchPattern, resources.GetString("txtCompanionFileSearchPattern.ToolTip"));
+            // 
             // splitContainerInput
             // 
-            this.splitContainerInput.AllowDrop = true;
             this.splitContainerInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerInput.Location = new System.Drawing.Point(6, 47);
+            this.splitContainerInput.Location = new System.Drawing.Point(6, 99);
             this.splitContainerInput.Name = "splitContainerInput";
             this.splitContainerInput.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainerInput.Panel1
             // 
+            this.splitContainerInput.Panel1.Controls.Add(this.lblInputEncoding);
             this.splitContainerInput.Panel1.Controls.Add(this.label7);
             this.splitContainerInput.Panel1.Controls.Add(this.txtPreferredInputEncoding);
             this.splitContainerInput.Panel1.Controls.Add(this.chkAutoDetect);
@@ -128,17 +182,26 @@
             // 
             // splitContainerInput.Panel2
             // 
-            this.splitContainerInput.Panel2.Controls.Add(this.richTextBox_in);
+            this.splitContainerInput.Panel2.Controls.Add(this.tbInputText);
             this.splitContainerInput.Panel2.Controls.Add(this.label2);
-            this.splitContainerInput.Size = new System.Drawing.Size(313, 374);
-            this.splitContainerInput.SplitterDistance = 214;
+            this.splitContainerInput.Size = new System.Drawing.Size(313, 322);
+            this.splitContainerInput.SplitterDistance = 184;
             this.splitContainerInput.TabIndex = 7;
+            // 
+            // lblInputEncoding
+            // 
+            this.lblInputEncoding.AutoSize = true;
+            this.lblInputEncoding.Location = new System.Drawing.Point(120, 0);
+            this.lblInputEncoding.Name = "lblInputEncoding";
+            this.lblInputEncoding.Size = new System.Drawing.Size(78, 13);
+            this.lblInputEncoding.TabIndex = 4;
+            this.lblInputEncoding.Text = "Input encoding";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label7.Location = new System.Drawing.Point(149, 17);
+            this.label7.Location = new System.Drawing.Point(149, 24);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(100, 13);
             this.label7.TabIndex = 9;
@@ -149,11 +212,13 @@
             this.txtPreferredInputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPreferredInputEncoding.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "PreferredInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtPreferredInputEncoding.Location = new System.Drawing.Point(255, 14);
+            this.txtPreferredInputEncoding.Location = new System.Drawing.Point(252, 21);
             this.txtPreferredInputEncoding.Name = "txtPreferredInputEncoding";
             this.txtPreferredInputEncoding.Size = new System.Drawing.Size(58, 20);
             this.txtPreferredInputEncoding.TabIndex = 8;
             this.txtPreferredInputEncoding.Text = global::EncodingConverter.Properties.Settings.Default.PreferredInputEncoding;
+            this.tooltipNormal.SetToolTip(this.txtPreferredInputEncoding, "When detecting the encoding, the program will try to find the encoding that match" +
+        "es the given text");
             // 
             // chkAutoDetect
             // 
@@ -162,29 +227,18 @@
             this.chkAutoDetect.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAutoDetect.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EncodingConverter.Properties.Settings.Default, "AutoDetectInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkAutoDetect.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkAutoDetect.Location = new System.Drawing.Point(6, 16);
+            this.chkAutoDetect.Location = new System.Drawing.Point(3, 23);
             this.chkAutoDetect.Name = "chkAutoDetect";
             this.chkAutoDetect.Size = new System.Drawing.Size(81, 17);
             this.chkAutoDetect.TabIndex = 7;
             this.chkAutoDetect.Text = "&Auto detect";
             this.chkAutoDetect.UseVisualStyleBackColor = true;
             // 
-            // evInputEncoding
-            // 
-            this.evInputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.evInputEncoding.Location = new System.Drawing.Point(3, 46);
-            this.evInputEncoding.Name = "evInputEncoding";
-            this.evInputEncoding.SelectedEncodingInfo = null;
-            this.evInputEncoding.Size = new System.Drawing.Size(310, 169);
-            this.evInputEncoding.TabIndex = 2;
-            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.linkLabel1.Location = new System.Drawing.Point(93, 17);
+            this.linkLabel1.Location = new System.Drawing.Point(90, 24);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(39, 13);
             this.linkLabel1.TabIndex = 6;
@@ -200,19 +254,6 @@
             this.label1.Size = new System.Drawing.Size(111, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Select read encoding:";
-            // 
-            // richTextBox_in
-            // 
-            this.richTextBox_in.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox_in.Location = new System.Drawing.Point(0, 23);
-            this.richTextBox_in.Name = "richTextBox_in";
-            this.richTextBox_in.ReadOnly = true;
-            this.richTextBox_in.Size = new System.Drawing.Size(313, 133);
-            this.richTextBox_in.TabIndex = 4;
-            this.richTextBox_in.Text = "";
-            this.richTextBox_in.WordWrap = false;
             // 
             // label2
             // 
@@ -282,6 +323,7 @@
             this.txtOutputPathFormat.Size = new System.Drawing.Size(119, 20);
             this.txtOutputPathFormat.TabIndex = 9;
             this.txtOutputPathFormat.Text = global::EncodingConverter.Properties.Settings.Default.OutputFilePathFormatString;
+            this.ttLongRead.SetToolTip(this.txtOutputPathFormat, resources.GetString("txtOutputPathFormat.ToolTip"));
             // 
             // label6
             // 
@@ -298,12 +340,13 @@
             this.splitContainerOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerOutput.Location = new System.Drawing.Point(6, 77);
+            this.splitContainerOutput.Location = new System.Drawing.Point(6, 73);
             this.splitContainerOutput.Name = "splitContainerOutput";
             this.splitContainerOutput.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainerOutput.Panel1
             // 
+            this.splitContainerOutput.Panel1.Controls.Add(this.lblOutputEncoding);
             this.splitContainerOutput.Panel1.Controls.Add(this.evOutputEncoding);
             this.splitContainerOutput.Panel1.Controls.Add(this.label4);
             // 
@@ -311,20 +354,18 @@
             // 
             this.splitContainerOutput.Panel2.Controls.Add(this.richTextBox_out);
             this.splitContainerOutput.Panel2.Controls.Add(this.label3);
-            this.splitContainerOutput.Size = new System.Drawing.Size(307, 344);
-            this.splitContainerOutput.SplitterDistance = 189;
+            this.splitContainerOutput.Size = new System.Drawing.Size(307, 348);
+            this.splitContainerOutput.SplitterDistance = 191;
             this.splitContainerOutput.TabIndex = 7;
             // 
-            // evOutputEncoding
+            // lblOutputEncoding
             // 
-            this.evOutputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.evOutputEncoding.Location = new System.Drawing.Point(0, 16);
-            this.evOutputEncoding.Name = "evOutputEncoding";
-            this.evOutputEncoding.SelectedEncodingInfo = null;
-            this.evOutputEncoding.Size = new System.Drawing.Size(307, 170);
-            this.evOutputEncoding.TabIndex = 2;
+            this.lblOutputEncoding.AutoSize = true;
+            this.lblOutputEncoding.Location = new System.Drawing.Point(129, 0);
+            this.lblOutputEncoding.Name = "lblOutputEncoding";
+            this.lblOutputEncoding.Size = new System.Drawing.Size(84, 13);
+            this.lblOutputEncoding.TabIndex = 4;
+            this.lblOutputEncoding.Text = "OutputEncoding";
             // 
             // label4
             // 
@@ -344,7 +385,7 @@
             this.richTextBox_out.Location = new System.Drawing.Point(0, 21);
             this.richTextBox_out.Name = "richTextBox_out";
             this.richTextBox_out.ReadOnly = true;
-            this.richTextBox_out.Size = new System.Drawing.Size(307, 127);
+            this.richTextBox_out.Size = new System.Drawing.Size(307, 129);
             this.richTextBox_out.TabIndex = 4;
             this.richTextBox_out.Text = "";
             this.richTextBox_out.WordWrap = false;
@@ -363,7 +404,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label5.Location = new System.Drawing.Point(6, 54);
+            this.label5.Location = new System.Drawing.Point(7, 50);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(47, 13);
             this.label5.TabIndex = 6;
@@ -373,7 +414,7 @@
             // 
             this.btnChangeOutputFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChangeOutputFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnChangeOutputFile.Location = new System.Drawing.Point(235, 48);
+            this.btnChangeOutputFile.Location = new System.Drawing.Point(235, 45);
             this.btnChangeOutputFile.Name = "btnChangeOutputFile";
             this.btnChangeOutputFile.Size = new System.Drawing.Size(78, 23);
             this.btnChangeOutputFile.TabIndex = 0;
@@ -384,7 +425,7 @@
             // 
             this.txtOutputPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOutputPath.Location = new System.Drawing.Point(60, 51);
+            this.txtOutputPath.Location = new System.Drawing.Point(60, 47);
             this.txtOutputPath.Name = "txtOutputPath";
             this.txtOutputPath.ReadOnly = true;
             this.txtOutputPath.Size = new System.Drawing.Size(169, 20);
@@ -401,30 +442,6 @@
             this.btnSave.Text = "Convert and &Save";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
-            // linkLanguage
-            // 
-            this.linkLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.linkLanguage.AutoSize = true;
-            this.linkLanguage.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.linkLanguage.Location = new System.Drawing.Point(90, 440);
-            this.linkLanguage.Name = "linkLanguage";
-            this.linkLanguage.Size = new System.Drawing.Size(55, 13);
-            this.linkLanguage.TabIndex = 14;
-            this.linkLanguage.TabStop = true;
-            this.linkLanguage.Text = "Language";
-            // 
-            // linkHelp
-            // 
-            this.linkHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.linkHelp.AutoSize = true;
-            this.linkHelp.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.linkHelp.Location = new System.Drawing.Point(55, 440);
-            this.linkHelp.Name = "linkHelp";
-            this.linkHelp.Size = new System.Drawing.Size(29, 13);
-            this.linkHelp.TabIndex = 13;
-            this.linkHelp.TabStop = true;
-            this.linkHelp.Text = "Help";
-            // 
             // linkAbout
             // 
             this.linkAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -437,6 +454,47 @@
             this.linkAbout.TabStop = true;
             this.linkAbout.Text = "About";
             // 
+            // ttLongRead
+            // 
+            this.ttLongRead.AutomaticDelay = 50;
+            this.ttLongRead.AutoPopDelay = 20000;
+            this.ttLongRead.InitialDelay = 50;
+            this.ttLongRead.ReshowDelay = 10;
+            // 
+            // tbInputText
+            // 
+            this.tbInputText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbInputText.Location = new System.Drawing.Point(0, 23);
+            this.tbInputText.Multiline = true;
+            this.tbInputText.Name = "tbInputText";
+            this.tbInputText.ReadOnly = true;
+            this.tbInputText.Size = new System.Drawing.Size(313, 111);
+            this.tbInputText.TabIndex = 6;
+            // 
+            // evInputEncoding
+            // 
+            this.evInputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.evInputEncoding.Location = new System.Drawing.Point(3, 46);
+            this.evInputEncoding.Name = "evInputEncoding";
+            this.evInputEncoding.SelectedEncodingInfo = null;
+            this.evInputEncoding.Size = new System.Drawing.Size(310, 139);
+            this.evInputEncoding.TabIndex = 2;
+            // 
+            // evOutputEncoding
+            // 
+            this.evOutputEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.evOutputEncoding.Location = new System.Drawing.Point(0, 26);
+            this.evOutputEncoding.Name = "evOutputEncoding";
+            this.evOutputEncoding.SelectedEncodingInfo = null;
+            this.evOutputEncoding.Size = new System.Drawing.Size(307, 162);
+            this.evOutputEncoding.TabIndex = 2;
+            // 
             // MainForm3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -444,8 +502,6 @@
             this.ClientSize = new System.Drawing.Size(649, 465);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.linkLanguage);
-            this.Controls.Add(this.linkHelp);
             this.Controls.Add(this.linkAbout);
             this.Name = "MainForm3";
             this.Text = "Encoding Converter";
@@ -485,7 +541,6 @@
         private Controls.EncodingsViewer evInputEncoding;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RichTextBox richTextBox_in;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.TextBox txtInputPath;
@@ -502,9 +557,16 @@
         private System.Windows.Forms.Button btnChangeOutputFile;
         private System.Windows.Forms.TextBox txtOutputPath;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.LinkLabel linkLanguage;
-        private System.Windows.Forms.LinkLabel linkHelp;
         private System.Windows.Forms.LinkLabel linkAbout;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtCompanionFile;
+        private System.Windows.Forms.TextBox txtCompanionFileSearchPattern;
+        private System.Windows.Forms.ToolTip ttLongRead;
+        private System.Windows.Forms.Label lblInputEncoding;
+        private System.Windows.Forms.Label lblOutputEncoding;
+        private System.Windows.Forms.ToolTip tooltipNormal;
+        private System.Windows.Forms.TextBox tbInputText;
     }
 }
 
