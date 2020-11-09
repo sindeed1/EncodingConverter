@@ -1,6 +1,6 @@
 ﻿namespace EncodingConverter.Forms
 {
-    partial class MainForm4
+    partial class MainForm5
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm4));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm5));
             this.txtOutputPathFormat = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -61,6 +61,7 @@
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.txtInputPath = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnTogleSidePanel = new System.Windows.Forms.Button();
             this.tsOutput.SuspendLayout();
             this.tsInput.SuspendLayout();
             this.gbOutput.SuspendLayout();
@@ -272,7 +273,7 @@
             this.tbInputText.Name = "tbInputText";
             this.tbInputText.ReadOnly = true;
             this.tbInputText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbInputText.Size = new System.Drawing.Size(210, 241);
+            this.tbInputText.Size = new System.Drawing.Size(204, 241);
             this.tbInputText.TabIndex = 6;
             // 
             // label2
@@ -398,7 +399,6 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.AllowDrop = true;
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
@@ -416,21 +416,31 @@
             this.splitContainer1.Panel2.Controls.Add(this.tbInputText);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(549, 257);
+            this.splitContainer1.Size = new System.Drawing.Size(543, 257);
             this.splitContainer1.SplitterDistance = 333;
             this.splitContainer1.TabIndex = 19;
+            // 
+            // btnTogleSidePanel
+            // 
+            this.btnTogleSidePanel.Location = new System.Drawing.Point(325, 120);
+            this.btnTogleSidePanel.Name = "btnTogleSidePanel";
+            this.btnTogleSidePanel.Size = new System.Drawing.Size(12, 69);
+            this.btnTogleSidePanel.TabIndex = 20;
+            this.btnTogleSidePanel.Text = "...";
+            this.btnTogleSidePanel.UseVisualStyleBackColor = true;
             // 
             // MainForm4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(549, 291);
+            this.Controls.Add(this.btnTogleSidePanel);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.linkAbout);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(500000, 330);
-            this.MinimumSize = new System.Drawing.Size(16, 330);
+            this.MinimumSize = new System.Drawing.Size(0, 330);
             this.Name = "MainForm4";
             this.Text = "MainForm4";
             this.tsOutput.ResumeLayout(false);
@@ -484,5 +494,6 @@
         private System.Windows.Forms.ToolStrip tsOutput;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripDropDownButton tsddOutputEncoding;
+        private System.Windows.Forms.Button btnTogleSidePanel;
     }
 }

@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace EncodingConverter.Forms
 {
-    public partial class MainForm4 : Form
+    public partial class MainForm5 : Form
     {
         ToolStripEncodingViewer _TSInputEncodingViewer;
         ToolStripEncodingViewer _TSOutputEncodingViewer;
@@ -24,14 +24,14 @@ namespace EncodingConverter.Forms
         Lazy<SaveFileDialog> _SFD;
         Lazy<OpenFileDialog> _OFD;
 
-        OutputPathFormatter _OPF;
+        OutputPathFormatter _OFF;
 
         OneWayUpdater<string> _InputTextLink;
 
         int _Panel2Width;
         #region ...ctor...
 
-        public MainForm4()
+        public MainForm5()
         {
             InitializeComponent();
             _TSInputEncodingViewer = new ToolStripEncodingViewer();
@@ -45,11 +45,12 @@ namespace EncodingConverter.Forms
             evInputEncoding = _TSInputEncodingViewer.EncodingsViewer;
             evOutputEncoding = _TSOutputEncodingViewer.EncodingsViewer;
 
-            _OPF = new OutputPathFormatter(Program.ECC);
+            _OFF = new OutputPathFormatter(Program.ECC);
             AddEventHandlers();
 
             this.Icon = Properties.Resources.Icon_Encoding_Converter_32x32;
 
+            this.gbInput.AllowDrop = true;
 
             encodingInfos = Encoding.GetEncodings();
             evInputEncoding.EncodingInfos = encodingInfos;
@@ -119,13 +120,13 @@ namespace EncodingConverter.Forms
             tsddOutputEncoding.BindTextAsDestination(() => ECC.OutputEncoding?.EncodingName, outputEncodingEventLink).Update();
 
 
-            txtOutputPathFormat.BindText(new PropertyLink<string>(() => _OPF.FormatString, x => _OPF.FormatString = x)
-                , new EventLink(_OPF, nameof(_OPF.FormatStringChanged))).UpdateObj2To1();
-            txtCompanionFileSearchPattern.BindText(new PropertyLink<string>(() => _OPF.CompanionFileSearchPattern, x => _OPF.CompanionFileSearchPattern = x)
-                , new EventLink(_OPF, nameof(_OPF.CompanionFileSearchPatternChanged))).UpdateObj2To1();
+            txtOutputPathFormat.BindText(new PropertyLink<string>(() => _OFF.FormatString, x => _OFF.FormatString = x)
+                , new EventLink(_OFF, nameof(_OFF.FormatStringChanged))).UpdateObj2To1();
+            txtCompanionFileSearchPattern.BindText(new PropertyLink<string>(() => _OFF.CompanionFileSearchPattern, x => _OFF.CompanionFileSearchPattern = x)
+                , new EventLink(_OFF, nameof(_OFF.CompanionFileSearchPatternChanged))).UpdateObj2To1();
 
-            txtCompanionFile.BindText(new PropertyLink<string>(() => _OPF.CompanionFile, x => _OPF.CompanionFile = x)
-                , new EventLink(_OPF, nameof(_OPF.CompanionFileChanged))).UpdateObj2To1();
+            txtCompanionFile.BindText(new PropertyLink<string>(() => _OFF.CompanionFile, x => _OFF.CompanionFile = x)
+                , new EventLink(_OFF, nameof(_OFF.CompanionFileChanged))).UpdateObj2To1();
 
 
             //Bind favorite encoding of OutputEncodingsViewer to favorite encoding of InputEncodingsViewer
@@ -144,9 +145,12 @@ namespace EncodingConverter.Forms
             //    , new EventLink(evInputEncoding, nameof(evInputEncoding.FavoriteEncodingInfosChanged)))
             //    ;
 
-            this.splitContainer1.AllowDrop = true;
-            this.splitContainer1.DragEnter += InputControl_DragEnter; 
+            //this.gbInput.DragEnter += InputControl_DragEnter;
+            //this.gbInput.DragDrop += InputControl_DragDrop;
+
+            this.splitContainer1.DragEnter += InputControl_DragEnter;
             this.splitContainer1.DragDrop += InputControl_DragDrop;
+
 
             this.linkAbout.LinkClicked += this.linkAbout_LinkClicked;
             this.btnChangeOutputFile.Click += this.btnChangeOutputFile_Click;
@@ -154,9 +158,68 @@ namespace EncodingConverter.Forms
             this.btnSave.Click += this.btnSave_Click;
             this.btnOpen.Click += BtnOpen_Click;
             this.btnApplyOutputFormatting.Click += BtnApplyOutputFormatting_Click;
+            this.splitContainer1.SplitterMoved += SplitContainer1_SplitterMoved;
+            this.btnTogleSidePanel.Click += BtnTogleSidePanel_Click;
+            this.splitContainer1.Resize += SplitContainer1_Resize;
 
             this.Load += MainForm3_Load;
             this.FormClosed += FormMain_FormClosed;
+        }
+
+        private void SplitContainer1_Resize(object sender, EventArgs e)
+        {
+            if (this.splitContainer1.Panel2Collapsed)
+            {
+                btnTogleSidePanel.Left = splitContainer1.Width - 6;
+            }
+        }
+
+        private void BtnTogleSidePanel_Click(object sender, EventArgs e)
+        {
+            Trace.TraceInformation("Before Toggle: MailForm4.Width='" + this.Width + "', SplitContainer.");
+            int formWidth, containerWidth, splitterDistance;
+            this.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+
+            formWidth = this.Width;
+            containerWidth = this.splitContainer1.Width;
+            splitterDistance = this.splitContainer1.SplitterDistance;
+
+            if (this.splitContainer1.Panel2Collapsed)
+            {
+                this.Width += _Panel2Width + 4;
+                //this.splitContainer1.Width = this.Width - 4;
+                this.splitContainer1.Panel2Collapsed = false;
+
+                btnTogleSidePanel.Left = splitContainer1.SplitterDistance - 4;
+                btnTogleSidePanel.Invalidate();
+
+                _InputTextLink.Update();
+                //this.Width += this.splitContainer1.Panel2.Width;
+                //splitContainer1.Panel2.
+            }
+            else
+            {
+                _Panel2Width = this.splitContainer1.Panel2.Width;
+
+                //this.Width -= this.splitContainer1.Panel2.Width;
+                this.splitContainer1.Panel2Collapsed = true;
+                //this.splitContainer1.Width -= 4;
+                this.Width -= _Panel2Width + 4;
+            }
+            this.splitContainer1.SplitterDistance = splitterDistance;
+
+            this.splitContainer1.ResumeLayout();
+            this.ResumeLayout();
+        }
+
+        private void SplitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            if (!this.splitContainer1.Panel2Collapsed)
+            {
+                btnTogleSidePanel.Left = e.SplitX - 4;
+                btnTogleSidePanel.Invalidate();
+            }
         }
 
         #endregion
@@ -302,7 +365,7 @@ namespace EncodingConverter.Forms
         }
         private void BtnApplyOutputFormatting_Click(object sender, EventArgs e)
         {
-            this.txtOutputPath.Text = _OPF.FormatOutputpath();
+            this.txtOutputPath.Text = _OFF.FormatOutputpath();
         }
 
         #endregion //Event handlers

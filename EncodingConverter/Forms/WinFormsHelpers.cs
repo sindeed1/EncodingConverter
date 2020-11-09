@@ -69,6 +69,6 @@ namespace EncodingConverter.Forms
             return binding;
         }
 
-    }
+    }//WinFormsHelpers
 
 }

@@ -54,7 +54,7 @@ namespace EncodingConverter.Commands
             }
 
             if (_FormType == null)
-                InitForm(typeof(MainForm3));
+                InitForm(typeof(MainForm4));
             else
             {
                 InitForm(_FormType);
@@ -97,11 +97,10 @@ namespace EncodingConverter.Commands
             {
                 _FormType = typeof(MainForm4);
             }
-            //else if (switchData == nameof(MainForm3).ToLower())
-            //{
-            //    _FormType = typeof(MainForm3);
-            //    //_Form = new FormTestEncodingViewer();
-            //}
+            else if (switchData == nameof(MainForm5).ToLower())
+            {
+                _FormType = typeof(MainForm5);
+            }
             else
             {
                 _Form = null;
