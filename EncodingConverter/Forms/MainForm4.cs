@@ -213,7 +213,7 @@ namespace EncodingConverter.Forms
             else
             {
                 favs = new EncodingsCollection(evOutputEncoding.FavoriteEncodingInfos.Length);
-                favs.AddRange(evOutputEncoding.FavoriteEncodingInfos?.Select(x => x.CodePage));
+                favs.AddRange(evOutputEncoding.FavoriteEncodingInfos.Select(x => x.CodePage));
             }
             Properties.Settings.Default.FavoriteEncodings = favs;
             Program.Settings.Save();

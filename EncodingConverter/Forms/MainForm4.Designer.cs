@@ -432,7 +432,7 @@
             this.MaximumSize = new System.Drawing.Size(500000, 330);
             this.MinimumSize = new System.Drawing.Size(16, 330);
             this.Name = "MainForm4";
-            this.Text = "MainForm4";
+            this.Text = "Encoding Converter";
             this.tsOutput.ResumeLayout(false);
             this.tsOutput.PerformLayout();
             this.tsInput.ResumeLayout(false);
