@@ -19,8 +19,16 @@ namespace EncodingConverter
         [STAThread]
         static void Main(string[] args)
         {
-            args.ProcessCommandLine(Program.GetCommands, new ShowUICommand());
-            return;
+            try
+            {
+                args.ProcessCommandLine(Program.GetCommands, new ShowUICommand());
+                return;
+            }
+            catch (Exception ex)
+            {
+                ex.WriteToTrace();
+                throw ex;
+            }
 
             _ECC.ProcessCommandLine(args);
             if (_ECC.CommandLineCommand != null)
@@ -54,7 +62,7 @@ namespace EncodingConverter
             Application.Run(new Forms.MainForm3());
             //Application.Run(new Form1());
         }
-        public static System.Resources.ResourceManager ResourceManager { get { return Properties.Resources.ResourceManager; } }
+        //public static System.Resources.ResourceManager ResourceManager { get { return Properties.Resources.ResourceManager; } }
         public static Properties.Settings Settings { get { return Properties.Settings.Default; } }
 
         public static EncodingConverterCore ECC { get { return _ECC; } }

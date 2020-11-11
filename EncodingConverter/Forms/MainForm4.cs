@@ -145,7 +145,7 @@ namespace EncodingConverter.Forms
             //    ;
 
             this.splitContainer1.AllowDrop = true;
-            this.splitContainer1.DragEnter += InputControl_DragEnter; 
+            this.splitContainer1.DragEnter += InputControl_DragEnter;
             this.splitContainer1.DragDrop += InputControl_DragDrop;
 
             this.linkAbout.LinkClicked += this.linkAbout_LinkClicked;
@@ -155,13 +155,13 @@ namespace EncodingConverter.Forms
             this.btnOpen.Click += BtnOpen_Click;
             this.btnApplyOutputFormatting.Click += BtnApplyOutputFormatting_Click;
 
-            this.Load += MainForm3_Load;
+            this.Load += MainForm_Load;
             this.FormClosed += FormMain_FormClosed;
         }
 
         #endregion
 
-        private void MainForm3_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             Properties.Settings defSet = Properties.Settings.Default;
             this.DataBindings.Add(new Binding("ClientSize"
@@ -205,8 +205,16 @@ namespace EncodingConverter.Forms
         }
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            EncodingsCollection favs = new EncodingsCollection(evOutputEncoding.FavoriteEncodingInfos.Length);
-            favs.AddRange(evOutputEncoding.FavoriteEncodingInfos.Select(x => x.CodePage));
+            EncodingsCollection favs;
+            if (evOutputEncoding.FavoriteEncodingInfos == null)
+            {
+                favs = null;
+            }
+            else
+            {
+                favs = new EncodingsCollection(evOutputEncoding.FavoriteEncodingInfos.Length);
+                favs.AddRange(evOutputEncoding.FavoriteEncodingInfos.Select(x => x.CodePage));
+            }
             Properties.Settings.Default.FavoriteEncodings = favs;
             Program.Settings.Save();
         }
