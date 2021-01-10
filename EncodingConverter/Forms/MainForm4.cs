@@ -46,7 +46,6 @@ namespace EncodingConverter.Forms
             evOutputEncoding = _TSOutputEncodingViewer.EncodingsViewer;
 
             _OPF = new OutputPathFormatter(Program.ECC);
-            AddEventHandlers();
 
             this.Icon = Properties.Resources.Icon_Encoding_Converter_32x32;
 
@@ -61,6 +60,8 @@ namespace EncodingConverter.Forms
 
             _OFD = new Lazy<OpenFileDialog>();
             _SFD = new Lazy<SaveFileDialog>();
+
+            AddEventHandlers();
         }
         void AddEventHandlers()
         {
@@ -102,21 +103,47 @@ namespace EncodingConverter.Forms
             //Bind 'ECC.InputEncoding' to 'evInputEncoding.SelectedEncodingInfo':
             WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evInputEncoding.SelectedEncodingInfo, x => evInputEncoding.SelectedEncodingInfo = x)
                 , new EventLink(evInputEncoding, nameof(evInputEncoding.SelectedEncodingInfoChanged))
-                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.InputEncoding.CodePage), x => ECC.InputEncoding = x?.GetEncoding())
+                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.InputEncoding?.CodePage), x => ECC.InputEncoding = x?.GetEncoding())
                 , inputEncodingEventLink)
                 .UpdateObj2To1();
             //Bind 'ECC.InputEncoding' to 'lblInputEncoding':
             tsddInputEncoding.BindTextAsDestination(() => ECC.InputEncoding?.EncodingName, inputEncodingEventLink).Update();
 
-            //Bind 'ECC.OutputEncoding' to 'evOutputEncoding.SelectedEncodingInfo':
-            var outputEncodingEventLink = new EventLink(ECC, nameof(ECC.OutputEncodingChanged));
-            WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evOutputEncoding.SelectedEncodingInfo, x => evOutputEncoding.SelectedEncodingInfo = x)
+            //Bind 'ECC.OutputEncoding' to 'evOutputEncoding.SelectedEncodingInfo' and 'Settings.LastOutputEncoding':
+            Properties.Settings defSet = Properties.Settings.Default;
+            //1- Setup PropertyLink to 'ECC.OutputEncoding':
+            var ECCOutputEncodingPropertyLink = new PropertyLink<Encoding>
+                        (() => ECC.OutputEncoding//getter
+                        , x => ECC.OutputEncoding = x);//setter
+
+            //2- Setup EventLink of 'OutputEncodingChanged':
+            var ECCOutputEncodingEventLink = new EventLink(ECC, nameof(ECC.OutputEncodingChanged));
+            //3- Now make the Bindings:
+            //  Bind 'ECC.OutputEncoding' to 'Settings.LastOutputEncoding':
+            WinFormsHelpers.Bind(new PropertyLink<Encoding>
+                        (() => encodingInfos?.FirstOrDefault(x => x.CodePage == defSet.LastOutputEncoding)?.GetEncoding()
+                        , x => defSet.LastOutputEncoding = x.CodePage)
                 , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
-                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.OutputEncoding.CodePage), x => ECC.OutputEncoding = x?.GetEncoding())
-                , outputEncodingEventLink)
+                , ECCOutputEncodingPropertyLink
+                , ECCOutputEncodingEventLink)
+                .UpdateObj1To2();//Update Settings to ECC.
+
+            //  Bind 'ECC.OutputEncoding' to 'evOutputEncoding.SelectedEncodingInfo':
+            //WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evOutputEncoding.SelectedEncodingInfo, x => evOutputEncoding.SelectedEncodingInfo = x)
+            //    , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
+            //    , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.OutputEncoding.CodePage), x => ECC.OutputEncoding = x?.GetEncoding())
+            //    , ECCOutputEncodingEventLink)
+            //    .UpdateObj2To1();
+            WinFormsHelpers.Bind(new PropertyLink<Encoding>(
+                        () => evOutputEncoding.SelectedEncodingInfo.GetEncoding()
+                        , x => evOutputEncoding.SelectedEncodingInfo = encodingInfos?.FirstOrDefault(ei => x.CodePage == ei.CodePage))
+                , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
+                , ECCOutputEncodingPropertyLink
+                , ECCOutputEncodingEventLink)
                 .UpdateObj2To1();
-            //Bind 'ECC.OutputEncoding' to 'lblOutputEncoding':
-            tsddOutputEncoding.BindTextAsDestination(() => ECC.OutputEncoding?.EncodingName, outputEncodingEventLink).Update();
+
+            //  Bind 'ECC.OutputEncoding' to 'lblOutputEncoding':
+            tsddOutputEncoding.BindTextAsDestination(() => ECC.OutputEncoding?.EncodingName, ECCOutputEncodingEventLink).Update();
 
 
             txtOutputPathFormat.BindText(new PropertyLink<string>(() => _OPF.FormatString, x => _OPF.FormatString = x)
