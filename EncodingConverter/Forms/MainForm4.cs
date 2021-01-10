@@ -136,7 +136,7 @@ namespace EncodingConverter.Forms
             //    .UpdateObj2To1();
             WinFormsHelpers.Bind(new PropertyLink<Encoding>(
                         () => evOutputEncoding.SelectedEncodingInfo.GetEncoding()
-                        , x => evOutputEncoding.SelectedEncodingInfo = encodingInfos?.FirstOrDefault(ei => x.CodePage == ei.CodePage))
+                        , x => evOutputEncoding.SelectedEncodingInfo = encodingInfos?.FirstOrDefault(ei => x?.CodePage == ei.CodePage))
                 , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
                 , ECCOutputEncodingPropertyLink
                 , ECCOutputEncodingEventLink)
