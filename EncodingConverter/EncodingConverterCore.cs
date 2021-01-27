@@ -321,6 +321,8 @@ namespace EncodingConverter
 
             preferredString = preferredString?.Trim();
             Encoding encoding;
+            Encoding[] encodings = null;
+
             if (preferredString == null || preferredString.Length <= 0)
             {
                 try
@@ -329,25 +331,43 @@ namespace EncodingConverter
                 }
                 catch (Exception ex)
                 {
-                    TraceWarning("Error by detecting the encoding of the file '" + inputPath + "'.");
+                    TraceWarning("Error while detecting the encoding of the file '" + inputPath + "'.");
                     ex.WriteToTrace();
+                    TraceWarning("Execution will continue with no detected encodings.");
                     encoding = null;
                 }
             }
             else
             {
-                Encoding[] encodings;
-                encodings = EncodingTools.DetectInputCodepages(buf, 10);
-                var searchStrings = preferredString.ToLower().Split(' ');
-                var prefferedEncodings = encodings.Where(x => x.EncodingName.ToLower().Contains(searchStrings)).ToArray();
-                if (prefferedEncodings == null || prefferedEncodings.Length <= 0)
+                //User has provided a preferred encoding. we have to use it
+                //Encoding[] encodings = null;
+                try
                 {
-                    encoding = encodings[0];
+                    encodings = EncodingTools.DetectInputCodepages(buf, 10);
+                }
+                catch (Exception ex)
+                {
+                    TraceWarning("Error while detecting the encoding of the file '" + inputPath + "'.");
+                    ex.WriteToTrace();
+                }
+                if (encodings == null || encodings.Length <= 0)
+                {
+                    TraceWarning("Execution will continue with no detected encodings.");
+                    encoding = null;
                 }
                 else
                 {
-                    TraceInformation(string.Format("Found '{0}' encodings with the preferred encoding text '{1}'", prefferedEncodings.Length, preferredString));
-                    encoding = prefferedEncodings[0];
+                    var searchStrings = preferredString.ToLower().Split(' ');
+                    var prefferedEncodings = encodings.Where(x => x.EncodingName.ToLower().Contains(searchStrings)).ToArray();
+                    if (prefferedEncodings == null || prefferedEncodings.Length <= 0)
+                    {
+                        encoding = encodings[0];
+                    }
+                    else
+                    {
+                        TraceInformation(string.Format("Found '{0}' encodings with the preferred encoding text '{1}'", prefferedEncodings.Length, preferredString));
+                        encoding = prefferedEncodings[0];
+                    }
                 }
             }
 
@@ -563,7 +583,7 @@ namespace EncodingConverter
 
         #region Trace helpers
         static void TraceInfo(string methodName, string msg) { Trace.TraceInformation(FormatTraceMessage(methodName, msg)); }
-        static void TraceInformation( string msg) { Trace.TraceInformation(FormatTraceMessage(msg)); }
+        static void TraceInformation(string msg) { Trace.TraceInformation(FormatTraceMessage(msg)); }
         static void TraceError(string msg) { Trace.TraceError(FormatTraceMessage(msg)); }
         static void TraceError(string methodName, string msg) { Trace.TraceError(FormatTraceMessage(methodName, msg)); }
         static void TraceWarning(string msg) { Trace.TraceWarning(FormatTraceMessage(msg)); }

@@ -27,15 +27,15 @@ namespace href.Utils
         // this contains all codepages, sorted by preference and byte usage 
         public static int[] AllEncodings;
 
-        
-        
+
+
         /// <summary>
         /// Static constructor that fills the default preferred codepages
         /// </summary>
         static EncodingTools()
         {
 
-            List<int> streamEcodings= new List<int>();
+            List<int> streamEcodings = new List<int>();
             List<int> allEncodings = new List<int>();
             List<int> mimeEcodings = new List<int>();
 
@@ -44,7 +44,7 @@ namespace href.Utils
             mimeEcodings.Add(Encoding.ASCII.CodePage);
             allEncodings.Add(Encoding.ASCII.CodePage);
 
-            
+
             // add default 2nd for all encodings
             allEncodings.Add(Encoding.Default.CodePage);
             // default is single byte?
@@ -55,7 +55,7 @@ namespace href.Utils
                 mimeEcodings.Add(Encoding.Default.CodePage);
             }
 
-          
+
 
             // prefer JIS over JIS-SHIFT (JIS is detected better than JIS-SHIFT)
             // this one does include cyrilic (strange but true)
@@ -78,12 +78,12 @@ namespace href.Utils
 
             // stream is done here
             PreferedEncodingsForStream = streamEcodings.ToArray();
-           
+
 
             // all singlebyte encodings
             foreach (EncodingInfo enc in Encoding.GetEncodings())
             {
-                
+
 
                 if (!enc.GetEncoding().IsSingleByte)
                     continue;
@@ -172,7 +172,7 @@ namespace href.Utils
         /// <returns>the suggested encoding</returns>
         public static Encoding GetMostEfficientEncoding(string input, int[] preferedEncodings)
         {
-            Encoding enc = DetectOutgoingEncoding(input,preferedEncodings,true);
+            Encoding enc = DetectOutgoingEncoding(input, preferedEncodings, true);
             // unicode.. hmmm... check for smallest encoding
             if (enc.CodePage == Encoding.Unicode.CodePage)
             {
@@ -264,11 +264,11 @@ namespace href.Utils
                     if (preferedEncodings != null)
                         options |= MultiLanguage.MLCPF.MLDETECTF_PREFERRED_ONLY;
 
-                    multilang3.DetectOutboundCodePage(options,  
+                    multilang3.DetectOutboundCodePage(options,
                         input, (uint)input.Length,
-                        pPrefEncs, (uint) (preferedEncodings==null ? 0 : preferedEncodings.Length),
+                        pPrefEncs, (uint)(preferedEncodings == null ? 0 : preferedEncodings.Length),
 
-                        pDetectedEncs, ref detectedCodepages, 
+                        pDetectedEncs, ref detectedCodepages,
                         ref specialChar);
 
                     // get result
@@ -319,7 +319,7 @@ namespace href.Utils
 
                 // get unmanaged arrays
                 IntPtr pPrefEncs = Marshal.AllocCoTaskMem(sizeof(uint) * preferedEncodings.Length);
-                IntPtr pDetectedEncs =  preferedEncodings == null ? IntPtr.Zero : Marshal.AllocCoTaskMem(sizeof(uint) * resultCodePages.Length);
+                IntPtr pDetectedEncs = preferedEncodings == null ? IntPtr.Zero : Marshal.AllocCoTaskMem(sizeof(uint) * resultCodePages.Length);
 
                 try
                 {
@@ -338,7 +338,7 @@ namespace href.Utils
                     // finally... call to DetectOutboundCodePage
                     multilang3.DetectOutboundCodePage(options,
                         input, (uint)input.Length,
-                        pPrefEncs, (uint) (preferedEncodings==null ? 0 : preferedEncodings.Length),
+                        pPrefEncs, (uint)(preferedEncodings == null ? 0 : preferedEncodings.Length),
                         pDetectedEncs, ref detectedCodepages,
                         ref specialChar);
 
@@ -352,7 +352,7 @@ namespace href.Utils
                         // get the encodings for the codepages
                         for (int i = 0; i < detectedCodepages; i++)
                             result.Add(Encoding.GetEncoding(theResult[i]));
-                        
+
                     }
 
                 }
@@ -376,7 +376,7 @@ namespace href.Utils
         /// Detect the most probable codepage from an byte array
         /// </summary>
         /// <param name="input">array containing the raw data</param>
-        /// <returns>the detected encoding or the default encoding if the detection failed</returns>
+        /// <returns>the detected encoding or null if the detection failed</returns>
         public static Encoding DetectInputCodepage(byte[] input)
         {
             try
@@ -384,29 +384,30 @@ namespace href.Utils
                 Encoding[] detected = DetectInputCodepages(input, 1);
                 if (detected.Length > 0)
                     return detected[0];
-                return Encoding.Default;
+                return null;// Encoding.Default;
             }
-            catch(COMException)
+            catch (COMException)
             {
                 // return default codepage on error
-                return Encoding.Default;
+                // return null on error
+                return null;// Encoding.Default;
             }
         }
 
         /// <summary>
-        /// Rerurns up to maxEncodings codpages that are assumed to be apropriate
+        /// Returns up to maxEncodings codpages that are assumed to be appropriate
         /// </summary>
         /// <param name="input">array containing the raw data</param>
-        /// <param name="maxEncodings">maxiumum number of encodings to detect</param>
+        /// <param name="maxEncodings">Maximum number of encodings to detect</param>
         /// <returns>an array of Encoding with assumed encodings</returns>
         public static Encoding[] DetectInputCodepages(byte[] input, int maxEncodings)
         {
 
             if (maxEncodings < 1)
-                throw new ArgumentOutOfRangeException("at least one encoding must be returend", "maxEncodings");
+                throw new ArgumentOutOfRangeException("at least one encoding must be returned", nameof(maxEncodings));
 
             if (input == null)
-                throw new ArgumentNullException("input");
+                throw new ArgumentNullException(nameof(input));
 
             // empty strings can always be encoded as ASCII
             if (input.Length == 0)
@@ -438,14 +439,14 @@ namespace href.Utils
 
                 int scores = detectedEncdings.Length;
                 int srcLen = input.Length;
-               
+
                 // setup options (none)   
                 MultiLanguage.MLDETECTCP options = MultiLanguage.MLDETECTCP.MLDETECTCP_NONE;
 
                 // finally... call to DetectInputCodepage
-                multilang2.DetectInputCodepage(options,0,
+                multilang2.DetectInputCodepage(options, 0,
                     ref input[0], ref srcLen, ref detectedEncdings[0], ref scores);
-                
+
                 // get result
                 if (scores > 0)
                 {
@@ -456,9 +457,14 @@ namespace href.Utils
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                result = new List<Encoding>();
+            }
             finally
             {
                 Marshal.FinalReleaseComObject(multilang2);
+                
             }
             // nothing found
             return result.ToArray();
@@ -480,7 +486,7 @@ namespace href.Utils
             {
                 byte[] rawData = new byte[fs.Length];
                 Encoding enc = DetectInputCodepage(rawData);
-                return enc.GetString(rawData);
+                return enc?.GetString(rawData);
             }
         }
 
@@ -509,8 +515,8 @@ namespace href.Utils
             if (stream == null)
                 throw new ArgumentNullException("stream");
             if (!stream.CanSeek)
-                throw new ArgumentException("the stream must support seek operations","stream");
-            
+                throw new ArgumentException("the stream must support seek operations", "stream");
+
             // assume default encoding at first place
             Encoding detectedEncoding = Encoding.Default;
 
@@ -526,11 +532,11 @@ namespace href.Utils
             stream.Seek(0, SeekOrigin.Begin);
 
 
-            return new StreamReader(stream,detectedEncoding);
+            return new StreamReader(stream, detectedEncoding);
 
         }
 
     }
 
-  
+
 }
