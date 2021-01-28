@@ -321,8 +321,6 @@ namespace EncodingConverter
 
             preferredString = preferredString?.Trim();
             Encoding encoding;
-            Encoding[] encodings = null;
-
             if (preferredString == null || preferredString.Length <= 0)
             {
                 try
@@ -340,7 +338,7 @@ namespace EncodingConverter
             else
             {
                 //User has provided a preferred encoding. we have to use it
-                //Encoding[] encodings = null;
+                Encoding[] encodings = null;
                 try
                 {
                     encodings = EncodingTools.DetectInputCodepages(buf, 10);
