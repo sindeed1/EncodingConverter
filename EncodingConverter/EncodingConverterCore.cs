@@ -182,8 +182,10 @@ namespace EncodingConverter
         public EncodingInfo[] Encodings { get { return _Encodings; } }
 
         /// <summary>
-        /// 
+        /// Reads the <see cref="InputFilePath"/> file using the <see cref="InputEncoding"/>
+        /// and writes it to <see cref="OutputFilePath"/> using the <see cref="OutputEncoding"/>.
         /// </summary>
+        /// <remarks>This method will overwrite the <see cref="OutputFilePath"/> if it already exists.</remarks>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="PathTooLongException"></exception>

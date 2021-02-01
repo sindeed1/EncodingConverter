@@ -25,9 +25,19 @@ namespace EncodingConverter
     //, CompanionFile fileExtention   //{32} extension of the companion file
     //, "", "", "", "", "", "", ""    //{33-39} reserved and empty
 
+    /// <summary>
+    /// Formats the Output path using parameters calculated from different sources.
+    /// </summary>
+    /// <remarks>The <see cref="OutputPathFormatter"/> is an attached sub-system that uses the 
+    /// <see cref="EncodingConverterCore"/> as one of the sources. It will update the formated output path back to the
+    /// <see cref="EncodingConverterCore"/>.</remarks>
     class OutputPathFormatter
     {
         static char[] _SplitChars = { '|' };
+
+        public static string PARAM_InputFile_DirectoryPath = "{0}";// directory path;
+        public static string PARAM_InputFile_FileNameWithoutExtention = "{1}";// file name without extension
+        public static string PARAM_InputFile_Extention = "{2}";// extension
 
         public event EventHandler FormatStringChanged;
         public event EventHandler CompanionFileSearchPatternChanged;
@@ -257,12 +267,20 @@ namespace EncodingConverter
         }
         #endregion
 
+        /// <summary>
+        /// Updates the <see cref="EncodingConverterCore.OutputFilePath"/> with the
+        /// new formatted value.
+        /// </summary>
         void UpdateFormattedText()
         {
             if (_ECC == null)
                 return;
             _ECC.OutputFilePath = this.FormatOutputpath();
         }
+        /// <summary>
+        /// Returns a formatted output path.
+        /// </summary>
+        /// <returns></returns>
         public string FormatOutputpath()
         {
             if (string.IsNullOrEmpty(_FormatString))

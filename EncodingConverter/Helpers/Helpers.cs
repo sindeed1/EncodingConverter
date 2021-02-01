@@ -68,6 +68,10 @@ namespace EncodingConverter
     }
     static class ExceptionHelper
     {
+        /// <summary>
+        /// Writes the <see cref="Exception"/> to the trace as <see cref="Trace.TraceError(string)"/>.
+        /// </summary>
+        /// <param name="ex"></param>
         public static void WriteToTrace(this Exception ex)
         {
             Trace.TraceError(ex.ToText());

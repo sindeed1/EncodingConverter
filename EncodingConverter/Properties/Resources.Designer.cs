@@ -202,6 +202,15 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Output file already exists. Do you want to overwrite it?.
+        /// </summary>
+        internal static string Message_Q_OutputFileAlreadyExists_Overwrite {
+            get {
+                return ResourceManager.GetString("Message_Q_OutputFileAlreadyExists_Overwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Encoding Converter.
         /// </summary>
         internal static string ProgramTitel {

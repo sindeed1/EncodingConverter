@@ -166,6 +166,9 @@ Encoding Converter is distributed in the hope that it will be useful, but WITHOU
   <data name="Message_PleaseBrowseWhereToSaveTheFileFirst" xml:space="preserve">
     <value>Please browse where to save the file first !</value>
   </data>
+  <data name="Message_Q_OutputFileAlreadyExists_Overwrite" xml:space="preserve">
+    <value>Output file already exists. Do you want to overwrite it?</value>
+  </data>
   <data name="ProgramTitel" xml:space="preserve">
     <value>Encoding Converter</value>
   </data>

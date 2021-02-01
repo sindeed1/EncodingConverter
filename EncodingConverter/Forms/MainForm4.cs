@@ -26,6 +26,8 @@ namespace EncodingConverter.Forms
 
         OutputPathFormatter _OPF;
 
+        bool _AllowOverwriteOutputFile;
+
         OneWayUpdater<string> _InputTextLink;
 
         int _Panel2Width;
@@ -65,8 +67,10 @@ namespace EncodingConverter.Forms
         }
         void AddEventHandlers()
         {
-            //Binding to Encoding converter core:
             EncodingConverterCore ECC = Program.ECC;
+            #region Bindings
+
+            //Binding to Encoding converter core:
             //Bind 'ECC.AutoDetectInputEncoding' to 'chkAutoDetect.Checked':
             WinFormsHelpers.Bind(new PropertyLink<bool>(() => chkAutoDetect.Checked, x => chkAutoDetect.Checked = x)
                 , new EventLink(chkAutoDetect, nameof(CheckBox.CheckedChanged))
@@ -81,8 +85,10 @@ namespace EncodingConverter.Forms
             txtInputPath.BindText(new PropertyLink<string>(() => ECC.InputFilePath, x => ECC.InputFilePath = x)
                 , new EventLink(ECC, nameof(ECC.InputFilePathChanged)))
                 .UpdateObj2To1();
+
+
             //Bind 'ECC.OutputFilePath' to 'txtOutputPath':
-            txtOutputPath.BindText(new PropertyLink<string>(() => ECC.OutputFilePath, x => ECC.OutputFilePath = x)
+            txtOutputPath.BindText(new PropertyLink<string>(() => ECC.OutputFilePath, (x) => { ECC.OutputFilePath = x; })
                 , new EventLink(ECC, nameof(ECC.OutputFilePathChanged)))
                 .UpdateObj2To1();
             //Bind 'ECC.InputText' to 'tbInputText':
@@ -170,6 +176,9 @@ namespace EncodingConverter.Forms
             //    , new PropertyLink<EncodingsCollection>(() => evInputEncoding.FavoriteEncodingInfos, x => evInputEncoding.FavoriteEncodingInfos = x)
             //    , new EventLink(evInputEncoding, nameof(evInputEncoding.FavoriteEncodingInfosChanged)))
             //    ;
+            #endregion//Bindings
+
+            ECC.OutputFilePathChanged += ECC_OutputFilePathChanged;
 
             this.splitContainer1.AllowDrop = true;
             this.splitContainer1.DragEnter += InputControl_DragEnter;
@@ -185,6 +194,7 @@ namespace EncodingConverter.Forms
             this.Load += MainForm_Load;
             this.FormClosed += FormMain_FormClosed;
         }
+
 
         #endregion
 
@@ -226,6 +236,8 @@ namespace EncodingConverter.Forms
         public event Action DefSetSplitterDistanceChanged;
 
         #region ...Event handlers...
+        private void ECC_OutputFilePathChanged(object sender, EventArgs e) { _AllowOverwriteOutputFile = false; }
+
         private void ECC_InputTextChanged(object sender, EventArgs e)
         {
             if (!splitContainer1.Panel2Collapsed && File.Exists(Program.ECC.InputFilePath)) tbInputText.Text = Program.ECC.InputText;
@@ -261,11 +273,34 @@ namespace EncodingConverter.Forms
             }
             if (evInputEncoding.SelectedEncodingInfo == null)
             {
+                Trace.TraceInformation("Can not convert. Input encoding is not specified.");
                 return;
             }
             if (evOutputEncoding.SelectedEncodingInfo == null)
             {
+                Trace.TraceInformation("Can not convert. Output encoding is not specified.");
                 return;
+            }
+            if (_AllowOverwriteOutputFile)
+                Trace.TraceInformation("Overwrite permission already granted.");
+            else
+            {
+                Trace.TraceInformation("Overwrite permission is not already granted.");
+                if (File.Exists(txtOutputPath.Text))
+                {
+                    Trace.TraceInformation("Output file already exists. Ask the user whether to overwrite or not.");
+                    if (MessageBox.Show(Properties.Resources.Message_Q_OutputFileAlreadyExists_Overwrite
+                        , "Convert"
+                        , MessageBoxButtons.OKCancel) != DialogResult.OK)
+                    {
+                        Trace.TraceInformation("User didn't chose OK, Do not overwrite.");
+                        return;
+                    }
+                    else
+                    {
+                        Trace.TraceInformation("User chose 'OK'.");
+                    }
+                }
             }
 
             try
@@ -297,10 +332,25 @@ namespace EncodingConverter.Forms
             //SaveFileDialog sav = new SaveFileDialog();
             _SFD.Value.Title = Properties.Resources.Message_BrowseWhereYouWantToSaveTheFile;// Program.ResourceManager.GetString("Message_BrowseWhereYouWantToSaveTheFile");
             _SFD.Value.Filter = Properties.Resources.Filter_AllFiles;// Program.ResourceManager.GetString("Filter_AllFiles");
-            _SFD.Value.FileName = txtOutputPath.Text;
+            _SFD.Value.OverwritePrompt = true;
+
+            var outputFile = new FileInfo(txtOutputPath.Text);
+            _SFD.Value.FileName = outputFile.Name; //txtOutputPath.Text;
+            _SFD.Value.InitialDirectory = outputFile.DirectoryName;
+
             if (_SFD.Value.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
+
                 txtOutputPath.Text = _SFD.Value.FileName;
+                //The SaveAsDialog checks for the FileAlreadyExists condition.
+                //If we got here the either the user chose to overwrite OR the file does not exists.
+                //In either way we don't need to check if it exists:
+                //IMPORTANT: The _AllowOverwriteOutputFile MUST come after updating the txtOutputPath
+                //with new value, because the Binding between txtOutputPath and other component will
+                //set the _AllowOverwriteOutputFile flag back to 'false' for any change that happen.
+                //Only a change that happens through SaveAsFileDialog qualifies to change the flag to
+                //'true' because the dialog box will check and ask for this case.
+                _AllowOverwriteOutputFile = true;
             }
         }
         private void BtnOpen_Click(object sender, EventArgs e)
