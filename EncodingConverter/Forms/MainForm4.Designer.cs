@@ -47,7 +47,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
             this.chkAutoDetect = new System.Windows.Forms.CheckBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabelDetectInputEncoding = new System.Windows.Forms.LinkLabel();
             this.tbInputText = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
@@ -251,16 +251,16 @@
             this.chkAutoDetect.Text = "&Auto detect";
             this.chkAutoDetect.UseVisualStyleBackColor = true;
             // 
-            // linkLabel1
+            // linkLabelDetectInputEncoding
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.linkLabel1.Location = new System.Drawing.Point(100, 105);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(39, 13);
-            this.linkLabel1.TabIndex = 6;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Detect";
+            this.linkLabelDetectInputEncoding.AutoSize = true;
+            this.linkLabelDetectInputEncoding.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.linkLabelDetectInputEncoding.Location = new System.Drawing.Point(100, 105);
+            this.linkLabelDetectInputEncoding.Name = "linkLabelDetectInputEncoding";
+            this.linkLabelDetectInputEncoding.Size = new System.Drawing.Size(39, 13);
+            this.linkLabelDetectInputEncoding.TabIndex = 6;
+            this.linkLabelDetectInputEncoding.TabStop = true;
+            this.linkLabelDetectInputEncoding.Text = "Detect";
             // 
             // tbInputText
             // 
@@ -373,7 +373,7 @@
             this.gbInput.Controls.Add(this.label9);
             this.gbInput.Controls.Add(this.chkAutoDetect);
             this.gbInput.Controls.Add(this.label8);
-            this.gbInput.Controls.Add(this.linkLabel1);
+            this.gbInput.Controls.Add(this.linkLabelDetectInputEncoding);
             this.gbInput.Controls.Add(this.txtCompanionFile);
             this.gbInput.Controls.Add(this.txtCompanionFileSearchPattern);
             this.gbInput.Controls.Add(this.btnOpen);
@@ -466,7 +466,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtPreferredInputEncoding;
         private System.Windows.Forms.CheckBox chkAutoDetect;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabelDetectInputEncoding;
         private System.Windows.Forms.TextBox tbInputText;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSave;

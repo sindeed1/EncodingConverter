@@ -181,6 +181,10 @@ namespace EncodingConverter
 
         public EncodingInfo[] Encodings { get { return _Encodings; } }
 
+        public void DetectInputEncoding()
+        {
+            this.InputEncoding = DetectInputEncoding(_InputFilePath, _PreferredInputEncoding);
+        }
         /// <summary>
         /// Reads the <see cref="InputFilePath"/> file using the <see cref="InputEncoding"/>
         /// and writes it to <see cref="OutputFilePath"/> using the <see cref="OutputEncoding"/>.
@@ -281,7 +285,8 @@ namespace EncodingConverter
             //Encoding encoding;
             if (_AutoCheckInputEncoding)
             {
-                this.InputEncoding = DetectInputEncdoing(_InputFilePath, _PreferredInputEncoding);
+                DetectInputEncoding();
+                //this.InputEncoding = DetectInputEncdoing(_InputFilePath, _PreferredInputEncoding);
             }
         }
         public static void Convert(string inputFile, Encoding inputEncoding, string outputFile, Encoding outputEncoding)
@@ -290,11 +295,11 @@ namespace EncodingConverter
             text = File.ReadAllText(inputFile, inputEncoding);
             File.WriteAllText(outputFile, text, outputEncoding);
         }
-        private static Encoding DetectInputEncdoing(string inputPath, string preferredString)
+        private static Encoding DetectInputEncoding(string inputPath, string preferredString)
         {
             if (!File.Exists(inputPath))
             {
-                TraceError(nameof(DetectInputEncdoing), nameof(inputPath) + " does not exist!");
+                TraceError(nameof(DetectInputEncoding), nameof(inputPath) + " does not exist!");
                 throw new FileNotFoundException(Properties.Resources.Message_InputFileDoesNotExsist, inputPath);
             }
 
@@ -311,7 +316,7 @@ namespace EncodingConverter
             }
             catch (Exception ex)
             {
-                TraceWarning(nameof(DetectInputEncdoing), "Exception while reading input file '" +
+                TraceWarning(nameof(DetectInputEncoding), "Exception while reading input file '" +
                     inputPath + "': \n"
                     );
                 ex.WriteToTrace();

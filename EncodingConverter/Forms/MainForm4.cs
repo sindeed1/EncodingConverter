@@ -186,7 +186,7 @@ namespace EncodingConverter.Forms
 
             this.linkAbout.LinkClicked += this.linkAbout_LinkClicked;
             this.btnChangeOutputFile.Click += this.btnChangeOutputFile_Click;
-            this.linkLabel1.LinkClicked += this.linkLabel1_LinkClicked;
+            this.linkLabelDetectInputEncoding.LinkClicked += this.linkLabelDetectInputEncoding_LinkClicked;
             this.btnSave.Click += this.btnSave_Click;
             this.btnOpen.Click += BtnOpen_Click;
             this.btnApplyOutputFormatting.Click += BtnApplyOutputFormatting_Click;
@@ -323,9 +323,9 @@ namespace EncodingConverter.Forms
             DialogResult res = MessageBox.Show(this, Properties.Resources.Message_Done,
                 Properties.Resources.ProgramTitel, MessageBoxButtons.OK);
         }
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabelDetectInputEncoding_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //AutoDetectInputEncdoing();
+            Program.ECC.DetectInputEncoding();
         }
         private void btnChangeOutputFile_Click(object sender, EventArgs e)
         {
