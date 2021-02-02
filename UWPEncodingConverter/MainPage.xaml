@@ -9,7 +9,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock x:Name="dads">asdasd</TextBlock>
-        
+        <Rectangle HorizontalAlignment="Left" Height="206" Margin="31,36,0,0" Stroke="Black" VerticalAlignment="Top" Width="826"/>
+        <Rectangle HorizontalAlignment="Left" Height="246" Margin="31,284,0,0" Stroke="Black" VerticalAlignment="Top" Width="826"/>
+        <Button Content="Open" Margin="34,47,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="125,47,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="715"/>
+        <TextBlock HorizontalAlignment="Left" Margin="37,16,0,0" Text="Input" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="37,264,0,0" Text="Output" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.073,1.6"/>
+        <TextBox Header="Companion file search pattern" HorizontalAlignment="Left" Margin="125,84,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="715"/>
+
     </Grid>
 </Page>

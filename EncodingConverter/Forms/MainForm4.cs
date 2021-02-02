@@ -193,7 +193,12 @@ namespace EncodingConverter.Forms
 
             this.Load += MainForm_Load;
             this.FormClosed += FormMain_FormClosed;
+
+            this.txtInputPath.TextChanged += TxtPath_TextChanged;
+            this.txtOutputPath.TextChanged += TxtPath_TextChanged;
+            this.txtCompanionFile.TextChanged += TxtPath_TextChanged; ;
         }
+
 
 
         #endregion
@@ -236,6 +241,19 @@ namespace EncodingConverter.Forms
         public event Action DefSetSplitterDistanceChanged;
 
         #region ...Event handlers...
+        private void TxtPath_TextChanged(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            if (TextRenderer.MeasureText(txt.Text, txt.Font).Width > txt.Width)
+            {
+                this.ttLongRead.SetToolTip(txt, txt.Text);
+            }
+            else
+            {
+                this.ttLongRead.SetToolTip(txt, string.Empty);
+            }
+        }
+
         private void ECC_OutputFilePathChanged(object sender, EventArgs e) { _AllowOverwriteOutputFile = false; }
 
         private void ECC_InputTextChanged(object sender, EventArgs e)
