@@ -79,7 +79,7 @@
             this.txtOutputPathFormat.Location = new System.Drawing.Point(110, 21);
             this.txtOutputPathFormat.Name = "txtOutputPathFormat";
             this.txtOutputPathFormat.Size = new System.Drawing.Size(129, 20);
-            this.txtOutputPathFormat.TabIndex = 9;
+            this.txtOutputPathFormat.TabIndex = 0;
             this.txtOutputPathFormat.Text = global::EncodingConverter.Properties.Settings.Default.OutputFilePathFormatString;
             this.ttLongRead.SetToolTip(this.txtOutputPathFormat, resources.GetString("txtOutputPathFormat.ToolTip"));
             // 
@@ -110,7 +110,7 @@
             this.btnChangeOutputFile.Location = new System.Drawing.Point(245, 45);
             this.btnChangeOutputFile.Name = "btnChangeOutputFile";
             this.btnChangeOutputFile.Size = new System.Drawing.Size(78, 23);
-            this.btnChangeOutputFile.TabIndex = 0;
+            this.btnChangeOutputFile.TabIndex = 3;
             this.btnChangeOutputFile.Text = "&Change";
             this.btnChangeOutputFile.UseVisualStyleBackColor = true;
             // 
@@ -141,7 +141,7 @@
             this.txtCompanionFile.Location = new System.Drawing.Point(87, 73);
             this.txtCompanionFile.Name = "txtCompanionFile";
             this.txtCompanionFile.Size = new System.Drawing.Size(236, 20);
-            this.txtCompanionFile.TabIndex = 14;
+            this.txtCompanionFile.TabIndex = 3;
             this.tooltipNormal.SetToolTip(this.txtCompanionFile, "The companion file that could be used to format the output path.");
             // 
             // txtCompanionFileSearchPattern
@@ -152,7 +152,7 @@
             this.txtCompanionFileSearchPattern.Location = new System.Drawing.Point(162, 47);
             this.txtCompanionFileSearchPattern.Name = "txtCompanionFileSearchPattern";
             this.txtCompanionFileSearchPattern.Size = new System.Drawing.Size(161, 20);
-            this.txtCompanionFileSearchPattern.TabIndex = 13;
+            this.txtCompanionFileSearchPattern.TabIndex = 2;
             this.txtCompanionFileSearchPattern.Text = global::EncodingConverter.Properties.Settings.Default.CompanionFileSearchPattern;
             this.ttLongRead.SetToolTip(this.txtCompanionFileSearchPattern, resources.GetString("txtCompanionFileSearchPattern.ToolTip"));
             // 
@@ -167,7 +167,8 @@
             this.tsOutput.Name = "tsOutput";
             this.tsOutput.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.tsOutput.Size = new System.Drawing.Size(256, 25);
-            this.tsOutput.TabIndex = 11;
+            this.tsOutput.TabIndex = 4;
+            this.tsOutput.TabStop = true;
             this.tsOutput.Text = "toolStrip2";
             // 
             // toolStripLabel2
@@ -196,7 +197,8 @@
             this.tsInput.Name = "tsInput";
             this.tsInput.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.tsInput.Size = new System.Drawing.Size(208, 25);
-            this.tsInput.TabIndex = 10;
+            this.tsInput.TabIndex = 7;
+            this.tsInput.TabStop = true;
             this.tsInput.Text = "toolStrip1";
             // 
             // toolStripLabel1
@@ -232,7 +234,7 @@
             this.txtPreferredInputEncoding.Location = new System.Drawing.Point(262, 102);
             this.txtPreferredInputEncoding.Name = "txtPreferredInputEncoding";
             this.txtPreferredInputEncoding.Size = new System.Drawing.Size(61, 20);
-            this.txtPreferredInputEncoding.TabIndex = 8;
+            this.txtPreferredInputEncoding.TabIndex = 6;
             this.txtPreferredInputEncoding.Text = global::EncodingConverter.Properties.Settings.Default.PreferredInputEncoding;
             this.tooltipNormal.SetToolTip(this.txtPreferredInputEncoding, "When detecting the encoding, the program will try to find the encoding that match" +
         "es the given text");
@@ -247,7 +249,7 @@
             this.chkAutoDetect.Location = new System.Drawing.Point(13, 104);
             this.chkAutoDetect.Name = "chkAutoDetect";
             this.chkAutoDetect.Size = new System.Drawing.Size(81, 17);
-            this.chkAutoDetect.TabIndex = 7;
+            this.chkAutoDetect.TabIndex = 4;
             this.chkAutoDetect.Text = "&Auto detect";
             this.chkAutoDetect.UseVisualStyleBackColor = true;
             // 
@@ -258,7 +260,7 @@
             this.linkLabelDetectInputEncoding.Location = new System.Drawing.Point(100, 105);
             this.linkLabelDetectInputEncoding.Name = "linkLabelDetectInputEncoding";
             this.linkLabelDetectInputEncoding.Size = new System.Drawing.Size(39, 13);
-            this.linkLabelDetectInputEncoding.TabIndex = 6;
+            this.linkLabelDetectInputEncoding.TabIndex = 5;
             this.linkLabelDetectInputEncoding.TabStop = true;
             this.linkLabelDetectInputEncoding.Text = "Detect";
             // 
@@ -273,7 +275,7 @@
             this.tbInputText.ReadOnly = true;
             this.tbInputText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbInputText.Size = new System.Drawing.Size(210, 241);
-            this.tbInputText.TabIndex = 6;
+            this.tbInputText.TabIndex = 0;
             // 
             // label2
             // 
@@ -292,7 +294,7 @@
             this.btnSave.Location = new System.Drawing.Point(6, 263);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(214, 23);
-            this.btnSave.TabIndex = 18;
+            this.btnSave.TabIndex = 0;
             this.btnSave.Text = "Convert and &Save";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
@@ -304,7 +306,7 @@
             this.linkAbout.Location = new System.Drawing.Point(502, 268);
             this.linkAbout.Name = "linkAbout";
             this.linkAbout.Size = new System.Drawing.Size(35, 13);
-            this.linkAbout.TabIndex = 17;
+            this.linkAbout.TabIndex = 1;
             this.linkAbout.TabStop = true;
             this.linkAbout.Text = "About";
             // 
@@ -316,7 +318,7 @@
             this.txtOutputPath.Name = "txtOutputPath";
             this.txtOutputPath.ReadOnly = true;
             this.txtOutputPath.Size = new System.Drawing.Size(179, 20);
-            this.txtOutputPath.TabIndex = 1;
+            this.txtOutputPath.TabIndex = 2;
             // 
             // btnOpen
             // 
@@ -353,7 +355,7 @@
             this.btnApplyOutputFormatting.Location = new System.Drawing.Point(245, 19);
             this.btnApplyOutputFormatting.Name = "btnApplyOutputFormatting";
             this.btnApplyOutputFormatting.Size = new System.Drawing.Size(78, 23);
-            this.btnApplyOutputFormatting.TabIndex = 10;
+            this.btnApplyOutputFormatting.TabIndex = 1;
             this.btnApplyOutputFormatting.Text = "Apply";
             this.btnApplyOutputFormatting.UseVisualStyleBackColor = true;
             // 
@@ -382,7 +384,7 @@
             this.gbInput.Location = new System.Drawing.Point(0, 0);
             this.gbInput.Name = "gbInput";
             this.gbInput.Size = new System.Drawing.Size(329, 150);
-            this.gbInput.TabIndex = 4;
+            this.gbInput.TabIndex = 0;
             this.gbInput.TabStop = false;
             this.gbInput.Text = "Input";
             // 
@@ -418,7 +420,7 @@
             this.splitContainer1.Panel2MinSize = 100;
             this.splitContainer1.Size = new System.Drawing.Size(549, 257);
             this.splitContainer1.SplitterDistance = 333;
-            this.splitContainer1.TabIndex = 19;
+            this.splitContainer1.TabIndex = 0;
             // 
             // MainForm4
             // 
