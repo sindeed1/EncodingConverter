@@ -308,7 +308,7 @@ namespace EncodingConverter.Forms
                 {
                     Trace.TraceInformation("Output file already exists. Ask the user whether to overwrite or not.");
                     if (MessageBox.Show(Properties.Resources.Message_Q_OutputFileAlreadyExists_Overwrite
-                        , "Convert"
+                        , Properties.Resources.ProgramTitel
                         , MessageBoxButtons.OKCancel) != DialogResult.OK)
                     {
                         Trace.TraceInformation("User didn't chose OK, Do not overwrite.");
@@ -327,12 +327,14 @@ namespace EncodingConverter.Forms
             }
             catch (System.Security.SecurityException ex)
             {
-                MessageBox.Show(Properties.Resources.Message_Err_NoPermissionToPerformConversion + ex.ToText());
+                MessageBox.Show(Properties.Resources.Message_Err_NoPermissionToPerformConversion + ex.ToText()
+                    , Properties.Resources.ProgramTitel);
                 return;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText());
+                MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText()
+                    , Properties.Resources.ProgramTitel);
                 ex.WriteToTrace();
                 return;
             }
@@ -385,8 +387,9 @@ namespace EncodingConverter.Forms
 
         private void linkAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            DialogResult res = MessageBox.Show(this, Properties.Resources.Message_About,
-                Properties.Resources.ProgramTitel, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DialogResult res = MessageBox.Show(this
+                , string.Format(Properties.Resources.Message_About, Application.ProductVersion)
+                , Properties.Resources.ProgramTitel, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void InputControl_DragDrop(object sender, DragEventArgs e)
         {

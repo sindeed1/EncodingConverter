@@ -118,10 +118,11 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ammar J. Alhamwi
+        ///   Looks up a localized string similar to Version:{0}
+        ///Created by Ammar J. Alhamwi
         ///
-        ///Inspired by &quot;AHD Encoding Converter&quot; by Ala Ibrahim Hadid
-        ///Encoding Converter is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE..
+        ///Inspired by &quot;AHD Encoding Converter&quot; by Ala Ibrahim Hadid.
+        ///Encoding Converter is distributed AS IS in the hope that it will be useful, but WITHOUT ANY WARRANTY..
         /// </summary>
         internal static string Message_About {
             get {
