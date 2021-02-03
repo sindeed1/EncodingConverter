@@ -196,7 +196,7 @@
             this.tsInput.Location = new System.Drawing.Point(0, 120);
             this.tsInput.Name = "tsInput";
             this.tsInput.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsInput.Size = new System.Drawing.Size(208, 25);
+            this.tsInput.Size = new System.Drawing.Size(239, 25);
             this.tsInput.TabIndex = 7;
             this.tsInput.TabStop = true;
             this.tsInput.Text = "toolStrip1";
@@ -263,6 +263,7 @@
             this.linkLabelDetectInputEncoding.TabIndex = 5;
             this.linkLabelDetectInputEncoding.TabStop = true;
             this.linkLabelDetectInputEncoding.Text = "Detect";
+            this.tooltipNormal.SetToolTip(this.linkLabelDetectInputEncoding, "Detect input encoding");
             // 
             // tbInputText
             // 

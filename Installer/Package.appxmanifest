@@ -7,13 +7,13 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="1098ef53-d56d-4ff5-9b3e-db5ee5ca4797"
-    Publisher="CN=AA"
-    Version="1.0.0.0" />
+    Name="22202Sindeed.EncodingConverter"
+    Publisher="CN=FB05F013-9F05-431D-88DA-A51686E06091"
+    Version="3.0.3.0" />
 
   <Properties>
-    <DisplayName>Installer</DisplayName>
-    <PublisherDisplayName>AA</PublisherDisplayName>
+    <DisplayName>Encoding Converter</DisplayName>
+    <PublisherDisplayName>Sindeed</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
@@ -31,19 +31,18 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="EncodingConverterInstaller"
-        Description="Installer for the Encoding Converter."
+        DisplayName="Encoding Converter"
+        Description="Encoding Converter is an open source tool to convert the encoding of files."
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
+        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
 
   <Capabilities>
-    <Capability Name="internetClient" />
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>
 </Package>
