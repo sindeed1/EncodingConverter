@@ -196,7 +196,7 @@
             this.tsInput.Location = new System.Drawing.Point(0, 120);
             this.tsInput.Name = "tsInput";
             this.tsInput.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsInput.Size = new System.Drawing.Size(239, 25);
+            this.tsInput.Size = new System.Drawing.Size(208, 25);
             this.tsInput.TabIndex = 7;
             this.tsInput.TabStop = true;
             this.tsInput.Text = "toolStrip1";
@@ -433,7 +433,7 @@
             this.Controls.Add(this.linkAbout);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(500000, 330);
-            this.MinimumSize = new System.Drawing.Size(16, 330);
+            this.MinimumSize = new System.Drawing.Size(16, 0);
             this.Name = "MainForm4";
             this.Text = "Encoding Converter";
             this.tsOutput.ResumeLayout(false);
