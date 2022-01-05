@@ -429,7 +429,7 @@
             this.btnTogleSidePanel.Text = "...";
             this.btnTogleSidePanel.UseVisualStyleBackColor = true;
             // 
-            // MainForm4
+            // MainForm5
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -440,8 +440,8 @@
             this.Controls.Add(this.linkAbout);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(500000, 330);
-            this.MinimumSize = new System.Drawing.Size(0, 330);
-            this.Name = "MainForm4";
+            this.MinimumSize = new System.Drawing.Size(16, 330);
+            this.Name = "MainForm5";
             this.Text = "MainForm4";
             this.tsOutput.ResumeLayout(false);
             this.tsOutput.PerformLayout();

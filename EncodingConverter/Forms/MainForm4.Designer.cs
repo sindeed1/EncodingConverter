@@ -433,7 +433,7 @@
             this.Controls.Add(this.linkAbout);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(500000, 330);
-            this.MinimumSize = new System.Drawing.Size(16, 0);
+            this.MinimumSize = new System.Drawing.Size(16, 39);
             this.Name = "MainForm4";
             this.Text = "Encoding Converter";
             this.tsOutput.ResumeLayout(false);

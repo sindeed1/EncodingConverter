@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>EncodingConverter</RootNamespace>
     <AssemblyName>enco</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>false</Deterministic>
@@ -115,6 +115,7 @@
     <Compile Include="Commands\DetectEncodingCommad.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ShowUICommand.cs" />
+    <Compile Include="CompanionFileSearchPatternFormatter.cs" />
     <Compile Include="Controls\SearchableEncodingListView.cs">
       <SubType>Component</SubType>
     </Compile>

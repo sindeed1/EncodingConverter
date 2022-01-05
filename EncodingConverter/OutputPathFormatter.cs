@@ -166,15 +166,20 @@ namespace EncodingConverter
                 Directory.SetCurrentDirectory(directory);
                 Trace.TraceInformation("New current directory '" + Directory.GetCurrentDirectory() + "'");
 
+                //Fill the formatting patterns with patterns that correspond to InputFile.
+                //Those formatting arguments begins at index of 0:
                 FillPathParemeters(_OutputPathFormattingParameters, 0, file);
 
                 if (!string.IsNullOrWhiteSpace(_CompanionFileSearchPattern) && _CompanionFileSearchPatterns != null)
                 {
                     var dir = file.Directory;
                     FileInfo compFile = null;
+                    object[] inputFileFormattingParams = new object[3];
+                    Array.Copy(_OutputPathFormattingParameters, 0, inputFileFormattingParams, 0, 3);
                     for (int i = 0; i < _CompanionFileSearchPatterns.Length; i++)
                     {
                         var searchPattern = _CompanionFileSearchPatterns[i];
+                        searchPattern = string.Format(searchPattern, _OutputPathFormattingParameters);
                         var commpFiles = dir.EnumerateFiles(searchPattern, SearchOption.TopDirectoryOnly);
                         compFile = commpFiles.FirstOrDefault();
                         if (compFile != null)
