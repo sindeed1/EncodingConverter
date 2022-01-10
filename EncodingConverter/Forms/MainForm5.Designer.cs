@@ -90,7 +90,7 @@
             this.label6.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label6.Location = new System.Drawing.Point(6, 24);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(98, 13);
+            this.label6.Size = new System.Drawing.Size(105, 13);
             this.label6.TabIndex = 8;
             this.label6.Text = "Output path format:";
             // 
@@ -100,7 +100,7 @@
             this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label5.Location = new System.Drawing.Point(7, 50);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.Size = new System.Drawing.Size(48, 13);
             this.label5.TabIndex = 6;
             this.label5.Text = "Save to:";
             // 
@@ -121,7 +121,7 @@
             this.label9.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label9.Location = new System.Drawing.Point(6, 77);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(79, 13);
+            this.label9.Size = new System.Drawing.Size(81, 13);
             this.label9.TabIndex = 15;
             this.label9.Text = "Companion file:";
             // 
@@ -131,7 +131,7 @@
             this.label8.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label8.Location = new System.Drawing.Point(6, 50);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(150, 13);
+            this.label8.Size = new System.Drawing.Size(155, 13);
             this.label8.TabIndex = 16;
             this.label8.Text = "Companion file search pattern:";
             // 
@@ -221,7 +221,7 @@
             this.label7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label7.Location = new System.Drawing.Point(159, 105);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(100, 13);
+            this.label7.Size = new System.Drawing.Size(103, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "Preferred encoding:";
             // 
@@ -247,7 +247,7 @@
             this.chkAutoDetect.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chkAutoDetect.Location = new System.Drawing.Point(13, 104);
             this.chkAutoDetect.Name = "chkAutoDetect";
-            this.chkAutoDetect.Size = new System.Drawing.Size(81, 17);
+            this.chkAutoDetect.Size = new System.Drawing.Size(83, 17);
             this.chkAutoDetect.TabIndex = 7;
             this.chkAutoDetect.Text = "&Auto detect";
             this.chkAutoDetect.UseVisualStyleBackColor = true;
@@ -304,7 +304,7 @@
             this.linkAbout.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.linkAbout.Location = new System.Drawing.Point(502, 268);
             this.linkAbout.Name = "linkAbout";
-            this.linkAbout.Size = new System.Drawing.Size(35, 13);
+            this.linkAbout.Size = new System.Drawing.Size(36, 13);
             this.linkAbout.TabIndex = 17;
             this.linkAbout.TabStop = true;
             this.linkAbout.Text = "About";

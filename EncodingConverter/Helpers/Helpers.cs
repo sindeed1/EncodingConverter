@@ -170,7 +170,7 @@ namespace EncodingConverter
 
         static bool ProcessDefaultCommand(string[] args, ICommandLineCommand defaultCommand)
         {
-            Console.WriteLine("No default command line. Further processing is not possible.");
+            //Console.WriteLine("No default command line. Further processing is not possible.");
             Trace.TraceInformation("Processing default command '");
 
             if (defaultCommand == null)
