@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace EncodingConverter
         [STAThread]
         static void Main(string[] args)
         {
+            //AllocConsole();
             try
             {
                 args.ProcessCommandLine(Program.GetCommands, new ShowUICommand());
@@ -44,11 +46,17 @@ namespace EncodingConverter
         {
             if (_Commands == null)
             {
-                _Commands = new ICommandLineCommand[3];
-                int index = 0;
-                _Commands[index++] = new ConvertCommand();
-                _Commands[index++] = new ShowUICommand();
-                _Commands[index++] = new ConsoleCommand();
+                var commands = new List<ICommandLineCommand>();
+                commands.Add(new HelpComman());
+                commands.Add(new ConvertCommand());
+                commands.Add(new ShowUICommand());
+                commands.Add(new ConsoleCommand());
+
+                _Commands = commands.ToArray();
+                //int index = 0;
+                //_Commands[index++] = new ConvertCommand();
+                //_Commands[index++] = new ShowUICommand();
+                //_Commands[index++] = new ConsoleCommand();
             }
 
 
@@ -66,6 +74,10 @@ namespace EncodingConverter
         public static Properties.Settings Settings { get { return Properties.Settings.Default; } }
 
         public static EncodingConverterCore ECC { get { return _ECC; } }
+
+        //[DllImport("kernel32.dll", SetLastError = true)]
+        //[return: MarshalAs(UnmanagedType.Bool)]
+        //static extern bool AllocConsole();
 
     }
 }

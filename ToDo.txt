@@ -8,3 +8,7 @@ The program already supports command line parameters.
 For Winforms, however, the console will not show up.
 We will have to call, attach a console and maybe free the console before termination
 of course we also need to test the implementation!
+
+Currently: Console command works and writes output, when in command line, to the console window.
+
+Todo better: write description of the commands that includes the parameters of each commend in the long description of the command.

@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 
 namespace EncodingConverter
 {
-    static internal class Win32Helper
+    static class Win32Helper
     {
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool AllocConsole();
+        public static extern bool AllocConsole();
     }
 }
