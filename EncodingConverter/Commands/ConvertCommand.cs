@@ -11,7 +11,7 @@ namespace EncodingConverter.Commands
     /// </summary>
     class ConvertCommand : ICommandLineCommand
     {
-        const string CLARG_SWITCH = "-";
+        const string CLARG_SWITCH = "-";//CommandLineArgument
         const string CLARG_InputEncoding = "ie:";
         const string CLARG_OutputEncoding = "oe:";
         const string CLARG_Convert = "convert";

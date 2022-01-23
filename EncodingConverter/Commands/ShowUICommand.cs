@@ -54,11 +54,14 @@ namespace EncodingConverter.Commands
             }
 
             if (_FormType == null)
+            {
                 InitForm(typeof(MainForm4));
+            }
             else
             {
                 InitForm(_FormType);
             }
+            Trace.TraceInformation("Run Application using form: "+_Form.GetType().FullName);
             Application.Run(_Form);
         }
 

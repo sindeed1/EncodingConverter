@@ -25,9 +25,19 @@ namespace EncodingConverter
     //, CompanionFile fileExtention   //{32} extension of the companion file
     //, "", "", "", "", "", "", ""    //{33-39} reserved and empty
 
+    /// <summary>
+    /// Formats the Output path using parameters calculated from different sources.
+    /// </summary>
+    /// <remarks>The <see cref="OutputPathFormatter"/> is an attached sub-system that uses the 
+    /// <see cref="EncodingConverterCore"/> as one of the sources. It will update the formated output path back to the
+    /// <see cref="EncodingConverterCore"/>.</remarks>
     class OutputPathFormatter
     {
         static char[] _SplitChars = { '|' };
+
+        public static string PARAM_InputFile_DirectoryPath = "{0}";// directory path;
+        public static string PARAM_InputFile_FileNameWithoutExtention = "{1}";// file name without extension
+        public static string PARAM_InputFile_Extention = "{2}";// extension
 
         public event EventHandler FormatStringChanged;
         public event EventHandler CompanionFileSearchPatternChanged;
@@ -156,15 +166,20 @@ namespace EncodingConverter
                 Directory.SetCurrentDirectory(directory);
                 Trace.TraceInformation("New current directory '" + Directory.GetCurrentDirectory() + "'");
 
+                //Fill the formatting patterns with patterns that correspond to InputFile.
+                //Those formatting arguments begins at index of 0:
                 FillPathParemeters(_OutputPathFormattingParameters, 0, file);
 
                 if (!string.IsNullOrWhiteSpace(_CompanionFileSearchPattern) && _CompanionFileSearchPatterns != null)
                 {
                     var dir = file.Directory;
                     FileInfo compFile = null;
+                    object[] inputFileFormattingParams = new object[3];
+                    Array.Copy(_OutputPathFormattingParameters, 0, inputFileFormattingParams, 0, 3);
                     for (int i = 0; i < _CompanionFileSearchPatterns.Length; i++)
                     {
                         var searchPattern = _CompanionFileSearchPatterns[i];
+                        searchPattern = string.Format(searchPattern, _OutputPathFormattingParameters);
                         var commpFiles = dir.EnumerateFiles(searchPattern, SearchOption.TopDirectoryOnly);
                         compFile = commpFiles.FirstOrDefault();
                         if (compFile != null)
@@ -257,12 +272,20 @@ namespace EncodingConverter
         }
         #endregion
 
+        /// <summary>
+        /// Updates the <see cref="EncodingConverterCore.OutputFilePath"/> with the
+        /// new formatted value.
+        /// </summary>
         void UpdateFormattedText()
         {
             if (_ECC == null)
                 return;
             _ECC.OutputFilePath = this.FormatOutputpath();
         }
+        /// <summary>
+        /// Returns a formatted output path.
+        /// </summary>
+        /// <returns></returns>
         public string FormatOutputpath()
         {
             if (string.IsNullOrEmpty(_FormatString))

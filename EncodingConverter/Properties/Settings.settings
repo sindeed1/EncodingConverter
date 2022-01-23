@@ -26,5 +26,8 @@
     <Setting Name="CompanionFileSearchPattern" Type="System.String" Scope="User">
       <Value Profile="(Default)">*.mp4|*.mkv|*.avi</Value>
     </Setting>
+    <Setting Name="LastOutputEncoding" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

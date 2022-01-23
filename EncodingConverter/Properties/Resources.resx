@@ -137,10 +137,12 @@
     <value>..\Resources\Encoding Converter 32x32.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Message_About" xml:space="preserve">
-    <value>Ammar J. Alhamwi
+    <value>Version:{0}
+Created by Ammar J. Alhamwi
 
-Inspired by "AHD Encoding Converter" by Ala Ibrahim Hadid
-Encoding Converter is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</value>
+Inspired by "AHD Encoding Converter" by Ala Ibrahim Hadid.
+Encoding Converter is distributed AS IS in the hope that it will be useful, but WITHOUT ANY WARRANTY.</value>
+    <comment>{0} is Version</comment>
   </data>
   <data name="Message_BrowseWhereYouWantToSaveTheFile" xml:space="preserve">
     <value>Browse where you want to save the file</value>
@@ -165,6 +167,9 @@ Encoding Converter is distributed in the hope that it will be useful, but WITHOU
   </data>
   <data name="Message_PleaseBrowseWhereToSaveTheFileFirst" xml:space="preserve">
     <value>Please browse where to save the file first !</value>
+  </data>
+  <data name="Message_Q_OutputFileAlreadyExists_Overwrite" xml:space="preserve">
+    <value>Output file already exists. Do you want to overwrite it?</value>
   </data>
   <data name="ProgramTitel" xml:space="preserve">
     <value>Encoding Converter</value>

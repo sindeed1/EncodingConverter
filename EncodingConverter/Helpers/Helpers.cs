@@ -68,6 +68,10 @@ namespace EncodingConverter
     }
     static class ExceptionHelper
     {
+        /// <summary>
+        /// Writes the <see cref="Exception"/> to the trace as <see cref="Trace.TraceError(string)"/>.
+        /// </summary>
+        /// <param name="ex"></param>
         public static void WriteToTrace(this Exception ex)
         {
             Trace.TraceError(ex.ToText());
@@ -166,7 +170,7 @@ namespace EncodingConverter
 
         static bool ProcessDefaultCommand(string[] args, ICommandLineCommand defaultCommand)
         {
-            Console.WriteLine("No default command line. Further processing is not possible.");
+            //Console.WriteLine("No default command line. Further processing is not possible.");
             Trace.TraceInformation("Processing default command '");
 
             if (defaultCommand == null)

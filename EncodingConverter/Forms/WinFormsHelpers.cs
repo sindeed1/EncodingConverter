@@ -25,6 +25,13 @@ namespace EncodingConverter.Forms
             UpdateLock<T> binding = new UpdateLock<T>(property1, obj1ChangeEvent, property2, obj2ChangeEvent);
             return binding;
         }
+        /// <summary>
+        /// Binds the <see cref="Control.Text"/> property to a given <paramref name="property2"/> in both directions (as a target and destination).
+        /// </summary>
+        /// <param name="textBox"></param>
+        /// <param name="property2"></param>
+        /// <param name="obj2ChangeEvent"></param>
+        /// <returns></returns>
         public static UpdateLock<String> BindText(this Control textBox, PropertyLink<String> property2, EventLink obj2ChangeEvent)
         {
             PropertyLink<String> property1 = new PropertyLink<String>(() => textBox.Text, x => textBox.Text = x);

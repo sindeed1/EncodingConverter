@@ -54,18 +54,27 @@ namespace EncodingConverter
         #endregion
 
 
+        /// <summary>
+        /// Returns the input file as a text encoded using <see cref="InputEncoding"/>.
+        /// </summary>
         public string InputText
         {
             get
             {
+                //To save processing time, InputText will be processed one time and stored
+                //in the _InputText. If it was null then we should read the file; Otherwise
+                //we can just return the text:
                 if (_InputText != null)
                     return _InputText;
 
+                //There is no cashed _InputText, can we get the text:
                 if (_InputEncoding == null || string.IsNullOrWhiteSpace(_InputFilePath))
                 {
+                    //There is no file to read, OR there is no encoding specified, return.
                     return null;
                 }
 
+                //Read the file:
                 _InputText = File.ReadAllText(_InputFilePath, _InputEncoding);
                 return _InputText;
             }
@@ -89,6 +98,9 @@ namespace EncodingConverter
             get { return _InputFilePath; }
             set
             {
+                //ToDo: Change to let the OS/Framework to decide if the new value and _InputFile are the same.
+                //The core should not be sensitive to changes in the path if it returns the same file.
+                //A reasonable way to do that is by using FileInfo instead of FilePath as a variable.
                 if (_InputFilePath == value)
                     return;
 
@@ -169,9 +181,15 @@ namespace EncodingConverter
 
         public EncodingInfo[] Encodings { get { return _Encodings; } }
 
+        public void DetectInputEncoding()
+        {
+            this.InputEncoding = DetectInputEncoding(_InputFilePath, _PreferredInputEncoding);
+        }
         /// <summary>
-        /// 
+        /// Reads the <see cref="InputFilePath"/> file using the <see cref="InputEncoding"/>
+        /// and writes it to <see cref="OutputFilePath"/> using the <see cref="OutputEncoding"/>.
         /// </summary>
+        /// <remarks>This method will overwrite the <see cref="OutputFilePath"/> if it already exists.</remarks>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="PathTooLongException"></exception>
@@ -258,6 +276,7 @@ namespace EncodingConverter
         }
         public void RefreshInputFielPath()
         {
+            //The InputFilePath has changed. The _InputText is no more valid:
             _InputText = null;
 
             Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.InputFilePath) + ".set:'" + _InputFilePath + "'");
@@ -266,7 +285,8 @@ namespace EncodingConverter
             //Encoding encoding;
             if (_AutoCheckInputEncoding)
             {
-                this.InputEncoding = DetectInputEncdoing(_InputFilePath, _PreferredInputEncoding);
+                DetectInputEncoding();
+                //this.InputEncoding = DetectInputEncdoing(_InputFilePath, _PreferredInputEncoding);
             }
         }
         public static void Convert(string inputFile, Encoding inputEncoding, string outputFile, Encoding outputEncoding)
@@ -275,23 +295,31 @@ namespace EncodingConverter
             text = File.ReadAllText(inputFile, inputEncoding);
             File.WriteAllText(outputFile, text, outputEncoding);
         }
-        private static Encoding DetectInputEncdoing(string inputPath, string preferredString)
+        private static Encoding DetectInputEncoding(string inputPath, string preferredString)
         {
             if (!File.Exists(inputPath))
             {
+                TraceError(nameof(DetectInputEncoding), nameof(inputPath) + " does not exist!");
                 throw new FileNotFoundException(Properties.Resources.Message_InputFileDoesNotExsist, inputPath);
             }
 
             // do auto-detect
             //isDetectingInputEncoding = true;
 
-            byte[] buf;
+            byte[] buf = null;
             FileStream stream = null;
             try
             {
                 stream = new FileStream(inputPath, FileMode.Open, FileAccess.Read);
                 buf = new byte[stream.Length];
                 stream.Read(buf, 0, (int)stream.Length);
+            }
+            catch (Exception ex)
+            {
+                TraceWarning(nameof(DetectInputEncoding), "Exception while reading input file '" +
+                    inputPath + "': \n"
+                    );
+                ex.WriteToTrace();
             }
             finally
             {
@@ -308,25 +336,43 @@ namespace EncodingConverter
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceWarning("Error by detecting the encoding of the file '" + inputPath + "'.");
+                    TraceWarning("Error while detecting the encoding of the file '" + inputPath + "'.");
                     ex.WriteToTrace();
+                    TraceWarning("Execution will continue with no detected encodings.");
                     encoding = null;
                 }
             }
             else
             {
-                Encoding[] encodings;
-                encodings = EncodingTools.DetectInputCodepages(buf, 10);
-                var searchStrings = preferredString.ToLower().Split(' ');
-                var prefferedEncodings = encodings.Where(x => x.EncodingName.ToLower().Contains(searchStrings)).ToArray();
-                if (prefferedEncodings == null || prefferedEncodings.Length <= 0)
+                //User has provided a preferred encoding. we have to use it
+                Encoding[] encodings = null;
+                try
                 {
-                    encoding = encodings[0];
+                    encodings = EncodingTools.DetectInputCodepages(buf, 10);
+                }
+                catch (Exception ex)
+                {
+                    TraceWarning("Error while detecting the encoding of the file '" + inputPath + "'.");
+                    ex.WriteToTrace();
+                }
+                if (encodings == null || encodings.Length <= 0)
+                {
+                    TraceWarning("Execution will continue with no detected encodings.");
+                    encoding = null;
                 }
                 else
                 {
-                    Trace.TraceInformation(string.Format("Found '{0}' encodings with the preferred encoding text '{1}'", prefferedEncodings.Length, preferredString));
-                    encoding = prefferedEncodings[0];
+                    var searchStrings = preferredString.ToLower().Split(' ');
+                    var prefferedEncodings = encodings.Where(x => x.EncodingName.ToLower().Contains(searchStrings)).ToArray();
+                    if (prefferedEncodings == null || prefferedEncodings.Length <= 0)
+                    {
+                        encoding = encodings[0];
+                    }
+                    else
+                    {
+                        TraceInformation(string.Format("Found '{0}' encodings with the preferred encoding text '{1}'", prefferedEncodings.Length, preferredString));
+                        encoding = prefferedEncodings[0];
+                    }
                 }
             }
 
@@ -538,9 +584,21 @@ namespace EncodingConverter
 
             return true;
         }
-    }
+        #endregion//
 
-    #endregion//
+        #region Trace helpers
+        static void TraceInfo(string methodName, string msg) { Trace.TraceInformation(FormatTraceMessage(methodName, msg)); }
+        static void TraceInformation(string msg) { Trace.TraceInformation(FormatTraceMessage(msg)); }
+        static void TraceError(string msg) { Trace.TraceError(FormatTraceMessage(msg)); }
+        static void TraceError(string methodName, string msg) { Trace.TraceError(FormatTraceMessage(methodName, msg)); }
+        static void TraceWarning(string msg) { Trace.TraceWarning(FormatTraceMessage(msg)); }
+        static void TraceWarning(string methodName, string msg) { Trace.TraceWarning(FormatTraceMessage(methodName, msg)); }
+        static string FormatTraceMessage(string methodName, string msg)
+        {
+            return nameof(EncodingConverterCore) + "." + methodName + ":" + msg;
+        }
+        static string FormatTraceMessage(string msg) { return nameof(EncodingConverterCore) + ":" + msg; }
 
-    //class
+        #endregion
+    }//class
 }//namespace

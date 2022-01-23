@@ -26,6 +26,8 @@ namespace EncodingConverter.Forms
 
         OutputPathFormatter _OPF;
 
+        bool _AllowOverwriteOutputFile;
+
         OneWayUpdater<string> _InputTextLink;
 
         int _Panel2Width;
@@ -46,7 +48,6 @@ namespace EncodingConverter.Forms
             evOutputEncoding = _TSOutputEncodingViewer.EncodingsViewer;
 
             _OPF = new OutputPathFormatter(Program.ECC);
-            AddEventHandlers();
 
             this.Icon = Properties.Resources.Icon_Encoding_Converter_32x32;
 
@@ -61,11 +62,15 @@ namespace EncodingConverter.Forms
 
             _OFD = new Lazy<OpenFileDialog>();
             _SFD = new Lazy<SaveFileDialog>();
+
+            AddEventHandlers();
         }
         void AddEventHandlers()
         {
-            //Binding to Encoding converter core:
             EncodingConverterCore ECC = Program.ECC;
+            #region Bindings
+
+            //Binding to Encoding converter core:
             //Bind 'ECC.AutoDetectInputEncoding' to 'chkAutoDetect.Checked':
             WinFormsHelpers.Bind(new PropertyLink<bool>(() => chkAutoDetect.Checked, x => chkAutoDetect.Checked = x)
                 , new EventLink(chkAutoDetect, nameof(CheckBox.CheckedChanged))
@@ -80,8 +85,10 @@ namespace EncodingConverter.Forms
             txtInputPath.BindText(new PropertyLink<string>(() => ECC.InputFilePath, x => ECC.InputFilePath = x)
                 , new EventLink(ECC, nameof(ECC.InputFilePathChanged)))
                 .UpdateObj2To1();
+
+
             //Bind 'ECC.OutputFilePath' to 'txtOutputPath':
-            txtOutputPath.BindText(new PropertyLink<string>(() => ECC.OutputFilePath, x => ECC.OutputFilePath = x)
+            txtOutputPath.BindText(new PropertyLink<string>(() => ECC.OutputFilePath, (x) => { ECC.OutputFilePath = x; })
                 , new EventLink(ECC, nameof(ECC.OutputFilePathChanged)))
                 .UpdateObj2To1();
             //Bind 'ECC.InputText' to 'tbInputText':
@@ -102,21 +109,47 @@ namespace EncodingConverter.Forms
             //Bind 'ECC.InputEncoding' to 'evInputEncoding.SelectedEncodingInfo':
             WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evInputEncoding.SelectedEncodingInfo, x => evInputEncoding.SelectedEncodingInfo = x)
                 , new EventLink(evInputEncoding, nameof(evInputEncoding.SelectedEncodingInfoChanged))
-                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.InputEncoding.CodePage), x => ECC.InputEncoding = x?.GetEncoding())
+                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.InputEncoding?.CodePage), x => ECC.InputEncoding = x?.GetEncoding())
                 , inputEncodingEventLink)
                 .UpdateObj2To1();
             //Bind 'ECC.InputEncoding' to 'lblInputEncoding':
             tsddInputEncoding.BindTextAsDestination(() => ECC.InputEncoding?.EncodingName, inputEncodingEventLink).Update();
 
-            //Bind 'ECC.OutputEncoding' to 'evOutputEncoding.SelectedEncodingInfo':
-            var outputEncodingEventLink = new EventLink(ECC, nameof(ECC.OutputEncodingChanged));
-            WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evOutputEncoding.SelectedEncodingInfo, x => evOutputEncoding.SelectedEncodingInfo = x)
+            //Bind 'ECC.OutputEncoding' to 'evOutputEncoding.SelectedEncodingInfo' and 'Settings.LastOutputEncoding':
+            Properties.Settings defSet = Properties.Settings.Default;
+            //1- Setup PropertyLink to 'ECC.OutputEncoding':
+            var ECCOutputEncodingPropertyLink = new PropertyLink<Encoding>
+                        (() => ECC.OutputEncoding//getter
+                        , x => ECC.OutputEncoding = x);//setter
+
+            //2- Setup EventLink of 'OutputEncodingChanged':
+            var ECCOutputEncodingEventLink = new EventLink(ECC, nameof(ECC.OutputEncodingChanged));
+            //3- Now make the Bindings:
+            //  Bind 'ECC.OutputEncoding' to 'Settings.LastOutputEncoding':
+            WinFormsHelpers.Bind(new PropertyLink<Encoding>
+                        (() => encodingInfos?.FirstOrDefault(x => x.CodePage == defSet.LastOutputEncoding)?.GetEncoding()
+                        , x => defSet.LastOutputEncoding = x.CodePage)
                 , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
-                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.OutputEncoding.CodePage), x => ECC.OutputEncoding = x?.GetEncoding())
-                , outputEncodingEventLink)
+                , ECCOutputEncodingPropertyLink
+                , ECCOutputEncodingEventLink)
+                .UpdateObj1To2();//Update Settings to ECC.
+
+            //  Bind 'ECC.OutputEncoding' to 'evOutputEncoding.SelectedEncodingInfo':
+            //WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evOutputEncoding.SelectedEncodingInfo, x => evOutputEncoding.SelectedEncodingInfo = x)
+            //    , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
+            //    , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.OutputEncoding.CodePage), x => ECC.OutputEncoding = x?.GetEncoding())
+            //    , ECCOutputEncodingEventLink)
+            //    .UpdateObj2To1();
+            WinFormsHelpers.Bind(new PropertyLink<Encoding>(
+                        () => evOutputEncoding.SelectedEncodingInfo.GetEncoding()
+                        , x => evOutputEncoding.SelectedEncodingInfo = encodingInfos?.FirstOrDefault(ei => x?.CodePage == ei.CodePage))
+                , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
+                , ECCOutputEncodingPropertyLink
+                , ECCOutputEncodingEventLink)
                 .UpdateObj2To1();
-            //Bind 'ECC.OutputEncoding' to 'lblOutputEncoding':
-            tsddOutputEncoding.BindTextAsDestination(() => ECC.OutputEncoding?.EncodingName, outputEncodingEventLink).Update();
+
+            //  Bind 'ECC.OutputEncoding' to 'lblOutputEncoding':
+            tsddOutputEncoding.BindTextAsDestination(() => ECC.OutputEncoding?.EncodingName, ECCOutputEncodingEventLink).Update();
 
 
             txtOutputPathFormat.BindText(new PropertyLink<string>(() => _OPF.FormatString, x => _OPF.FormatString = x)
@@ -143,6 +176,9 @@ namespace EncodingConverter.Forms
             //    , new PropertyLink<EncodingsCollection>(() => evInputEncoding.FavoriteEncodingInfos, x => evInputEncoding.FavoriteEncodingInfos = x)
             //    , new EventLink(evInputEncoding, nameof(evInputEncoding.FavoriteEncodingInfosChanged)))
             //    ;
+            #endregion//Bindings
+
+            ECC.OutputFilePathChanged += ECC_OutputFilePathChanged;
 
             this.splitContainer1.AllowDrop = true;
             this.splitContainer1.DragEnter += InputControl_DragEnter;
@@ -150,14 +186,20 @@ namespace EncodingConverter.Forms
 
             this.linkAbout.LinkClicked += this.linkAbout_LinkClicked;
             this.btnChangeOutputFile.Click += this.btnChangeOutputFile_Click;
-            this.linkLabel1.LinkClicked += this.linkLabel1_LinkClicked;
+            this.linkLabelDetectInputEncoding.LinkClicked += this.linkLabelDetectInputEncoding_LinkClicked;
             this.btnSave.Click += this.btnSave_Click;
             this.btnOpen.Click += BtnOpen_Click;
             this.btnApplyOutputFormatting.Click += BtnApplyOutputFormatting_Click;
 
             this.Load += MainForm_Load;
             this.FormClosed += FormMain_FormClosed;
+
+            this.txtInputPath.TextChanged += TxtPath_TextChanged;
+            this.txtOutputPath.TextChanged += TxtPath_TextChanged;
+            this.txtCompanionFile.TextChanged += TxtPath_TextChanged; ;
         }
+
+
 
         #endregion
 
@@ -199,6 +241,21 @@ namespace EncodingConverter.Forms
         public event Action DefSetSplitterDistanceChanged;
 
         #region ...Event handlers...
+        private void TxtPath_TextChanged(object sender, EventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            if (TextRenderer.MeasureText(txt.Text, txt.Font).Width > txt.Width)
+            {
+                this.ttLongRead.SetToolTip(txt, txt.Text);
+            }
+            else
+            {
+                this.ttLongRead.SetToolTip(txt, string.Empty);
+            }
+        }
+
+        private void ECC_OutputFilePathChanged(object sender, EventArgs e) { _AllowOverwriteOutputFile = false; }
+
         private void ECC_InputTextChanged(object sender, EventArgs e)
         {
             if (!splitContainer1.Panel2Collapsed && File.Exists(Program.ECC.InputFilePath)) tbInputText.Text = Program.ECC.InputText;
@@ -234,11 +291,34 @@ namespace EncodingConverter.Forms
             }
             if (evInputEncoding.SelectedEncodingInfo == null)
             {
+                Trace.TraceInformation("Can not convert. Input encoding is not specified.");
                 return;
             }
             if (evOutputEncoding.SelectedEncodingInfo == null)
             {
+                Trace.TraceInformation("Can not convert. Output encoding is not specified.");
                 return;
+            }
+            if (_AllowOverwriteOutputFile)
+                Trace.TraceInformation("Overwrite permission already granted.");
+            else
+            {
+                Trace.TraceInformation("Overwrite permission is not already granted.");
+                if (File.Exists(txtOutputPath.Text))
+                {
+                    Trace.TraceInformation("Output file already exists. Ask the user whether to overwrite or not.");
+                    if (MessageBox.Show(Properties.Resources.Message_Q_OutputFileAlreadyExists_Overwrite
+                        , Properties.Resources.ProgramTitel
+                        , MessageBoxButtons.OKCancel) != DialogResult.OK)
+                    {
+                        Trace.TraceInformation("User didn't chose OK, Do not overwrite.");
+                        return;
+                    }
+                    else
+                    {
+                        Trace.TraceInformation("User chose 'OK'.");
+                    }
+                }
             }
 
             try
@@ -247,12 +327,14 @@ namespace EncodingConverter.Forms
             }
             catch (System.Security.SecurityException ex)
             {
-                MessageBox.Show(Properties.Resources.Message_Err_NoPermissionToPerformConversion + ex.ToText());
+                MessageBox.Show(Properties.Resources.Message_Err_NoPermissionToPerformConversion + ex.ToText()
+                    , Properties.Resources.ProgramTitel);
                 return;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText());
+                MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText()
+                    , Properties.Resources.ProgramTitel);
                 ex.WriteToTrace();
                 return;
             }
@@ -261,19 +343,34 @@ namespace EncodingConverter.Forms
             DialogResult res = MessageBox.Show(this, Properties.Resources.Message_Done,
                 Properties.Resources.ProgramTitel, MessageBoxButtons.OK);
         }
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabelDetectInputEncoding_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //AutoDetectInputEncdoing();
+            Program.ECC.DetectInputEncoding();
         }
         private void btnChangeOutputFile_Click(object sender, EventArgs e)
         {
             //SaveFileDialog sav = new SaveFileDialog();
             _SFD.Value.Title = Properties.Resources.Message_BrowseWhereYouWantToSaveTheFile;// Program.ResourceManager.GetString("Message_BrowseWhereYouWantToSaveTheFile");
             _SFD.Value.Filter = Properties.Resources.Filter_AllFiles;// Program.ResourceManager.GetString("Filter_AllFiles");
-            _SFD.Value.FileName = txtOutputPath.Text;
+            _SFD.Value.OverwritePrompt = true;
+
+            var outputFile = new FileInfo(txtOutputPath.Text);
+            _SFD.Value.FileName = outputFile.Name; //txtOutputPath.Text;
+            _SFD.Value.InitialDirectory = outputFile.DirectoryName;
+
             if (_SFD.Value.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
+
                 txtOutputPath.Text = _SFD.Value.FileName;
+                //The SaveAsDialog checks for the FileAlreadyExists condition.
+                //If we got here the either the user chose to overwrite OR the file does not exists.
+                //In either way we don't need to check if it exists:
+                //IMPORTANT: The _AllowOverwriteOutputFile MUST come after updating the txtOutputPath
+                //with new value, because the Binding between txtOutputPath and other component will
+                //set the _AllowOverwriteOutputFile flag back to 'false' for any change that happen.
+                //Only a change that happens through SaveAsFileDialog qualifies to change the flag to
+                //'true' because the dialog box will check and ask for this case.
+                _AllowOverwriteOutputFile = true;
             }
         }
         private void BtnOpen_Click(object sender, EventArgs e)
@@ -290,8 +387,9 @@ namespace EncodingConverter.Forms
 
         private void linkAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            DialogResult res = MessageBox.Show(this, Properties.Resources.Message_About,
-                Properties.Resources.ProgramTitel, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DialogResult res = MessageBox.Show(this
+                , string.Format(Properties.Resources.Message_About, Application.ProductVersion)
+                , Properties.Resources.ProgramTitel, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void InputControl_DragDrop(object sender, DragEventArgs e)
         {

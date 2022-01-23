@@ -117,5 +117,17 @@ namespace EncodingConverter.Properties {
                 this["CompanionFileSearchPattern"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LastOutputEncoding {
+            get {
+                return ((int)(this["LastOutputEncoding"]));
+            }
+            set {
+                this["LastOutputEncoding"] = value;
+            }
+        }
     }
 }
