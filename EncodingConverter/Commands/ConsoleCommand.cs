@@ -35,6 +35,25 @@ namespace EncodingConverter.Commands
             Console.WriteLine("Console started.");
             Console.WriteLine($"Type '{end}' any time to exit the console.'");
 
+            //Any arguments that comes after the 'console' command name are interpreted as
+            //a new command line that should be executed in the console.
+            //This behavior helps when wanting to start the UI in console mode.
+            //In this case then we call the program like this:
+            //enco.exe console showui
+            //This will start the console and then directly execute the command showui from inside it.
+            //Thus, we start the console and then the UI from a single command line.
+
+            string allAfterArgs = string.Empty;
+            for (int i = argsStartIndex; i < args.Length; i++)
+            {
+                allAfterArgs += args[i];
+            }
+            if (allAfterArgs != String.Empty)
+            {
+                Console.WriteLine(allAfterArgs);
+                args.ProcessCommandLine(Program.GetCommands, null, argsStartIndex);
+            }
+
             args = new string[1];
             while (true)
             {
