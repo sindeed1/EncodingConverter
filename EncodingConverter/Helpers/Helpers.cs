@@ -138,7 +138,7 @@ namespace EncodingConverter
         /// [command] [filepath] </remarks>
         public static bool ProcessCommandLine(this string[] args, Func<ICommandLineCommand[]> getCommands, ICommandLineCommand defaultCommand)
         {
-            Console.WriteLine("Processing command line...");
+            Trace.TraceInformation("Processing command line...");
 
             if (args == null || args.Length <= 0)
             {

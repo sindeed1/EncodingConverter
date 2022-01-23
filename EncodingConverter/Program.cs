@@ -47,7 +47,8 @@ namespace EncodingConverter
             if (_Commands == null)
             {
                 var commands = new List<ICommandLineCommand>();
-                commands.Add(new HelpComman());
+                commands.Add(new QuestionmarkCommand());
+                commands.Add(new HelpCommand());
                 commands.Add(new ConvertCommand());
                 commands.Add(new ShowUICommand());
                 commands.Add(new ConsoleCommand());

@@ -28,7 +28,19 @@ namespace EncodingConverter.Commands
 
         public string ShortDescription => "Shows the user interface.";
 
-        public string LongDescription => "";
+        public string LongDescription => $"<{CL_Name}>" +
+            $"[ {CLARG_FORM}]" +
+            $"[ {CLARG_SWITCH + CLARG_InputEncoding}<encoding.CodePage|.Name>]" +
+            $"[ {CLARG_SWITCH + CLARG_OutputEncoding}<encoding.CodePage|.Name>]" +
+            $"[ inputFileName]" +
+            $"[ outputFileName]" +
+            $"{Environment.NewLine}    '{CLARG_FORM}' Optional, Name of the form to be displayed." +
+            $"{Environment.NewLine}      If this argument is not provided then it is interpreted as '{CLARG_FORM}mainform4'" +
+            $"{Environment.NewLine}    '{CLARG_SWITCH + CLARG_InputEncoding}' is the encoding of the <inputFileName>. Optional and must be followed by either code page of the encoding or name of the encoding." +
+            $"{Environment.NewLine}    '{CLARG_SWITCH + CLARG_OutputEncoding}' is the encoding of the <outputFileName>. Optional and must be followed by either code page of the encoding or name of the encoding." +
+            $"{Environment.NewLine}    [inputFileName]  Optional, file name of the file that needs to be converted. The first argument that is not a switch (i.e. not input or output switch) is interpreted as the input file." +
+            $"{Environment.NewLine}    [outputFileName] Optional, file name of the output file that will contain the converted encoding. The last argument that is not a switch (i.e. not input or output switch) is interpreted as the output file."
+            ;
 
         public bool Execute(string[] args, int argsStartIndex)
         {
@@ -61,7 +73,7 @@ namespace EncodingConverter.Commands
             {
                 InitForm(_FormType);
             }
-            Trace.TraceInformation("Run Application using form: "+_Form.GetType().FullName);
+            Trace.TraceInformation("Run Application using form: " + _Form.GetType().FullName);
             Application.Run(_Form);
         }
 

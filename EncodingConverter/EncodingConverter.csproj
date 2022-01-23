@@ -113,8 +113,9 @@
     <Compile Include="Commands\ConsoleCommand.cs" />
     <Compile Include="Commands\ConvertCommand.cs" />
     <Compile Include="Commands\DetectEncodingCommad.cs" />
-    <Compile Include="Commands\HelpComman.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\QuestionmarkCommand.cs" />
     <Compile Include="Commands\ShowUICommand.cs" />
     <Compile Include="CompanionFileSearchPatternFormatter.cs" />
     <Compile Include="Controls\SearchableEncodingListView.cs">
