@@ -201,6 +201,7 @@
     <Compile Include="OutputPathFormatter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32.cs" />
     <EmbeddedResource Include="Forms\MainForm3.resx">
       <DependentUpon>MainForm3.cs</DependentUpon>
     </EmbeddedResource>
