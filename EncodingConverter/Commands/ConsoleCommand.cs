@@ -40,7 +40,7 @@ namespace EncodingConverter.Commands
             //This behavior helps when wanting to start the UI in console mode.
             //In this case then we call the program like this:
             //enco.exe console showui
-            //This will start the console and then directly execute the command showui from inside it.
+            //This will start the console and then directly execute the command 'showui' from inside it.
             //Thus, we start the console and then the UI from a single command line.
 
             string allAfterArgs = string.Empty;
@@ -59,7 +59,7 @@ namespace EncodingConverter.Commands
             {
                 string read = Console.ReadLine();
 
-                if (read == null || read.Trim().ToLower() == "end")
+                if (read == null || read.Trim().ToLower() == end)
                 {
                     break;
                 }
@@ -113,9 +113,47 @@ namespace EncodingConverter.Commands
         private const int STD_OUTPUT_HANDLE = -11;
         private const int MY_CODE_PAGE = 437;
 
-        void ConvertToArguments(string line)
+        string[] ConvertToArguments(string line)
         {
+            const char escapeChar = '\\';
+            const char quoteChar = '"';
 
+            List<string> arguments = new List<string>();
+
+            string arg = string.Empty;
+            bool includeWhiteSpace = false;
+            bool escape = false;
+
+            foreach (var item in line)
+            {
+                if (char.IsWhiteSpace(item))
+                {
+                    if (!includeWhiteSpace)
+                    {
+                        if (!string.IsNullOrEmpty(arg))
+                        {
+                            arguments.Add(arg);
+                        }
+                        arg = string.Empty;
+                        continue;
+                    }
+                }
+                else if (item == quoteChar && !escape)
+                {
+                    includeWhiteSpace = !includeWhiteSpace;
+                    continue;
+                }
+                else if (item == escapeChar && !escape)
+                {
+                    escape = true;
+                    continue;
+                }
+
+                arg += item;
+                escape = false;
+            }//foreach item
+
+            return arguments.ToArray();
         }
     }
 
