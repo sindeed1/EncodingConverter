@@ -457,7 +457,7 @@ namespace href.Utils
                     }
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 result = new List<Encoding>();
             }

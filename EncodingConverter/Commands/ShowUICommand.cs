@@ -19,8 +19,6 @@ namespace EncodingConverter.Commands
 
         Func<string, bool>[] _CommonCommandLineSwitches;
 
-        bool _FormCreated;
-
         Form _Form;
         Type _FormType;
 

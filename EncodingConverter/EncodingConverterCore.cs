@@ -33,7 +33,6 @@ namespace EncodingConverter
         //#endregion
         EncodingInfo[] _Encodings;
 
-        bool isDetectingInputEncoding;
         int _MaxDetectedInputEncodings;
 
 
@@ -259,70 +258,70 @@ namespace EncodingConverter
                 File.WriteAllText(_OutputFilePath, _InputText, _OutputEncoding);
             }
             return;
-            if (_InputEncoding == null)
-            {
-                Console.WriteLine("Can not convert. Input encoding is not specified.");
-                throw new ArgumentNullException(nameof(InputEncoding));
-                return;
-            }
-            if (_OutputEncoding == null)
-            {
-                Console.WriteLine("Can not convert. Output encoding is not specified.");
-                throw new ArgumentNullException(nameof(OutputEncoding));
-                return;
-            }
+            //if (_InputEncoding == null)
+            //{
+            //    Console.WriteLine("Can not convert. Input encoding is not specified.");
+            //    throw new ArgumentNullException(nameof(InputEncoding));
+            //    return;
+            //}
+            //if (_OutputEncoding == null)
+            //{
+            //    Console.WriteLine("Can not convert. Output encoding is not specified.");
+            //    throw new ArgumentNullException(nameof(OutputEncoding));
+            //    return;
+            //}
 
-            if (!File.Exists(_InputFilePath))
-            {
-                Console.WriteLine("Can not convert. Input file '{0}' does not exist!", _InputFilePath);
-                return;
-            }
-            if (_OutputFilePath == null || _OutputFilePath.Length == 0)
-            {
-                Console.WriteLine("Output file is not specified. Please enter a valid output file path.");
-                return;
-            }
+            //if (!File.Exists(_InputFilePath))
+            //{
+            //    Console.WriteLine("Can not convert. Input file '{0}' does not exist!", _InputFilePath);
+            //    return;
+            //}
+            //if (_OutputFilePath == null || _OutputFilePath.Length == 0)
+            //{
+            //    Console.WriteLine("Output file is not specified. Please enter a valid output file path.");
+            //    return;
+            //}
 
-            string[] lines;
+            //string[] lines;
 
-            Console.WriteLine("Reading text from input file '{0}'", _InputFilePath);
-            Console.WriteLine("Input encoding '{0}'", _InputEncoding);
-            try
-            {
-                // Read all lines from the file
-                lines = File.ReadAllLines(_InputFilePath, _InputEncoding);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error while reading input file:");
-                Console.WriteLine("Input file path: '{0}'", _InputFilePath);
-                Console.WriteLine("Input encoding: '{0}'", _InputEncoding);
-                Console.WriteLine("Raised Exception:");
-                Console.WriteLine(ex);
-                return;
-                throw;
-            }
+            //Console.WriteLine("Reading text from input file '{0}'", _InputFilePath);
+            //Console.WriteLine("Input encoding '{0}'", _InputEncoding);
+            //try
+            //{
+            //    // Read all lines from the file
+            //    lines = File.ReadAllLines(_InputFilePath, _InputEncoding);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Error while reading input file:");
+            //    Console.WriteLine("Input file path: '{0}'", _InputFilePath);
+            //    Console.WriteLine("Input encoding: '{0}'", _InputEncoding);
+            //    Console.WriteLine("Raised Exception:");
+            //    Console.WriteLine(ex);
+            //    return;
+            //    throw;
+            //}
 
-            Console.WriteLine("Writing text to output file '{0}'", _OutputFilePath);
-            Console.WriteLine("Output encoding '{0}'", _OutputEncoding);
-            try
-            {
-                // Save it !
-                File.WriteAllLines(_OutputFilePath, lines, _OutputEncoding);
+            //Console.WriteLine("Writing text to output file '{0}'", _OutputFilePath);
+            //Console.WriteLine("Output encoding '{0}'", _OutputEncoding);
+            //try
+            //{
+            //    // Save it !
+            //    File.WriteAllLines(_OutputFilePath, lines, _OutputEncoding);
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error while writing the encoded text to the output file:");
-                Console.WriteLine("Output file path: '{0}'", _OutputFilePath);
-                Console.WriteLine("Output encoding: '{0}'", _OutputEncoding);
-                Console.WriteLine("Raised Exception:");
-                Console.WriteLine(ex);
-                return;
-                throw;
-            }
-            // Done !!
-            Console.WriteLine("Conversion finished successfully.");
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Error while writing the encoded text to the output file:");
+            //    Console.WriteLine("Output file path: '{0}'", _OutputFilePath);
+            //    Console.WriteLine("Output encoding: '{0}'", _OutputEncoding);
+            //    Console.WriteLine("Raised Exception:");
+            //    Console.WriteLine(ex);
+            //    return;
+            //    throw;
+            //}
+            //// Done !!
+            //Console.WriteLine("Conversion finished successfully.");
         }
         public void RefreshInputFielPath()
         {

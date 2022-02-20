@@ -30,7 +30,6 @@ namespace EncodingConverter.Forms
 
         OneWayUpdater<string> _InputTextLink;
 
-        int _Panel2Width;
         #region ...ctor...
 
         public MainForm4()

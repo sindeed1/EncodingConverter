@@ -32,14 +32,14 @@ namespace EncodingConverter
                 throw ex;
             }
 
-            _ECC.ProcessCommandLine(args);
-            if (_ECC.CommandLineCommand != null)
-            {
-                _ECC.CommandLineCommand();
-                return;
-            }
+            //_ECC.ProcessCommandLine(args);
+            //if (_ECC.CommandLineCommand != null)
+            //{
+            //    _ECC.CommandLineCommand();
+            //    return;
+            //}
 
-            StartUI();
+            //StartUI();
         }
 
         public static ICommandLineCommand[] GetCommands()
