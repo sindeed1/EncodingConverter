@@ -3,12 +3,22 @@ Created by Ammar J. Alhamwi
 
 
 ToDo in this branch (New):
-Add support to Console:
+Add UI-Feature: Show all detected encodings:
+	Currently, when detecting encoding, the presented encoding will be the first one that matches the given
+		'Preferred encoding'. The new feature will present all the detected encodings and allow the user to
+		select one of it.
+	The way I thought about it is to show a buttun on the ToolStrip for each of the encodings.
+	The first encoding to  show up will be the one that matches the 'Preferred encoding' string.
+	If there is a lot of detected encodings, the tool strip will automatically push them into a DropDown menu.
+
+Todo better: write description of the commands that includes the parameters of each commend in the long description of the command.
+
+===============================================================================================================================
+>>>Done:
++Added support to Console:
 The program already supports command line parameters.
 For Winforms, however, the console will not show up.
 We will have to call, attach a console and maybe free the console before termination
 of course we also need to test the implementation!
 
 Currently: Console command works and writes output, when in command line, to the console window.
-
-Todo better: write description of the commands that includes the parameters of each commend in the long description of the command.
