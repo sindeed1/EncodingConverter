@@ -12,7 +12,7 @@ namespace EncodingConverter.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -96,7 +96,7 @@ namespace EncodingConverter.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("323")]
+        [global::System.Configuration.DefaultSettingValueAttribute("419")]
         public int MainForm_SpliContainer_SplitterDistance {
             get {
                 return ((int)(this["MainForm_SpliContainer_SplitterDistance"]));
@@ -127,6 +127,18 @@ namespace EncodingConverter.Properties {
             }
             set {
                 this["LastOutputEncoding"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int MaxDetectedInputEncodingsCount {
+            get {
+                return ((int)(this["MaxDetectedInputEncodingsCount"]));
+            }
+            set {
+                this["MaxDetectedInputEncodingsCount"] = value;
             }
         }
     }

@@ -8,14 +8,21 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Height="554" Width="917">
         <Rectangle HorizontalAlignment="Left" Height="206" Margin="31,36,0,0" Stroke="Black" VerticalAlignment="Top" Width="826"/>
-        <Rectangle HorizontalAlignment="Left" Height="246" Margin="31,284,0,0" Stroke="Black" VerticalAlignment="Top" Width="826"/>
+        <Rectangle HorizontalAlignment="Left" Margin="31,284,0,100" Stroke="Black" Width="826"/>
         <Button Content="Open" Margin="34,47,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="125,47,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="715"/>
         <TextBlock HorizontalAlignment="Left" Margin="37,16,0,0" Text="Input" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="37,264,0,0" Text="Output" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.073,1.6"/>
-        <TextBox Header="Companion file search pattern" HorizontalAlignment="Left" Margin="125,84,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="715"/>
+        <TextBox Header="Companion file search pattern" HorizontalAlignment="Left" Margin="125,84,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="715"/>
+        <CheckBox Content="Auto detect" Height="7" Margin="125,149,0,0" VerticalAlignment="Top" Width="1"/>
+        <Button Content="Detect" Margin="245,149,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.731,0.203"/>
+        <TextBlock HorizontalAlignment="Left" Margin="379,154,0,0" Text="Preferred encoding:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="0" Margin="528,149,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="312"/>
+        <TextBox Header="Output path format:" HorizontalAlignment="Left" Margin="37,289,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="715"/>
+        <TextBox Header="Save to:" HorizontalAlignment="Left" Margin="37,354,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="715"/>
+        <Button Content="Convert and Save" Margin="31,516,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.057,0.1"/>
 
     </Grid>
 </Page>

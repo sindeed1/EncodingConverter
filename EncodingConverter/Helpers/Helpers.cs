@@ -135,15 +135,19 @@ namespace EncodingConverter
         /// </summary>
         /// <param name="args"></param>
         /// <remarks>Command line is something like this:
-        /// [command] [filepath] </remarks>
+        /// CommadName [args] </remarks>
         public static bool ProcessCommandLine(this string[] args, Func<ICommandLineCommand[]> getCommands, ICommandLineCommand defaultCommand)
         {
-            Console.WriteLine("Processing command line...");
+            return ProcessCommandLine(args, getCommands, defaultCommand, 0);
+        }
+        public static bool ProcessCommandLine(this string[] args, Func<ICommandLineCommand[]> getCommands, ICommandLineCommand defaultCommand, int startingArgIndex)
+        {
+            Trace.TraceInformation("Processing command line...");
 
-            if (args == null || args.Length <= 0)
+            if (args == null || args.Length <= startingArgIndex)
             {
                 Console.WriteLine("No command line arguments.");
-                return ProcessDefaultCommand(args, defaultCommand);
+                return ProcessDefaultCommand(args, defaultCommand, startingArgIndex);
             }
 
             ICommandLineCommand[] commands;
@@ -152,25 +156,25 @@ namespace EncodingConverter
             if (commands == null || commands.Length <= 0)
             {
                 Console.WriteLine("Command list not available.");
-                return ProcessDefaultCommand(args, defaultCommand);
+                return ProcessDefaultCommand(args, defaultCommand, startingArgIndex);
             }
 
-            string commandName = args[0].Trim().ToLower();
+            string commandName = args[startingArgIndex].Trim().ToLower();
             ICommandLineCommand cmd;
             cmd = commands.FirstOrDefault(x => x.Name.ToLower() == commandName);
             if (cmd == null)
             {
-                return ProcessDefaultCommand(args, defaultCommand);
+                return ProcessDefaultCommand(args, defaultCommand, startingArgIndex);
             }
 
-            cmd.Execute(args, 1);
+            cmd.Execute(args, startingArgIndex + 1);
 
             return true;
-        }
 
-        static bool ProcessDefaultCommand(string[] args, ICommandLineCommand defaultCommand)
+        }
+        static bool ProcessDefaultCommand(string[] args, ICommandLineCommand defaultCommand, int startingArgIndex)
         {
-            Console.WriteLine("No default command line. Further processing is not possible.");
+            //Console.WriteLine("No default command line. Further processing is not possible.");
             Trace.TraceInformation("Processing default command '");
 
             if (defaultCommand == null)
@@ -289,6 +293,18 @@ namespace EncodingConverter
             //);
 
             return result;
+        }
+
+        /// <summary>
+        /// Determines if two <see cref="Encoding"/>s are equal. Null is acceptable.
+        /// </summary>
+        /// <param name="enc1"></param>
+        /// <param name="enc2"></param>
+        /// <returns></returns>
+        public static bool EqualsEncoding(this Encoding enc1, Encoding enc2)
+        {
+            return (enc1 == enc2)//Either the two encodings are the same
+                    || (enc1 != null && enc2 != null && enc1.CodePage == enc2.CodePage);//Or they have the same CodePage.
         }
 
     }

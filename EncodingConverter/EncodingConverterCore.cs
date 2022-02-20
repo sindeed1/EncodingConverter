@@ -13,6 +13,7 @@ namespace EncodingConverter
 {
     class EncodingConverterCore
     {
+        const int con_Default_MaxDetectedInputEncodings = 10;
         #region ...Events...
         public event EventHandler InputTextChanged;
         public event EventHandler PreferredInputEncodingChanged;
@@ -22,6 +23,7 @@ namespace EncodingConverter
         public event EventHandler InputFilePathChanged;
         public event EventHandler OutputFilePathChanged;
 
+        public event EventHandler DetectedEncodingsChanged;
         #endregion
         //#region ...Error codes...
         //const int ERR_CONVERT_InputEncodingNull = 1;
@@ -32,6 +34,7 @@ namespace EncodingConverter
         EncodingInfo[] _Encodings;
 
         bool isDetectingInputEncoding;
+        int _MaxDetectedInputEncodings;
 
 
         string _InputFilePath;
@@ -50,6 +53,7 @@ namespace EncodingConverter
         public EncodingConverterCore()
         {
             _Encodings = Encoding.GetEncodings();
+            _MaxDetectedInputEncodings = con_Default_MaxDetectedInputEncodings;
         }
         #endregion
 
@@ -147,7 +151,7 @@ namespace EncodingConverter
             get { return _InputEncoding; }
             set
             {
-                if (Equate(_InputEncoding, value))
+                if (_InputEncoding.EqualsEncoding(value))
                     return;
 
                 _InputEncoding = value;
@@ -166,7 +170,7 @@ namespace EncodingConverter
             get { return _OutputEncoding; }
             set
             {
-                if (Equate(_OutputEncoding, value))
+                if (_OutputEncoding.EqualsEncoding(value))
                     return;
 
                 _OutputEncoding = value;
@@ -178,12 +182,58 @@ namespace EncodingConverter
             }
         }
 
+        private Encoding[] _DetectedEncodings;
 
+        /// <summary>
+        /// Returns an array of encodings available to the current <see cref="InputFilePath"/>.
+        /// The list will be generated only after the user calls <see cref="DetectInputEncoding"/>
+        /// </summary>
+        public Encoding[] DetectedEncodings
+        {
+            get { return _DetectedEncodings; }
+            private set
+            {
+                if (value == _DetectedEncodings)
+                    return;
+
+                _DetectedEncodings = value;
+
+                OnDetectedEncodingsChanged();
+            }
+        }
+
+        /// <summary>
+        /// Returns an array of all encodings in the system.
+        /// </summary>
         public EncodingInfo[] Encodings { get { return _Encodings; } }
 
+
+        public int MaxDetectedInputEncodings
+        {
+            get { return _MaxDetectedInputEncodings; }
+            set 
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "value must be equal or larger to zero.");
+                }
+                _MaxDetectedInputEncodings = value; 
+            }
+        }
+
+        /// <summary>
+        /// Detects the input encoding based on <see cref="InputFilePath"/> and <see cref="PreferredInputEncoding"/>.
+        /// The detected encoding will be then automatically set to <see cref="InputEncoding"/>.
+        /// </summary>
         public void DetectInputEncoding()
         {
-            this.InputEncoding = DetectInputEncoding(_InputFilePath, _PreferredInputEncoding);
+            Encoding[] detectedEncodings = null;
+
+            var encoding = DetectInputEncoding(_InputFilePath, _PreferredInputEncoding, 10, out detectedEncodings);
+
+            this.DetectedEncodings = detectedEncodings;
+
+            this.InputEncoding = encoding;
         }
         /// <summary>
         /// Reads the <see cref="InputFilePath"/> file using the <see cref="InputEncoding"/>
@@ -288,6 +338,10 @@ namespace EncodingConverter
                 DetectInputEncoding();
                 //this.InputEncoding = DetectInputEncdoing(_InputFilePath, _PreferredInputEncoding);
             }
+            else
+            {
+                this.DetectedEncodings = null;
+            }
         }
         public static void Convert(string inputFile, Encoding inputEncoding, string outputFile, Encoding outputEncoding)
         {
@@ -317,7 +371,7 @@ namespace EncodingConverter
             catch (Exception ex)
             {
                 TraceWarning(nameof(DetectInputEncoding), "Exception while reading input file '" +
-                    inputPath + "': \n"
+                    inputPath + $"': {Environment.NewLine}"
                     );
                 ex.WriteToTrace();
             }
@@ -328,7 +382,7 @@ namespace EncodingConverter
 
             preferredString = preferredString?.Trim();
             Encoding encoding;
-            if (preferredString == null || preferredString.Length <= 0)
+            if (string.IsNullOrEmpty(preferredString))
             {
                 try
                 {
@@ -336,7 +390,7 @@ namespace EncodingConverter
                 }
                 catch (Exception ex)
                 {
-                    TraceWarning("Error while detecting the encoding of the file '" + inputPath + "'.");
+                    TraceWarning($"Error while detecting the encoding of the file '{inputPath}'.");
                     ex.WriteToTrace();
                     TraceWarning("Execution will continue with no detected encodings.");
                     encoding = null;
@@ -352,7 +406,7 @@ namespace EncodingConverter
                 }
                 catch (Exception ex)
                 {
-                    TraceWarning("Error while detecting the encoding of the file '" + inputPath + "'.");
+                    TraceWarning($"Error while detecting the encoding of the file '{inputPath}'.");
                     ex.WriteToTrace();
                 }
                 if (encodings == null || encodings.Length <= 0)
@@ -370,7 +424,7 @@ namespace EncodingConverter
                     }
                     else
                     {
-                        TraceInformation(string.Format("Found '{0}' encodings with the preferred encoding text '{1}'", prefferedEncodings.Length, preferredString));
+                        TraceInformation($"Found '{prefferedEncodings.Length}' encodings with the preferred encoding text '{preferredString}'");
                         encoding = prefferedEncodings[0];
                     }
                 }
@@ -382,11 +436,124 @@ namespace EncodingConverter
             //isDetectingInputEncoding = false;
         }
 
-        bool Equate(Encoding enc1, Encoding enc2)
+        /// <summary>
+        /// Detects the encoding of a given file path.
+        /// </summary>
+        /// <param name="inputPath">Path of the file to detect its encoding.</param>
+        /// <param name="preferredString">A search string to be used if more that one encoding is detected.</param>
+        /// <param name="maxEncodingsCount">Maximum count of encodings to be detected.</param>
+        /// <param name="encodings">Returns an array of detected <see cref="Encoding"/>s.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="maxEncodingsCount"/> is less than 1.</exception>
+        /// <exception cref="FileNotFoundException">If <paramref name="inputPath"/> does not exists</exception>
+        private static Encoding DetectInputEncoding(string inputPath, string preferredString, int maxEncodingsCount, out Encoding[] encodings)
         {
-            return (enc1 == enc2)
-                    || (enc1 != null && enc2 != null && enc1.CodePage == enc2.CodePage);
+            encodings = DetectInputEncodings(inputPath, maxEncodingsCount);
+            if (encodings == null || encodings.Length <= 0)
+            {
+                return null;
+            }
+
+            preferredString = preferredString?.Trim();
+            Encoding encoding;
+            if (string.IsNullOrEmpty(preferredString))
+            {
+                encoding = encodings[1];
+            }
+            else
+            {
+                encoding = GetPreferredEncoding(encodings, preferredString);
+            }
+
+            return encoding;
         }
+
+        private static Encoding[] DetectInputEncodings(string inputPath) { return DetectInputEncodings(inputPath, 10); }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="maxEncodingsCount"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="maxEncodingsCount"/> is less than 1.</exception>
+        /// <exception cref="FileNotFoundException">If <paramref name="inputPath"/> does not exists</exception>
+        private static Encoding[] DetectInputEncodings(string inputPath, int maxEncodingsCount)
+        {
+            if (maxEncodingsCount < 1)
+                throw new ArgumentOutOfRangeException(nameof(maxEncodingsCount), $"{nameof(maxEncodingsCount)} must be larger that 0!");
+
+            if (!File.Exists(inputPath))
+            {
+                TraceError(nameof(DetectInputEncoding), nameof(inputPath) + " does not exist!");
+                throw new FileNotFoundException(Properties.Resources.Message_InputFileDoesNotExsist, inputPath);
+            }
+
+            // do auto-detect
+            //isDetectingInputEncoding = true;
+
+            byte[] buf = null;
+            FileStream stream = null;
+            try
+            {
+                stream = new FileStream(inputPath, FileMode.Open, FileAccess.Read);
+                buf = new byte[stream.Length];
+                stream.Read(buf, 0, (int)stream.Length);
+            }
+            catch (Exception ex)
+            {
+                TraceWarning(nameof(DetectInputEncoding), "Exception while reading input file '" +
+                    inputPath + $"': {Environment.NewLine}"
+                    );
+                ex.WriteToTrace();
+            }
+            finally
+            {
+                stream?.Close();
+            }
+
+            //User has provided a preferred encoding. we have to use it
+            Encoding[] encodings = null;
+            try
+            {
+                encodings = EncodingTools.DetectInputCodepages(buf, maxEncodingsCount);
+            }
+            catch (Exception ex)
+            {
+                TraceWarning($"Error while detecting the encoding of the file '{inputPath}'.");
+                ex.WriteToTrace();
+            }
+            return encodings;
+        }
+
+        private static Encoding GetPreferredEncoding(Encoding[] encodings, string preferredString)
+        {
+
+            Encoding encoding = null;
+
+            //User has provided a preferred encoding. we have to use it
+            if (encodings == null || encodings.Length <= 0)
+            {
+                TraceWarning("Execution will continue with no detected encodings.");
+                encoding = null;
+            }
+            else
+            {
+                var searchStrings = preferredString.ToLower().Split(' ');
+                var prefferedEncodings = encodings.Where(x => x.EncodingName.ToLower().Contains(searchStrings)).ToArray();
+                if (prefferedEncodings == null || prefferedEncodings.Length <= 0)
+                {
+                    encoding = encodings[0];
+                }
+                else
+                {
+                    TraceInformation($"Found '{prefferedEncodings.Length}' encodings with the preferred encoding text '{preferredString}'");
+                    encoding = prefferedEncodings[0];
+                }
+            }
+
+            return encoding;
+        }
+
         #region ...Event invokers...
         protected void OnInputFilePathChanged() { InputFilePathChanged?.Invoke(this, EventArgs.Empty); }
         protected void OnOutputFilePathChanged() { OutputFilePathChanged?.Invoke(this, EventArgs.Empty); }
@@ -395,6 +562,7 @@ namespace EncodingConverter
         protected void OnAutoDetectInputEncodingChanged() { AutoDetectInputEncodingChanged?.Invoke(this, EventArgs.Empty); }
         protected void OnInputEncodingChanged() { InputEncodingChanged?.Invoke(this, EventArgs.Empty); }
         protected void OnOutputEncodingChanged() { OutputEncodingChanged?.Invoke(this, EventArgs.Empty); }
+        protected void OnDetectedEncodingsChanged() { DetectedEncodingsChanged?.Invoke(this, EventArgs.Empty); }
 
         #endregion
 

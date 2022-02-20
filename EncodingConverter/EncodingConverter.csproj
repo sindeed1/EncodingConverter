@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>EncodingConverter</RootNamespace>
     <AssemblyName>enco</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>false</Deterministic>
@@ -24,8 +24,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>Encoding Converter</ProductName>
+    <PublisherName>Sindeed</PublisherName>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>15</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -84,13 +86,14 @@
     <ManifestCertificateThumbprint>C21DE6E76DE6BEC9D2EC734BCC6BA02D85D367E6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>EncodingConverter_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -110,8 +113,14 @@
     <Compile Include="Commands\ConsoleCommand.cs" />
     <Compile Include="Commands\ConvertCommand.cs" />
     <Compile Include="Commands\DetectEncodingCommad.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\QuestionmarkCommand.cs" />
     <Compile Include="Commands\ShowUICommand.cs" />
+    <Compile Include="CompanionFileSearchPatternFormatter.cs" />
+    <Compile Include="Controls\InputEncodingToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SearchableEncodingListView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -197,6 +206,7 @@
     <Compile Include="OutputPathFormatter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32.cs" />
     <EmbeddedResource Include="Forms\MainForm3.resx">
       <DependentUpon>MainForm3.cs</DependentUpon>
     </EmbeddedResource>
