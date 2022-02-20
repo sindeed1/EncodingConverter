@@ -21,13 +21,16 @@
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
     <Setting Name="MainForm_SpliContainer_SplitterDistance" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">323</Value>
+      <Value Profile="(Default)">419</Value>
     </Setting>
     <Setting Name="CompanionFileSearchPattern" Type="System.String" Scope="User">
       <Value Profile="(Default)">*.mp4|*.mkv|*.avi</Value>
     </Setting>
     <Setting Name="LastOutputEncoding" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="MaxDetectedInputEncodingsCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
     </Setting>
   </Settings>
 </SettingsFile>

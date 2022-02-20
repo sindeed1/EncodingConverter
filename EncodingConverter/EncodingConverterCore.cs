@@ -13,6 +13,7 @@ namespace EncodingConverter
 {
     class EncodingConverterCore
     {
+        const int con_Default_MaxDetectedInputEncodings = 10;
         #region ...Events...
         public event EventHandler InputTextChanged;
         public event EventHandler PreferredInputEncodingChanged;
@@ -33,6 +34,7 @@ namespace EncodingConverter
         EncodingInfo[] _Encodings;
 
         bool isDetectingInputEncoding;
+        int _MaxDetectedInputEncodings;
 
 
         string _InputFilePath;
@@ -51,6 +53,7 @@ namespace EncodingConverter
         public EncodingConverterCore()
         {
             _Encodings = Encoding.GetEncodings();
+            _MaxDetectedInputEncodings = con_Default_MaxDetectedInputEncodings;
         }
         #endregion
 
@@ -148,7 +151,7 @@ namespace EncodingConverter
             get { return _InputEncoding; }
             set
             {
-                if (Equate(_InputEncoding, value))
+                if (_InputEncoding.EqualsEncoding(value))
                     return;
 
                 _InputEncoding = value;
@@ -167,7 +170,7 @@ namespace EncodingConverter
             get { return _OutputEncoding; }
             set
             {
-                if (Equate(_OutputEncoding, value))
+                if (_OutputEncoding.EqualsEncoding(value))
                     return;
 
                 _OutputEncoding = value;
@@ -203,6 +206,20 @@ namespace EncodingConverter
         /// Returns an array of all encodings in the system.
         /// </summary>
         public EncodingInfo[] Encodings { get { return _Encodings; } }
+
+
+        public int MaxDetectedInputEncodings
+        {
+            get { return _MaxDetectedInputEncodings; }
+            set 
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "value must be equal or larger to zero.");
+                }
+                _MaxDetectedInputEncodings = value; 
+            }
+        }
 
         /// <summary>
         /// Detects the input encoding based on <see cref="InputFilePath"/> and <see cref="PreferredInputEncoding"/>.
@@ -418,9 +435,20 @@ namespace EncodingConverter
             //richTextBox_in.Lines = File.ReadAllLines(txtInputPath.Text, encoding);
             //isDetectingInputEncoding = false;
         }
-        private static Encoding DetectInputEncoding(string inputPath, string preferredString, int maxEncodings, out Encoding[] encodings)
+
+        /// <summary>
+        /// Detects the encoding of a given file path.
+        /// </summary>
+        /// <param name="inputPath">Path of the file to detect its encoding.</param>
+        /// <param name="preferredString">A search string to be used if more that one encoding is detected.</param>
+        /// <param name="maxEncodingsCount">Maximum count of encodings to be detected.</param>
+        /// <param name="encodings">Returns an array of detected <see cref="Encoding"/>s.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="maxEncodingsCount"/> is less than 1.</exception>
+        /// <exception cref="FileNotFoundException">If <paramref name="inputPath"/> does not exists</exception>
+        private static Encoding DetectInputEncoding(string inputPath, string preferredString, int maxEncodingsCount, out Encoding[] encodings)
         {
-            encodings = DetectInputEncodings(inputPath, maxEncodings);
+            encodings = DetectInputEncodings(inputPath, maxEncodingsCount);
             if (encodings == null || encodings.Length <= 0)
             {
                 return null;
@@ -526,11 +554,6 @@ namespace EncodingConverter
             return encoding;
         }
 
-        bool Equate(Encoding enc1, Encoding enc2)
-        {
-            return (enc1 == enc2)//Either the two encodings are the same
-                    || (enc1 != null && enc2 != null && enc1.CodePage == enc2.CodePage);//Or they have the same CodePage.
-        }
         #region ...Event invokers...
         protected void OnInputFilePathChanged() { InputFilePathChanged?.Invoke(this, EventArgs.Empty); }
         protected void OnOutputFilePathChanged() { OutputFilePathChanged?.Invoke(this, EventArgs.Empty); }

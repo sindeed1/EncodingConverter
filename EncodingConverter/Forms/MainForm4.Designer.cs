@@ -44,6 +44,7 @@
             this.tsInput = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tsddInputEncoding = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.label7 = new System.Windows.Forms.Label();
             this.txtPreferredInputEncoding = new System.Windows.Forms.TextBox();
             this.chkAutoDetect = new System.Windows.Forms.CheckBox();
@@ -61,7 +62,6 @@
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.txtInputPath = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsOutput.SuspendLayout();
             this.tsInput.SuspendLayout();
             this.gbOutput.SuspendLayout();
@@ -79,7 +79,7 @@
             this.txtOutputPathFormat.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "OutputFilePathFormatString", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtOutputPathFormat.Location = new System.Drawing.Point(110, 21);
             this.txtOutputPathFormat.Name = "txtOutputPathFormat";
-            this.txtOutputPathFormat.Size = new System.Drawing.Size(129, 20);
+            this.txtOutputPathFormat.Size = new System.Drawing.Size(215, 20);
             this.txtOutputPathFormat.TabIndex = 0;
             this.txtOutputPathFormat.Text = global::EncodingConverter.Properties.Settings.Default.OutputFilePathFormatString;
             this.ttLongRead.SetToolTip(this.txtOutputPathFormat, resources.GetString("txtOutputPathFormat.ToolTip"));
@@ -108,7 +108,7 @@
             // 
             this.btnChangeOutputFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChangeOutputFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnChangeOutputFile.Location = new System.Drawing.Point(245, 45);
+            this.btnChangeOutputFile.Location = new System.Drawing.Point(331, 45);
             this.btnChangeOutputFile.Name = "btnChangeOutputFile";
             this.btnChangeOutputFile.Size = new System.Drawing.Size(78, 23);
             this.btnChangeOutputFile.TabIndex = 3;
@@ -141,7 +141,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCompanionFile.Location = new System.Drawing.Point(87, 73);
             this.txtCompanionFile.Name = "txtCompanionFile";
-            this.txtCompanionFile.Size = new System.Drawing.Size(236, 20);
+            this.txtCompanionFile.Size = new System.Drawing.Size(322, 20);
             this.txtCompanionFile.TabIndex = 3;
             this.tooltipNormal.SetToolTip(this.txtCompanionFile, "The companion file that could be used to format the output path.");
             // 
@@ -152,7 +152,7 @@
             this.txtCompanionFileSearchPattern.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "CompanionFileSearchPattern", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtCompanionFileSearchPattern.Location = new System.Drawing.Point(162, 47);
             this.txtCompanionFileSearchPattern.Name = "txtCompanionFileSearchPattern";
-            this.txtCompanionFileSearchPattern.Size = new System.Drawing.Size(161, 20);
+            this.txtCompanionFileSearchPattern.Size = new System.Drawing.Size(247, 20);
             this.txtCompanionFileSearchPattern.TabIndex = 2;
             this.txtCompanionFileSearchPattern.Text = global::EncodingConverter.Properties.Settings.Default.CompanionFileSearchPattern;
             this.ttLongRead.SetToolTip(this.txtCompanionFileSearchPattern, resources.GetString("txtCompanionFileSearchPattern.ToolTip"));
@@ -167,7 +167,7 @@
             this.tsOutput.Location = new System.Drawing.Point(3, 71);
             this.tsOutput.Name = "tsOutput";
             this.tsOutput.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsOutput.Size = new System.Drawing.Size(323, 25);
+            this.tsOutput.Size = new System.Drawing.Size(409, 25);
             this.tsOutput.TabIndex = 4;
             this.tsOutput.TabStop = true;
             this.tsOutput.Text = "toolStrip2";
@@ -198,7 +198,7 @@
             this.tsInput.Location = new System.Drawing.Point(3, 122);
             this.tsInput.Name = "tsInput";
             this.tsInput.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsInput.Size = new System.Drawing.Size(323, 25);
+            this.tsInput.Size = new System.Drawing.Size(409, 25);
             this.tsInput.TabIndex = 7;
             this.tsInput.TabStop = true;
             this.tsInput.Text = "toolStrip1";
@@ -218,6 +218,11 @@
             this.tsddInputEncoding.Size = new System.Drawing.Size(114, 22);
             this.tsddInputEncoding.Text = "Arabic (Windows)";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -235,7 +240,7 @@
             this.txtPreferredInputEncoding.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EncodingConverter.Properties.Settings.Default, "PreferredInputEncoding", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtPreferredInputEncoding.Location = new System.Drawing.Point(262, 102);
             this.txtPreferredInputEncoding.Name = "txtPreferredInputEncoding";
-            this.txtPreferredInputEncoding.Size = new System.Drawing.Size(61, 20);
+            this.txtPreferredInputEncoding.Size = new System.Drawing.Size(147, 20);
             this.txtPreferredInputEncoding.TabIndex = 6;
             this.txtPreferredInputEncoding.Text = global::EncodingConverter.Properties.Settings.Default.PreferredInputEncoding;
             this.tooltipNormal.SetToolTip(this.txtPreferredInputEncoding, "When detecting the encoding, the program will try to find the encoding that match" +
@@ -277,7 +282,7 @@
             this.tbInputText.Name = "tbInputText";
             this.tbInputText.ReadOnly = true;
             this.tbInputText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbInputText.Size = new System.Drawing.Size(210, 241);
+            this.tbInputText.Size = new System.Drawing.Size(199, 241);
             this.tbInputText.TabIndex = 0;
             // 
             // label2
@@ -306,7 +311,7 @@
             this.linkAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.linkAbout.AutoSize = true;
             this.linkAbout.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.linkAbout.Location = new System.Drawing.Point(502, 268);
+            this.linkAbout.Location = new System.Drawing.Point(577, 268);
             this.linkAbout.Name = "linkAbout";
             this.linkAbout.Size = new System.Drawing.Size(36, 13);
             this.linkAbout.TabIndex = 1;
@@ -320,7 +325,7 @@
             this.txtOutputPath.Location = new System.Drawing.Point(60, 47);
             this.txtOutputPath.Name = "txtOutputPath";
             this.txtOutputPath.ReadOnly = true;
-            this.txtOutputPath.Size = new System.Drawing.Size(179, 20);
+            this.txtOutputPath.Size = new System.Drawing.Size(265, 20);
             this.txtOutputPath.TabIndex = 2;
             // 
             // btnOpen
@@ -346,7 +351,7 @@
             this.gbOutput.Controls.Add(this.txtOutputPath);
             this.gbOutput.Location = new System.Drawing.Point(0, 156);
             this.gbOutput.Name = "gbOutput";
-            this.gbOutput.Size = new System.Drawing.Size(329, 99);
+            this.gbOutput.Size = new System.Drawing.Size(415, 99);
             this.gbOutput.TabIndex = 5;
             this.gbOutput.TabStop = false;
             this.gbOutput.Text = "Output";
@@ -355,7 +360,7 @@
             // 
             this.btnApplyOutputFormatting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApplyOutputFormatting.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnApplyOutputFormatting.Location = new System.Drawing.Point(245, 19);
+            this.btnApplyOutputFormatting.Location = new System.Drawing.Point(331, 19);
             this.btnApplyOutputFormatting.Name = "btnApplyOutputFormatting";
             this.btnApplyOutputFormatting.Size = new System.Drawing.Size(78, 23);
             this.btnApplyOutputFormatting.TabIndex = 1;
@@ -386,7 +391,7 @@
             this.gbInput.Controls.Add(this.tsInput);
             this.gbInput.Location = new System.Drawing.Point(0, 0);
             this.gbInput.Name = "gbInput";
-            this.gbInput.Size = new System.Drawing.Size(329, 150);
+            this.gbInput.Size = new System.Drawing.Size(415, 150);
             this.gbInput.TabIndex = 0;
             this.gbInput.TabStop = false;
             this.gbInput.Text = "Input";
@@ -398,7 +403,7 @@
             this.txtInputPath.Location = new System.Drawing.Point(87, 21);
             this.txtInputPath.Name = "txtInputPath";
             this.txtInputPath.ReadOnly = true;
-            this.txtInputPath.Size = new System.Drawing.Size(236, 20);
+            this.txtInputPath.Size = new System.Drawing.Size(322, 20);
             this.txtInputPath.TabIndex = 1;
             // 
             // splitContainer1
@@ -421,20 +426,15 @@
             this.splitContainer1.Panel2.Controls.Add(this.tbInputText);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(549, 257);
-            this.splitContainer1.SplitterDistance = 333;
+            this.splitContainer1.Size = new System.Drawing.Size(624, 257);
+            this.splitContainer1.SplitterDistance = 419;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // MainForm4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(549, 291);
+            this.ClientSize = new System.Drawing.Size(624, 291);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.linkAbout);

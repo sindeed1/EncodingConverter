@@ -36,6 +36,8 @@ namespace EncodingConverter.Forms
         public MainForm4()
         {
             InitializeComponent();
+            Program.ECC.MaxDetectedInputEncodings = Properties.Settings.Default.MaxDetectedInputEncodingsCount;
+
             _TSInputEncodingViewer = new ToolStripEncodingViewer();
 
             _TSInputEncodingViewer = new ToolStripEncodingViewer();
@@ -543,6 +545,5 @@ namespace EncodingConverter.Forms
                 Program.ECC.InputFilePath = file;
             }
         }
-
     }
 }
