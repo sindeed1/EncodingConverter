@@ -61,6 +61,7 @@
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.txtInputPath = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsOutput.SuspendLayout();
             this.tsInput.SuspendLayout();
             this.gbOutput.SuspendLayout();
@@ -158,15 +159,15 @@
             // 
             // tsOutput
             // 
-            this.tsOutput.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsOutput.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tsOutput.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsOutput.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel2,
             this.tsddOutputEncoding});
-            this.tsOutput.Location = new System.Drawing.Point(0, 71);
+            this.tsOutput.Location = new System.Drawing.Point(3, 71);
             this.tsOutput.Name = "tsOutput";
             this.tsOutput.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsOutput.Size = new System.Drawing.Size(256, 25);
+            this.tsOutput.Size = new System.Drawing.Size(323, 25);
             this.tsOutput.TabIndex = 4;
             this.tsOutput.TabStop = true;
             this.tsOutput.Text = "toolStrip2";
@@ -188,15 +189,16 @@
             // 
             // tsInput
             // 
-            this.tsInput.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsInput.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tsInput.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsInput.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
-            this.tsddInputEncoding});
-            this.tsInput.Location = new System.Drawing.Point(0, 120);
+            this.tsddInputEncoding,
+            this.toolStripSeparator1});
+            this.tsInput.Location = new System.Drawing.Point(3, 122);
             this.tsInput.Name = "tsInput";
             this.tsInput.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsInput.Size = new System.Drawing.Size(208, 25);
+            this.tsInput.Size = new System.Drawing.Size(323, 25);
             this.tsInput.TabIndex = 7;
             this.tsInput.TabStop = true;
             this.tsInput.Text = "toolStrip1";
@@ -423,6 +425,11 @@
             this.splitContainer1.SplitterDistance = 333;
             this.splitContainer1.TabIndex = 0;
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // MainForm4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -487,5 +494,6 @@
         private System.Windows.Forms.ToolStrip tsOutput;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripDropDownButton tsddOutputEncoding;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

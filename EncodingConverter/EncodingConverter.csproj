@@ -118,6 +118,9 @@
     <Compile Include="Commands\QuestionmarkCommand.cs" />
     <Compile Include="Commands\ShowUICommand.cs" />
     <Compile Include="CompanionFileSearchPatternFormatter.cs" />
+    <Compile Include="Controls\InputEncodingToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SearchableEncodingListView.cs">
       <SubType>Component</SubType>
     </Compile>

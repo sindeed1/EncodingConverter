@@ -196,12 +196,131 @@ namespace EncodingConverter.Forms
 
             this.txtInputPath.TextChanged += TxtPath_TextChanged;
             this.txtOutputPath.TextChanged += TxtPath_TextChanged;
-            this.txtCompanionFile.TextChanged += TxtPath_TextChanged; ;
+            this.txtCompanionFile.TextChanged += TxtPath_TextChanged;
+
+            ECC.DetectedEncodingsChanged += ECC_DetectedEncodingsChanged;
+            ECC.InputEncodingChanged += ECC_InputEncodingChanged;
         }
 
-
-
         #endregion
+        private void ECC_InputEncodingChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < tsInput.Items.Count; i++)
+            {
+                var item = tsInput.Items[i];
+                if (item is ToolStripButton)
+                {
+                    if (item.Tag is Encoding)
+                    {
+                        Encoding encoding = (Encoding)item.Tag;
+                        ToolStripButton button = (ToolStripButton)item;
+                        button.Checked = Program.ECC.InputEncoding.EqualsEncoding(encoding);
+                    }
+                }
+            }
+        }
+
+        private void ECC_DetectedEncodingsChanged(object sender, EventArgs e) { RefreshDetectedEncodings(); }
+
+        void RefreshDetectedEncodings()
+        {
+            var ecc = Program.ECC;
+            //if (ecc.DetectedEncodings == null)
+            //{
+            //    RemoveToolStripButtons();
+            //    return;
+            //}
+            RemoveToolStripButtons();
+
+            for (int i = 0; i < ecc.DetectedEncodings.Length; i++)
+            {
+                var encoding = ecc.DetectedEncodings[i];
+                if (encoding == null)
+                    Trace.TraceWarning($"{nameof(EncodingConverterCore)}.{nameof(EncodingConverterCore.DetectedEncodings)} contains an item at index '{i}' that is null!");
+                else
+                {
+                    AddDetectedEncoding(encoding);
+                }
+            }
+        }
+        void AddDetectedEncoding(Encoding encoding)
+        {
+            var button = GetToolStripButton(encoding);
+            tsInput.Items.Add(button);
+            button.Click += TSDetectedEncodingButton_Click;
+        }
+        Font _DetectedEncodingButtonFont;
+        void InitFont()
+        {
+            if (_DetectedEncodingButtonFont == null)
+            {
+                _DetectedEncodingButtonFont = new Font(this.Font.FontFamily, this.Font.Size * 4 / 5);
+            }
+        }
+        ToolStripButton GetToolStripButton(Encoding encoding)
+        {
+            ToolStripButton button = new ToolStripButton();
+
+            InitFont();
+            button.Font = _DetectedEncodingButtonFont;
+
+            button.Text = encoding.EncodingName;
+            button.Tag = encoding;
+
+            return button;
+        }
+        void RemoveToolStripButton(Encoding encoding)
+        {
+            List<ToolStripItem> items = new List<ToolStripItem>();
+            for (int i = 0; i < tsInput.Items.Count; i++)
+            {
+                var item = tsInput.Items[i];
+                if (((Encoding)item.Tag) == encoding)
+                    items.Add(item);
+            }
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                tsInput.Items.Remove(item);
+                item.Click -= TSDetectedEncodingButton_Click;
+            }
+        }
+        void RemoveToolStripButtons()
+        {
+            List<ToolStripItem> items = new List<ToolStripItem>();
+            for (int i = 0; i < tsInput.Items.Count; i++)
+            {
+                var item = tsInput.Items[i];
+                if (item is ToolStripButton)
+                    items.Add(item);
+            }
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                tsInput.Items.Remove(item);
+                item.Click -= TSDetectedEncodingButton_Click;
+            }
+        }
+        //ToolStripButton oldSelected;
+        private void TSDetectedEncodingButton_Click(object sender, EventArgs e)
+        {
+            ToolStripButton item = (ToolStripButton)sender;
+            if (item.Tag is Encoding)
+            {
+                Program.ECC.InputEncoding = (Encoding)item.Tag;
+                //item.Checked = true;
+                //if (oldSelected != null)
+                //    oldSelected.Checked = false;
+
+                //oldSelected = item;
+            }
+            else
+            {
+                Trace.TraceWarning("A DetectedEncodingButton was clicked. It does NOT have an attached Encoding!");
+            }
+        }
 
         private void MainForm_Load(object sender, EventArgs e)
         {

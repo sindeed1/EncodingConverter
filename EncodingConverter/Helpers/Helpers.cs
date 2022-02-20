@@ -295,5 +295,17 @@ namespace EncodingConverter
             return result;
         }
 
+        /// <summary>
+        /// Determines if two <see cref="Encoding"/>s are equal. Null is acceptable.
+        /// </summary>
+        /// <param name="enc1"></param>
+        /// <param name="enc2"></param>
+        /// <returns></returns>
+        public static bool EqualsEncoding(this Encoding enc1, Encoding enc2)
+        {
+            return (enc1 == enc2)//Either the two encodings are the same
+                    || (enc1 != null && enc2 != null && enc1.CodePage == enc2.CodePage);//Or they have the same CodePage.
+        }
+
     }
 }
