@@ -8,8 +8,8 @@
 
   <Identity
     Name="22202Sindeed.EncodingConverter"
-    Publisher="CN=FB05F013-9F05-431D-88DA-A51686E06091"
-    Version="3.1.6.0" />
+    Publisher="CN=AA"
+    Version="3.1.11.0" />
 
   <Properties>
     <DisplayName>Encoding Converter</DisplayName>

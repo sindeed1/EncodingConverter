@@ -26,8 +26,10 @@ namespace EncodingConverter.Commands
             SafeFileHandle safeFileHandle = new SafeFileHandle(stdHandle, true);
             FileStream fileStream = new FileStream(safeFileHandle, FileAccess.Write);
             Encoding encoding = System.Text.Encoding.GetEncoding(Win32Helper.MY_CODE_PAGE);
-            StreamWriter standardOutput = new StreamWriter(fileStream, encoding);
-            standardOutput.AutoFlush = true;
+            StreamWriter standardOutput = new StreamWriter(fileStream, encoding)
+            {
+                AutoFlush = true
+            };
             Console.SetOut(standardOutput);
 
             Console.WriteLine("Console started.");
