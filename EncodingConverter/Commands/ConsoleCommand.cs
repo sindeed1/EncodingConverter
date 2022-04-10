@@ -102,14 +102,18 @@ namespace EncodingConverter.Commands
                 else
                 {
                     //Process and execute the arguments:
-                    args.ProcessCommandLine(0, Program.GetCommands());
+                    lastUsedArgIndex = args.ProcessCommandLine(0, Program.GetCommands());
+                    if (lastUsedArgIndex <= -1)
+                    {
+                        Console.WriteLine($"Wrong command name. '{args[0]}' is not recognized as internal or external command!");
+                    }
                 }
             }//loop
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
             Console.WriteLine("Ending console.");
-            return lastUsedArgIndex;
+            return args.Length - 1;
         }
 
 

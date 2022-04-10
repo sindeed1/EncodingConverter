@@ -3,7 +3,12 @@ Created by Ammar J. Alhamwi
 
 
 ToDo in this branch (New):
-Improve convert command:
+
+Todo better: write description of the commands that includes the parameters of each commend in the long description of the command.
+
+===============================================================================================================================
+>>>Done:
++~ Added/Improved convert command:
 	Conver command currently is limited in its usage.
 	It has the following syntax:
 	
@@ -12,10 +17,6 @@ Improve convert command:
 	The command neither support optional arguments nor supports advanced arguments like auto detection of encoding.
 	A better more robust command will support the above mentioned functions.
 
-Todo better: write description of the commands that includes the parameters of each commend in the long description of the command.
-
-===============================================================================================================================
->>>Done:
 +Added support to Console:
 The program already supports command line parameters.
 For Winforms, however, the console will not show up.
