@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CommandLine;
 
 namespace EncodingConverter
 {
@@ -14,6 +15,8 @@ namespace EncodingConverter
     {
         static EncodingConverterCore _ECC = new EncodingConverterCore();
         static ICommandLineCommand[] _Commands;
+
+        static ICommandLineCommand _DefaultCommand;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -21,9 +24,13 @@ namespace EncodingConverter
         static void Main(string[] args)
         {
             //AllocConsole();
+#if DEBUG == true
+            args.ProcessCommandLine(0, Program.GetCommands(), DefaultCommandLine);
+#else
+
             try
             {
-                args.ProcessCommandLine(Program.GetCommands, new ShowUICommand());
+                args.ProcessCommandLine(0, Program.GetCommands(), DefaultCommandLine);
                 return;
             }
             catch (Exception ex)
@@ -31,7 +38,7 @@ namespace EncodingConverter
                 ex.WriteToTrace();
                 throw ex;
             }
-
+#endif
             //_ECC.ProcessCommandLine(args);
             //if (_ECC.CommandLineCommand != null)
             //{
@@ -50,7 +57,8 @@ namespace EncodingConverter
                 commands.Add(new QuestionmarkCommand());
                 commands.Add(new HelpCommand());
                 commands.Add(new ConvertCommand());
-                commands.Add(new ShowUICommand());
+                _DefaultCommand = new ShowUICommand();
+                commands.Add(_DefaultCommand);// new ShowUICommand());
                 commands.Add(new ConsoleCommand());
 
                 _Commands = commands.ToArray();
@@ -62,6 +70,15 @@ namespace EncodingConverter
 
 
             return _Commands;
+        }
+
+        static int DefaultCommandLine(string[] args, int startingArgIndex)
+        {
+            List<string> newArgs = new List<string>(args.Length + 1);
+            newArgs.Add(_DefaultCommand.Name);
+            newArgs.AddRange(args);
+
+            return _DefaultCommand.Execute(newArgs.ToArray(), 0);
         }
         static void StartUI()
         {

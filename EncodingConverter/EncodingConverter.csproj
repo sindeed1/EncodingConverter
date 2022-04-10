@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLine.cs" />
+    <Compile Include="CommandLine\CommandLineHelper.cs" />
     <Compile Include="Commands\ConsoleCommand.cs" />
     <Compile Include="Commands\ConvertCommand.cs" />
     <Compile Include="Commands\DetectEncodingCommad.cs" />
@@ -265,6 +266,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommandLineHelper\CommandLineStandard.csproj">
+      <Project>{4d386296-29fb-4c72-b9d0-83e9fc70e760}</Project>
+      <Name>CommandLineStandard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

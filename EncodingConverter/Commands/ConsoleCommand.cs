@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using CommandLine;
 
 namespace EncodingConverter.Commands
 {
@@ -18,8 +19,14 @@ namespace EncodingConverter.Commands
 
         public string LongDescription => "'end' is an internal command to console. Type 'end' while in console to exit the console.";
 
-        public bool Execute(string[] args, int argsStartIndex)
+        public int Execute(string[] args, int argsStartIndex)
         {
+            //if (args[argsStartIndex].Trim().ToLower() != this.Name)
+            if (!args.IsSwitch(argsStartIndex, this.Name))
+            {
+                return argsStartIndex - 1;
+            }
+
             Console.WriteLine("Starting console...");
             Win32Helper.AllocConsole();
             IntPtr stdHandle = Win32Helper.GetStdHandle(Win32Helper.STD_OUTPUT_HANDLE);
@@ -32,7 +39,7 @@ namespace EncodingConverter.Commands
             };
             Console.SetOut(standardOutput);
 
-            Console.WriteLine("Console started.");
+            Console.Write("Done.");
             Console.WriteLine($"Type '{end}' any time to exit the console.'");
 
             //Any arguments that comes after the 'console' command name are interpreted as
@@ -44,26 +51,38 @@ namespace EncodingConverter.Commands
             //Thus, we start the console and then the UI from a single command line.
 
             string allAfterArgs = string.Empty;
-            for (int i = argsStartIndex; i < args.Length; i++)
+
+            int lastUsedArgIndex = args.Length;
+            //if (allAfterArgs.Trim() != String.Empty)
+            if (args.Length > argsStartIndex + 1)//Is there any arguments after the startingArg to process directly?
             {
-                allAfterArgs += args[i];
-            }
-            if (allAfterArgs != String.Empty)
-            {
+                //Combine all the after arguments into a single string to be written to console:
+                for (int i = argsStartIndex; i < args.Length; i++)
+                    allAfterArgs += args[i] + " ";
+
                 Console.WriteLine(allAfterArgs);
-                args.ProcessCommandLine(Program.GetCommands, null, argsStartIndex);
+                //args.ProcessCommandLine(argsStartIndex + 1, Program.GetCommands().Select<ICommandLineCommand, Func<string[], int, int>>(x => x.Execute).ToArray(), null, out commandIndex);
+                //Process the rest of the arguments as a new command line:
+                args.ProcessCommandLine(argsStartIndex + 1, Program.GetCommands());
             }
 
+            ////args.ProcessCommandLine(argsStartIndex, Program.GetCommands().Select<ICommandLineCommand, Func<string[], int, int>>(x => x.Execute).ToArray(), out commandIndex);
+            //args.ProcessCommandLine(argsStartIndex, Program.GetCommands(), out commandIndex);
+
+            //Now start the console loop to execute commands:
             args = new string[1];
             while (true)
             {
+                //Read line:
                 string read = Console.ReadLine();
 
+                //Check internal command 'end':
                 if (read == null || read.Trim().ToLower() == end)
                 {
                     break;
                 }
 
+                //Get arguments from the entered line:
                 try
                 {
                     args = CmdLineToArgvW.SplitArgs(read);
@@ -75,23 +94,22 @@ namespace EncodingConverter.Commands
                     Console.WriteLine($"Please try again, or type '{end}' to exit.");
                     continue;
                 }
-                if (args == null)
+                //Check the arguments if valid:
+                if (args == null || args.Length == 0)
                 {
                     Console.WriteLine("Please enter a command name.");
                 }
                 else
                 {
-                    args.ProcessCommandLine(Program.GetCommands, null);
+                    //Process and execute the arguments:
+                    args.ProcessCommandLine(0, Program.GetCommands());
                 }
-                //if (args.ProcessCommandLine(Program.GetCommands, null))
-                //    {
-                //    break;
-                //}
-            }
+            }//loop
+
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
             Console.WriteLine("Ending console.");
-            return true;
+            return lastUsedArgIndex;
         }
 
 

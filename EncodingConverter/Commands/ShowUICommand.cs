@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CommandLine;
 
 namespace EncodingConverter.Commands
 {
@@ -17,7 +18,7 @@ namespace EncodingConverter.Commands
         const string CLARG_InputEncoding = "ie:";
         const string CLARG_OutputEncoding = "oe:";
 
-        Func<string, bool>[] _CommonCommandLineSwitches;
+        Func<string[], int, int>[] _CommonCommandLineSwitches;
 
         Form _Form;
         Type _FormType;
@@ -40,20 +41,21 @@ namespace EncodingConverter.Commands
             $"{Environment.NewLine}    [outputFileName] Optional, file name of the output file that will contain the converted encoding. The last argument that is not a switch (i.e. not input or output switch) is interpreted as the output file."
             ;
 
-        public bool Execute(string[] args, int argsStartIndex)
+        public int Execute(string[] args, int argsStartIndex)
         {
             //Check command name:
             //string switchName = CL_Name;
-            //if (!args[0].IsSwitch(switchName))
-            //    return false;
+            if (!args.IsSwitch(argsStartIndex, this.Name))
+                //if (!args[0].IsSwitch(this.Name))
+                return argsStartIndex - 1;
 
             //Now process the possible switches:
             InitSwitches();
 
-            args.ProcessCommadLineSwitches(argsStartIndex, _CommonCommandLineSwitches, CommandLine.ProcessNoSwitch);
+            var lastArgIndex = args.ChainProcessCommandLine(argsStartIndex, _CommonCommandLineSwitches, true, CommandLine.ProcessNoSwitch);
 
             StartUI();
-            return true;
+            return lastArgIndex;
         }
         void StartUI()
         {
@@ -80,7 +82,7 @@ namespace EncodingConverter.Commands
             if (_CommonCommandLineSwitches != null)
                 return;
 
-            _CommonCommandLineSwitches = new Func<string, bool>[3];
+            _CommonCommandLineSwitches = new Func<string[], int, int>[3];
             int i = 0;
             _CommonCommandLineSwitches[i++] = this.ProcessFormCLArg;
             _CommonCommandLineSwitches[i++] = CommandLine.ProcessInputEncodingCLArg;
@@ -92,11 +94,13 @@ namespace EncodingConverter.Commands
             var ini = formType.GetConstructor(Type.EmptyTypes);
             _Form = (Form)ini.Invoke(null);
         }
-        bool ProcessFormCLArg(string arg)
+        int ProcessFormCLArg(string[] args, int argStartingIndex)
         {
             string switchName = CLARG_FORM;
+            string arg = args[argStartingIndex];
+
             if (!arg.IsSwitch(switchName))
-                return false;
+                return argStartingIndex - 1;
 
             string switchData;
             switchData = arg.GetSwitchData(switchName);//
@@ -119,7 +123,7 @@ namespace EncodingConverter.Commands
                 _Form = null;
             }
 
-            return true;
+            return argStartingIndex;
         }
 
     }

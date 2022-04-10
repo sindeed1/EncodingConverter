@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommandLine;
 
 namespace EncodingConverter.Commands
 {
@@ -16,8 +17,15 @@ namespace EncodingConverter.Commands
 
         public string LongDescription => ShortDescription;
 
-        public bool Execute(string[] args, int argsStartIndex)
+        public int Execute(string[] args, int argsStartIndex)
         {
+            if (!args.IsSwitch(argsStartIndex, this.Name))
+            //if (!args[argsStartIndex].IsSwitch(CL_Name))
+            {
+                //Wrong command name:
+                return argsStartIndex - 1;
+            }
+
             Console.WriteLine();
 
             var commands = Program.GetCommands();
@@ -26,7 +34,7 @@ namespace EncodingConverter.Commands
             commands.For(this.DisplayHelp);
 
             Console.WriteLine();
-            return true;
+            return argsStartIndex;
         }
 
         void DisplayHelp(ICommandLineCommand command)

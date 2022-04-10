@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommandLine;
 
 namespace EncodingConverter.Commands
 {
@@ -12,11 +14,23 @@ namespace EncodingConverter.Commands
     class ConvertCommand : ICommandLineCommand
     {
         const string CLARG_SWITCH = "-";//CommandLineArgument
-        const string CLARG_InputEncoding = "ie:";
-        const string CLARG_OutputEncoding = "oe:";
+        const string CLARG_InputEncoding = "-ie";// input encoding
+        const string CLARG_OutputEncoding = "-oe";// output encoding
+        const string CLARG_AutoDetectEncoding = "-ad";// auto detect input encoding
+        const string CLARG_PreferredEncoding = "-pe";// preferred encoding
         const string CLARG_Convert = "convert";
 
-        Func<string, bool>[] _CommonCommandLineSwitches;
+        /* Syntax:
+         * convert <inputFileName>[ -ie:<inputEncoding>| -ie <inputEncoding>]
+         *                        [ -oe:<outputEncoding>| -oe <outputEncoding>]
+         *                        [ <outputFileName>]
+         *                        [ -ad| -ad:<true|false>| -ad <true|false>]
+         *                        [ -pe <preferredEncoding>]
+         * 
+         * <inputFileName> is the file name and path to the input file.
+         * -ie: is the encoding of the input file.
+         */
+        Func<string[], int, int>[] _CommonCommandLineSwitches;
 
         public string Name => CLARG_Convert;
 
@@ -33,18 +47,28 @@ namespace EncodingConverter.Commands
             $"{Environment.NewLine}    <outputFileName> file name of the output file that will contain the converted encoding. The last argument that is not a switch (i.e. not input or output switch) is interpreted as the output file."
             ;
 
-        public bool Execute(string[] args, int argsStartIndex)
+        public int Execute(string[] args, int argsStartIndex)
         {
             //string switchName = CLARG_Convert;
-            //if (!args[0].IsSwitch(switchName))
-            //    return false;
+            if (!args.IsSwitch(argsStartIndex, this.Name))
+                //if (!args[0].IsSwitch(switchName))
+                return argsStartIndex - 1;
 
             InitCommonSwitches();
 
-            args.ProcessCommadLineSwitches(argsStartIndex, _CommonCommandLineSwitches, CommandLine.ProcessNoSwitch);
+            /* Handling of switches in this command is done in a similar fashion to handling command line:
+             * The switches here are the commands. Each switch handler will perform the necessary operations
+             * and return. The logic will get the next argument/switch and try to execute it.
+             * 
+             * The only difference in the current implementation is that switch handling is done in a chained sequence
+             * witch means the execution will continue to the next argument until a failure, i.e. no handler found, or
+             * the end of arguments is met.
+             */
+            //args.ProcessCommadLineSwitches(argsStartIndex, _CommonCommandLineSwitches, CommandLine.ProcessNoSwitch);
+            argsStartIndex = args.ChainProcessCommandLine(argsStartIndex, _CommonCommandLineSwitches, true, CommandLine.ProcessNoSwitch);
 
             Program.ECC.Convert();
-            return true;
+            return argsStartIndex;
         }
 
 
@@ -53,84 +77,122 @@ namespace EncodingConverter.Commands
             if (_CommonCommandLineSwitches != null)
                 return;
 
-            _CommonCommandLineSwitches = new Func<string, bool>[2];
+            //Notice: Handler of no-switch is not included. It will be processed as the default handler
+            //witch means it will be executed if no switch matches:
+            _CommonCommandLineSwitches = new Func<string[], int, int>[4];
             _CommonCommandLineSwitches[0] = CommandLine.ProcessInputEncodingCLArg;
             _CommonCommandLineSwitches[1] = CommandLine.ProcessOutputEncodingCLArg;
+            _CommonCommandLineSwitches[2] = this.ProcessAutoDetectCLArg;
+            _CommonCommandLineSwitches[3] = this.ProcessPreferredEncodingCLArg;
         }
 
-        bool ProcessInputEncodingCLArg(string arg)
+        //bool ProcessInputEncodingCLArg(string arg)
+        //{
+        //    string switchName = CLARG_InputEncoding;
+        //    if (!arg.IsSwitch(switchName))
+        //        return false;
+
+        //    string switchData;
+        //    switchData = arg.GetSwitchData(switchName);//
+
+        //    EncodingInfo encodingInfo;
+        //    encodingInfo = GetEncodingInfoFromSwitchData(switchData);
+        //    if (encodingInfo == null)
+        //    {
+        //        Console.WriteLine("Switch InputEncoding '" + switchName + "' does not provide a recognizable code page '" + switchData + "'.");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Input encoding '" + encodingInfo.DisplayName + "'.");
+        //        Program.ECC.InputEncoding = encodingInfo.GetEncoding();
+        //    }
+
+        //    return true;
+        //}
+        //bool ProcessOutputEncodingCLArg(string arg)
+        //{
+        //    string switchName = CLARG_OutputEncoding;
+        //    if (!arg.IsSwitch(switchName))
+        //        return false;
+
+        //    string switchData;
+        //    switchData = arg.GetSwitchData(switchName);//
+
+        //    EncodingInfo encodingInfo;
+        //    encodingInfo = GetEncodingInfoFromSwitchData(switchData);
+        //    if (encodingInfo == null)
+        //    {
+        //        Console.WriteLine("Switch OutputEncoding '" + switchName + "' does not provide a recognizable code page '" + switchData + "'.");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Output encoding '" + encodingInfo.DisplayName + "'.");
+        //        Program.ECC.OutputEncoding = encodingInfo.GetEncoding();
+        //    }
+
+        //    return true;
+        //}
+        //bool ProcessNoSwitch(string arg)
+        //{
+        //    if (string.IsNullOrWhiteSpace(Program.ECC.InputFilePath))
+        //    {
+        //        Program.ECC.InputFilePath = arg;
+        //    }
+        //    else
+        //    {
+        //        Program.ECC.OutputFilePath = arg;
+        //    }
+        //    return true;
+        //}
+        int ProcessAutoDetectCLArg(string[] args, int startingIndex)
         {
-            string switchName = CLARG_InputEncoding;
-            if (!arg.IsSwitch(switchName))
-                return false;
+            string switchName = CLARG_AutoDetectEncoding;
 
             string switchData;
-            switchData = arg.GetSwitchData(switchName);//
-
-            EncodingInfo encodingInfo;
-            encodingInfo = GetEncodingInfoFromSwitchData(switchData);
-            if (encodingInfo == null)
+            int lastArgsIndex = args.GetSwitchData(startingIndex, switchName, CommandLine.CLARG_DataSeparator, out switchData);
+            if (lastArgsIndex < startingIndex)
             {
-                Console.WriteLine("Switch InputEncoding '" + switchName + "' does not provide a recognizable code page '" + switchData + "'.");
+                //Switch is NOT AutoDetect switch:
+                Trace.TraceWarning($"Switch '{args[startingIndex]}' is not auto detect switch '{switchName}'!");
+                return lastArgsIndex;
+            }
+
+            switchData = switchData.Trim().ToLower();
+            if (string.IsNullOrEmpty(switchData))
+            {
+                //If no data available then it means AutoDetect is on:
+                Program.ECC.AutoDetectInputEncoding = true;
+                return lastArgsIndex;
+            }
+
+            bool autoDetect;
+            if (bool.TryParse(switchData, out autoDetect))
+            {
+                Program.ECC.AutoDetectInputEncoding = autoDetect;
             }
             else
             {
-                Console.WriteLine("Input encoding '" + encodingInfo.DisplayName + "'.");
-                Program.ECC.InputEncoding = encodingInfo.GetEncoding();
+                Console.WriteLine($"Failed to parse switch data '{switchName}' for switch '{switchName}' as boolean!");
             }
-
-            return true;
+            return lastArgsIndex;
         }
-        bool ProcessOutputEncodingCLArg(string arg)
+
+        int ProcessPreferredEncodingCLArg(string[] args, int startingIndex)
         {
-            string switchName = CLARG_OutputEncoding;
-            if (!arg.IsSwitch(switchName))
-                return false;
+            string switchName = CLARG_PreferredEncoding;
 
             string switchData;
-            switchData = arg.GetSwitchData(switchName);//
+            int lastArgsIndex = args.GetSwitchData(startingIndex, switchName, CommandLine.CLARG_DataSeparator, out switchData);
 
-            EncodingInfo encodingInfo;
-            encodingInfo = GetEncodingInfoFromSwitchData(switchData);
-            if (encodingInfo == null)
+            if (lastArgsIndex < startingIndex)
             {
-                Console.WriteLine("Switch OutputEncoding '" + switchName + "' does not provide a recognizable code page '" + switchData + "'.");
-            }
-            else
-            {
-                Console.WriteLine("Output encoding '" + encodingInfo.DisplayName + "'.");
-                Program.ECC.OutputEncoding = encodingInfo.GetEncoding();
+                //Switch is NOT PreferredEncoding switch:
+                Trace.TraceWarning($"Switch '{args[startingIndex]}' is not preferred encoding switch '{switchName}'!");
+                return lastArgsIndex;
             }
 
-            return true;
-        }
-        bool ProcessNoSwitch(string arg)
-        {
-            if (string.IsNullOrWhiteSpace(Program.ECC.InputFilePath))
-            {
-                Program.ECC.InputFilePath = arg;
-            }
-            else
-            {
-                Program.ECC.OutputFilePath = arg;
-            }
-            return true;
-        }
-
-        EncodingInfo GetEncodingInfoFromSwitchData(string switchData)
-        {
-            EncodingInfo encodingInfo;
-            int codePage;
-            if (Int32.TryParse(switchData, out codePage))
-            {
-                encodingInfo = Program.ECC.Encodings.FirstOrDefault(x => x.CodePage == codePage);
-            }
-            else
-            {
-                encodingInfo = Program.ECC.Encodings.FirstOrDefault(x => x.Name == switchData);
-            }
-
-            return encodingInfo;
+            Program.ECC.PreferredInputEncoding = switchData;
+            return lastArgsIndex;
         }
 
 

@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace EncodingConverter.Commands
 {
-    interface ICommandLineCommand
-    {
-        string Name { get; }
-        string ShortDescription { get; }
-        string LongDescription { get; }
+    //interface ICommandLineCommand
+    //{
+    //    string Name { get; }
+    //    string ShortDescription { get; }
+    //    string LongDescription { get; }
 
-        bool Execute(string[] args, int argsStartIndex);
-    }
+    //    /// <summary>
+    //    /// Executes the command and returns the index of last argument used by the command.
+    //    /// </summary>
+    //    /// <param name="args"></param>
+    //    /// <param name="argsStartIndex"></param>
+    //    /// <returns></returns>
+    //    int Execute(string[] args, int argsStartIndex);
+    //}
 }

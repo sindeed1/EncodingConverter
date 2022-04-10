@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommandLine;
 
 namespace EncodingConverter.Commands
 {
@@ -11,7 +12,7 @@ namespace EncodingConverter.Commands
         const string CL_Name = "detect";
         //const string CLARG_FORM = "form:";
         //const string CLARG_SWITCH = "-";
-        Func<string, bool>[] _Switches;
+        Func<string[], int, int>[] _Switches;
 
         public string Name => CL_Name;
 
@@ -19,32 +20,35 @@ namespace EncodingConverter.Commands
 
         public string LongDescription => "";
 
-        public bool Execute(string[] args, int argsStartIndex)
+        public int Execute(string[] args, int argsStartIndex)
         {
+            if (!args.IsSwitch(argsStartIndex, this.Name))
+                return argsStartIndex - 1;
+
             InitCommonSwitches();
 
-            args.ProcessCommadLineSwitches(argsStartIndex, _Switches, ProcessNoSwitch);
+            argsStartIndex = args.ChainProcessCommandLine(argsStartIndex, _Switches, true, ProcessNoSwitch);
 
             //var result = Program.ECC.de;
-            return true;
+            return argsStartIndex;
         }
         void InitCommonSwitches()
         {
             if (_Switches != null)
                 return;
 
-            _Switches = new Func<string, bool>[2];
+            _Switches = new Func<string[], int, int>[2];
             _Switches[0] = CommandLine.ProcessInputEncodingCLArg;
             _Switches[1] = CommandLine.ProcessOutputEncodingCLArg;
         }
 
-        public static bool ProcessNoSwitch(string arg)
+        public static int ProcessNoSwitch(string[] args, int startingArgIndex)
         {
             if (string.IsNullOrWhiteSpace(Program.ECC.InputFilePath))
             {
-                Program.ECC.InputFilePath = arg;
+                Program.ECC.InputFilePath = args[startingArgIndex];
             }
-            return true;
+            return startingArgIndex;
         }
 
     }

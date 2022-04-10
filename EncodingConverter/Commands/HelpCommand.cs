@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommandLine;
 
 namespace EncodingConverter.Commands
 {
@@ -18,8 +19,14 @@ namespace EncodingConverter.Commands
             $"{Environment.NewLine}    '<CommandName>' Optional, Name of a command to display its help. If it is not provided, help will be displayed for all commands." +
             $"{Environment.NewLine}    Displayed help is of the format:{Environment.NewLine}'<CommandName>' : <short descrpition>{Environment.NewLine} <long description>";
 
-        public bool Execute(string[] args, int argsStartIndex)
+        public int Execute(string[] args, int argsStartIndex)
         {
+            if (!args.IsSwitch(argsStartIndex, this.Name))
+            {
+                //Wrong command name:
+                return argsStartIndex - 1;
+            }
+
             Console.WriteLine();
 
             var commands = Program.GetCommands();
@@ -29,6 +36,7 @@ namespace EncodingConverter.Commands
             {
                 //There is at least a following argument.
                 //Let's get it:
+                argsStartIndex++;
                 arg = args[argsStartIndex];
             }
             if (arg == null || arg.Trim() == string.Empty)
@@ -49,7 +57,7 @@ namespace EncodingConverter.Commands
             }
 
             Console.WriteLine();
-            return true;
+            return argsStartIndex;
         }
         void DisplayHelp(ICommandLineCommand command)
         {
