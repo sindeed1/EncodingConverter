@@ -73,6 +73,8 @@ namespace EncodingConverter
                 if (_CompanionFile == value)
                     return;
                 _CompanionFile = value;
+                Trace.TraceInformation(nameof(OutputPathFormatter) + "." + nameof(this.CompanionFile) + ".set:'" + value + "'");
+
                 CompanionFileChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -87,6 +89,9 @@ namespace EncodingConverter
 
                 _CompanionFileSearchPattern = value;
                 _CompanionFileSearchPatterns = _CompanionFileSearchPattern.Split(_SplitChars, StringSplitOptions.RemoveEmptyEntries);
+                Trace.TraceInformation(nameof(OutputPathFormatter) + "." + nameof(this.CompanionFileSearchPattern) + ".set:'" + value + "'");
+
+
                 UpdateFormattedText();
                 CompanionFileSearchPatternChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -102,6 +107,8 @@ namespace EncodingConverter
                     return;
                 }
                 _FormatString = value;
+                Trace.TraceInformation(nameof(OutputPathFormatter) + "." + nameof(this.FormatString) + ".set:'" + value + "'");
+
                 UpdateFormattedText();
                 FormatStringChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -162,9 +169,9 @@ namespace EncodingConverter
             {
                 FileInfo file = new FileInfo(inputPath);
                 directory = file.DirectoryName;
-                Trace.TraceInformation("Old current directory '" + Directory.GetCurrentDirectory() + "'");
+                Trace.TraceInformation($"{nameof(OutputPathFormatter)}: Old current directory '{Directory.GetCurrentDirectory()}'");
                 Directory.SetCurrentDirectory(directory);
-                Trace.TraceInformation("New current directory '" + Directory.GetCurrentDirectory() + "'");
+                Trace.TraceInformation($"{nameof(OutputPathFormatter)}: New current directory '{Directory.GetCurrentDirectory()}'");
 
                 //Fill the formatting patterns with patterns that correspond to InputFile.
                 //Those formatting arguments begins at index of 0:

@@ -32,7 +32,7 @@ namespace EncodingConverter.Commands
             var commands = Program.GetCommands();
             string arg = string.Empty;
 
-            if (args != null && args.Length > argsStartIndex)
+            if (args != null && args.Length > argsStartIndex + 1)
             {
                 //There is at least a following argument.
                 //Let's get it:

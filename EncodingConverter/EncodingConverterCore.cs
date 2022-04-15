@@ -11,6 +11,9 @@ using System.Runtime.CompilerServices;
 
 namespace EncodingConverter
 {
+#if DEBUG == true
+    public
+#endif
     class EncodingConverterCore
     {
         const int con_Default_MaxDetectedInputEncodings = 10;
@@ -754,6 +757,15 @@ namespace EncodingConverter
         #endregion//
 
         #region Trace helpers
+        public override string ToString()
+        {
+            return $"{nameof(InputFilePath)}={InputFilePath}, " +
+                $"{nameof(InputEncoding)}={InputEncoding}, " +
+                $"{nameof(OutputFilePath)}={OutputFilePath}, " +
+                $"{nameof(OutputEncoding)}={OutputEncoding}, " + 
+                $""
+                ;
+        }
         static void TraceInfo(string methodName, string msg) { Trace.TraceInformation(FormatTraceMessage(methodName, msg)); }
         static void TraceInformation(string msg) { Trace.TraceInformation(FormatTraceMessage(msg)); }
         static void TraceError(string msg) { Trace.TraceError(FormatTraceMessage(msg)); }

@@ -153,12 +153,25 @@ namespace EncodingConverter
 
     class LockedOneWayUpdater<T> : OneWayUpdater<T>
     {
+        bool _Updating;
+
         public LockedOneWayUpdater(Func<T> sourceGetter, Action<T> destinationSetter, EventLink updateEvent)
             : base(sourceGetter, destinationSetter, updateEvent) { }
 
+        public bool Updating { get => _Updating; }
+
+        /// <summary>
+        /// Updates the destination with a value from source in a locked way.
+        /// </summary>
+        /// <remarks>Locked means that updating will be blocked until the first update returns.</remarks>
         public override void Update()
         {
+            if (_Updating)
+                return;
+
+            _Updating = true;
             base.Update();
+            _Updating = false;
         }
     }
     /// <summary>
@@ -237,6 +250,8 @@ namespace EncodingConverter
 
         void UpdateObj1To2(object sender, EventArgs e) { UpdateObj1To2(); }
         void UpdateObj2To1(object sender, EventArgs e) { UpdateObj2To1(); }
+
+        public bool Updating { get => _Updating; }
 
 
         public void UpdateObj1To2()

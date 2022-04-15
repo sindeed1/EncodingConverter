@@ -111,7 +111,7 @@ namespace EncodingConverter
                 return startingIndex - 1;
 
 
-            if (arg[switchName.Length] == switchDataSeparator)
+            if (arg.Length > switchName.Length && arg[switchName.Length] == switchDataSeparator)
             {
                 //We are in the data-separator mode.
                 //In this mode the data comes directly after the switch in the same argument:

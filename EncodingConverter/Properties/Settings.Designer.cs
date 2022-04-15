@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Diagnostics;
+
 namespace EncodingConverter.Properties {
     
     
@@ -51,10 +53,14 @@ namespace EncodingConverter.Properties {
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AutoDetectInputEncoding {
             get {
-                return ((bool)(this["AutoDetectInputEncoding"]));
+                var result = ((bool)(this["AutoDetectInputEncoding"]));
+                Trace.TraceInformation($"Settings.{nameof(AutoDetectInputEncoding)}.get: {result}");
+                return result;
+                //return ((bool)(this["AutoDetectInputEncoding"]));
             }
             set {
                 this["AutoDetectInputEncoding"] = value;
+                Trace.TraceInformation($"Settings.{nameof(AutoDetectInputEncoding)}.set: {value}");
             }
         }
         

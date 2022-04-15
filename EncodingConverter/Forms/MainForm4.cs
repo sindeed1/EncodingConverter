@@ -35,6 +35,7 @@ namespace EncodingConverter.Forms
         public MainForm4()
         {
             InitializeComponent();
+            //chkAutoDetect.DataBindings[0].
             Program.ECC.MaxDetectedInputEncodings = Properties.Settings.Default.MaxDetectedInputEncodingsCount;
 
             _TSInputEncodingViewer = new ToolStripEncodingViewer();
@@ -118,6 +119,7 @@ namespace EncodingConverter.Forms
 
             //Bind 'ECC.OutputEncoding' to 'evOutputEncoding.SelectedEncodingInfo' and 'Settings.LastOutputEncoding':
             Properties.Settings defSet = Properties.Settings.Default;
+
             //1- Setup PropertyLink to 'ECC.OutputEncoding':
             var ECCOutputEncodingPropertyLink = new PropertyLink<Encoding>
                         (() => ECC.OutputEncoding//getter

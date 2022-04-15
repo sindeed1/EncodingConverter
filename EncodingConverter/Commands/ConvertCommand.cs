@@ -18,6 +18,7 @@ namespace EncodingConverter.Commands
         const string CLARG_OutputEncoding = "-oe";// output encoding
         const string CLARG_AutoDetectEncoding = "-ad";// auto detect input encoding
         const string CLARG_PreferredEncoding = "-pe";// preferred encoding
+        const string CLARG_OutputPathFormat = "-outform";// output path format
         const string CLARG_Convert = "convert";
 
         /* Syntax:
@@ -36,13 +37,13 @@ namespace EncodingConverter.Commands
 
         public string ShortDescription => "Converts a text file from a given encoding to another.";
 
-        public string LongDescription => $"<{CLARG_Convert}>" +
+        public string LongDescription => $"<{this.Name}>" +
             $" <inputFileName>" +
-            $" <{CLARG_SWITCH + CLARG_InputEncoding}<encoding.CodePage|.Name>>" +
-            $" <{CLARG_SWITCH + CLARG_OutputEncoding}<encoding.CodePage|.Name>>" +
+            $" <{CLARG_InputEncoding}<encoding.CodePage|.Name>>" +
+            $" <{CLARG_OutputEncoding}<encoding.CodePage|.Name>>" +
             $" <outputFileName>" +
-            $"{Environment.NewLine}    '{CLARG_SWITCH + CLARG_InputEncoding}' is the encoding of the <inputFileName>. Must be present and followed by either code page of the encoding or name of the encoding." +
-            $"{Environment.NewLine}    '{CLARG_SWITCH + CLARG_OutputEncoding}' is the encoding of the <outputFileName>. Must be present and followed by either code page of the encoding or name of the encoding." +
+            $"{Environment.NewLine}    '{CLARG_InputEncoding}' is the encoding of the <inputFileName>. Must be present and followed by either code page of the encoding or name of the encoding." +
+            $"{Environment.NewLine}    '{CLARG_OutputEncoding}' is the encoding of the <outputFileName>. Must be present and followed by either code page of the encoding or name of the encoding." +
             $"{Environment.NewLine}    <inputFileName> file name of the file that needs to be converted. The first argument that is not a switch (i.e. not input or output switch) is interpreted as the input file." +
             $"{Environment.NewLine}    <outputFileName> file name of the output file that will contain the converted encoding. The last argument that is not a switch (i.e. not input or output switch) is interpreted as the output file."
             ;
