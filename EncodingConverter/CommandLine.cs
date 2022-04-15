@@ -32,7 +32,7 @@ namespace EncodingConverter
             int lastArgsIndex = GetSwitchData(args, startingIndex, switchName, CLARG_DataSeparator, out switchData);
             if (lastArgsIndex < startingIndex || string.IsNullOrEmpty(switchData))
             {
-                Trace.TraceWarning($"Switch '{args[startingIndex]}' is not input encoding switch '{switchName}'!");
+                Trace.TraceWarning($"Argument '{args[startingIndex]}' is not input encoding switch '{switchName}'!");
                 return lastArgsIndex;
             }
 
@@ -65,10 +65,10 @@ namespace EncodingConverter
             string switchName = CLARG_OutputEncoding;
 
             string switchData;
-            int lastArgsIndex = GetSwitchData(args, startingIndex, CLARG_InputEncoding, CLARG_DataSeparator, out switchData);
+            int lastArgsIndex = GetSwitchData(args, startingIndex, switchName, CLARG_DataSeparator, out switchData);
             if (lastArgsIndex < startingIndex || string.IsNullOrEmpty(switchData))
             {
-                Trace.TraceWarning($"Switch '{args[startingIndex]}' is not output encoding switch '{switchName}'!");
+                Trace.TraceWarning($"Argument '{args[startingIndex]}' is not output encoding switch '{switchName}'!");
                 return lastArgsIndex;
             }
 
@@ -76,7 +76,7 @@ namespace EncodingConverter
             encodingInfo = GetEncodingInfoFromSwitchData(switchData);
             if (encodingInfo == null)
             {
-                Console.WriteLine($"Switch OutputEncoding '{switchName }' does not provide a recognizable code page '{switchData }'.");
+                Console.WriteLine($"Switch OutputEncoding '{switchName}' does not provide a recognizable code page '{switchData}'.");
             }
             else
             {

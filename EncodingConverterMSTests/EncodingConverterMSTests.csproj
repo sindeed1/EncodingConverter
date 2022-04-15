@@ -58,7 +58,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Commands\CmdLineToArgvWTests.cs" />
+    <Compile Include="Commands\ConvertCommandTests.cs" />
     <Compile Include="Commands\EncodingConverterCoreTestHelper.cs" />
+    <Compile Include="ECCTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\ShowUICommandTests.cs" />
   </ItemGroup>

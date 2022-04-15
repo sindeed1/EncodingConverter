@@ -5,11 +5,30 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace EncodingConverter.Commands.Tests
 {
-    static internal class EncodingConverterCoreTestHelper
+    static internal class ECCTestHelper
     {
+        public static void AssertAll(this EncodingConverterCore ecc, string inputFile, string outputFile, Encoding ie, Encoding oe)
+        {
+            ecc.AssertECCInputEncoding(ie.HeaderName);
+            ecc.AssertECCInputFile(inputFile);
+            ecc.AssertECCOutputEncoding(oe.HeaderName);
+            ecc.AssertECCOutputFile(outputFile);
+
+            ecc.AssertContent();
+        }
+
+        public static void AssertContent(this EncodingConverterCore ecc)
+        {
+            string input = File.ReadAllText(ecc.InputFilePath, ecc.InputEncoding);
+            string output = File.ReadAllText(ecc.OutputFilePath, ecc.OutputEncoding);
+
+            AssertQuestion("File converted successfully?", input == output);
+            //Assert.AreEqual(input, output);
+        }
         public static void AssertECCInputFile(this EncodingConverterCore ecc, string inputFile)
         {
             AssertQuestion($"ECC.InputFilePath.Contains('{inputFile}') ?"

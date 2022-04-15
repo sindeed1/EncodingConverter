@@ -14,12 +14,12 @@ namespace EncodingConverter.Commands
     class ConvertCommand : ICommandLineCommand
     {
         const string CLARG_SWITCH = "-";//CommandLineArgument
-        const string CLARG_InputEncoding = "-ie";// input encoding
-        const string CLARG_OutputEncoding = "-oe";// output encoding
-        const string CLARG_AutoDetectEncoding = "-ad";// auto detect input encoding
-        const string CLARG_PreferredEncoding = "-pe";// preferred encoding
-        const string CLARG_OutputPathFormat = "-outform";// output path format
-        const string CLARG_Convert = "convert";
+        public const string CLARG_InputEncoding = CommandLine.CLARG_InputEncoding;// "-ie";// input encoding
+        public const string CLARG_OutputEncoding = CommandLine.CLARG_OutputEncoding;// "-oe";// output encoding
+        public const string CLARG_AutoDetectEncoding = "-ad";// auto detect input encoding
+        public const string CLARG_PreferredEncoding = "-pe";// preferred encoding
+        public const string CLARG_OutputPathFormat = "-outform";// output path format
+        public const string CLARG_Name = "convert";
 
         /* Syntax:
          * convert <inputFileName>[ -ie:<inputEncoding>| -ie <inputEncoding>]
@@ -33,7 +33,7 @@ namespace EncodingConverter.Commands
          */
         Func<string[], int, int>[] _CommonCommandLineSwitches;
 
-        public string Name => CLARG_Convert;
+        public string Name => CLARG_Name;
 
         public string ShortDescription => "Converts a text file from a given encoding to another.";
 
@@ -66,7 +66,7 @@ namespace EncodingConverter.Commands
              * the end of arguments is met.
              */
             //args.ProcessCommadLineSwitches(argsStartIndex, _CommonCommandLineSwitches, CommandLine.ProcessNoSwitch);
-            argsStartIndex = args.ChainProcessCommandLine(argsStartIndex, _CommonCommandLineSwitches, true, CommandLine.ProcessNoSwitch);
+            argsStartIndex = args.ChainProcessCommandLine(argsStartIndex + 1, _CommonCommandLineSwitches, true, CommandLine.ProcessNoSwitch);
 
             Program.ECC.Convert();
             return argsStartIndex;
@@ -154,7 +154,7 @@ namespace EncodingConverter.Commands
             if (lastArgsIndex < startingIndex)
             {
                 //Switch is NOT AutoDetect switch:
-                Trace.TraceWarning($"Switch '{args[startingIndex]}' is not auto detect switch '{switchName}'!");
+                Trace.TraceWarning($"Argument '{args[startingIndex]}' is not auto detect switch '{switchName}'!");
                 return lastArgsIndex;
             }
 
@@ -188,7 +188,7 @@ namespace EncodingConverter.Commands
             if (lastArgsIndex < startingIndex)
             {
                 //Switch is NOT PreferredEncoding switch:
-                Trace.TraceWarning($"Switch '{args[startingIndex]}' is not preferred encoding switch '{switchName}'!");
+                Trace.TraceWarning($"Argument '{args[startingIndex]}' is not preferred encoding switch '{switchName}'!");
                 return lastArgsIndex;
             }
 

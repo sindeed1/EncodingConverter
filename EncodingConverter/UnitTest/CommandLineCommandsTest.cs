@@ -39,5 +39,21 @@ namespace EncodingConverter.UnitTest
         public static string SwitchInputEncoding { get => ShowUICommand.CLARG_InputEncoding; }
         public static string SwitchOutputEncoding { get => ShowUICommand.CLARG_OutputEncoding; }
     }
+
+    public class ConvertCommandTest : CommandTestWrapper
+    {
+        public ConvertCommandTest()
+        {
+            _command = new ConvertCommand();
+        }
+
+        public static string SwitchCmdName { get => ConvertCommand.CLARG_Name; }
+
+        public static string SwitchAutoDetectEncoding { get => ConvertCommand.CLARG_AutoDetectEncoding; }
+        public static string SwitchInputEncoding { get => ConvertCommand.CLARG_InputEncoding; }
+        public static string SwitchPrefferedInputEncoding { get => ConvertCommand.CLARG_PreferredEncoding; }
+        public static string SwitchOutputEncoding { get => ConvertCommand.CLARG_OutputEncoding; }
+    }
+
 }
 #endif
