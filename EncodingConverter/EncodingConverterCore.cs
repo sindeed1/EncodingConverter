@@ -63,6 +63,12 @@ namespace EncodingConverter
         /// <summary>
         /// Returns the input file as a text encoded using <see cref="InputEncoding"/>.
         /// </summary>
+        /// <remarks>In the current implementation, the <see cref="InputText"/> is implemented as lazy load, witch
+        /// means that the text will actually be loaded upon request and NOT directly after changing <see cref="InputFilePath"/>
+        /// or <see cref="InputEncoding"/>.
+        /// <para>This method does NOT check for the existence of <see cref="InputFilePath"/>. If it does not exist,
+        /// an exception will be thrown.</para>
+        /// <para>If <see cref="InputFilePath"/> or <see cref="InputEncoding"/> are null, empty, or white space, returns null.</para></remarks>
         public string InputText
         {
             get
@@ -99,6 +105,14 @@ namespace EncodingConverter
             }
         }
 
+        /// <summary>
+        /// Gets or sets the path of the input file that will be converted.
+        /// </summary>
+        /// <remarks>In the current implementation the logic does not check the file directly. Some methods
+        /// like <see cref="Convert"/> and <see cref="DetectInputEncoding"/> will, however, read the file and throw
+        /// exceptions if it does not work.
+        /// <para>Also, if <see cref="AutoDetectInputEncoding"/> is true, then <see cref="DetectInputEncoding"/> will be automatically
+        /// called, thus triggering an exception if the file does not exist or has access problem.</para></remarks>
         public string InputFilePath
         {
             get { return _InputFilePath; }
@@ -112,7 +126,7 @@ namespace EncodingConverter
 
                 _InputFilePath = value;
 
-                RefreshInputFielPath();
+                RefreshInputFilePath();
 
                 OnInputTextChanged();
 
@@ -210,14 +224,18 @@ namespace EncodingConverter
         public EncodingInfo[] Encodings { get { return _Encodings; } }
 
 
+        /// <summary>
+        /// Gets or sets the max count of detected encodings for <see cref="InputFilePath"/>. Must be >= 1.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">When value is less that one.</exception>
         public int MaxDetectedInputEncodings
         {
             get { return _MaxDetectedInputEncodings; }
             set 
             {
-                if (value < 0)
+                if (value < 1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "value must be equal or larger to zero.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "value must be equal or larger to one.");
                 }
                 _MaxDetectedInputEncodings = value; 
             }
@@ -231,7 +249,7 @@ namespace EncodingConverter
         {
             Encoding[] detectedEncodings = null;
 
-            var encoding = DetectInputEncoding(_InputFilePath, _PreferredInputEncoding, 10, out detectedEncodings);
+            var encoding = DetectInputEncoding(_InputFilePath, _PreferredInputEncoding, _MaxDetectedInputEncodings, out detectedEncodings);
 
             this.DetectedEncodings = detectedEncodings;
 
@@ -326,7 +344,7 @@ namespace EncodingConverter
             //// Done !!
             //Console.WriteLine("Conversion finished successfully.");
         }
-        public void RefreshInputFielPath()
+        public void RefreshInputFilePath()
         {
             //The InputFilePath has changed. The _InputText is no more valid:
             _InputText = null;
@@ -460,7 +478,7 @@ namespace EncodingConverter
             Encoding encoding;
             if (string.IsNullOrEmpty(preferredString))
             {
-                encoding = encodings[1];
+                encoding = encodings[0];// Get the first item in the detected encodings.
             }
             else
             {
@@ -568,193 +586,6 @@ namespace EncodingConverter
 
         #endregion
 
-
-        #region ...Command line...
-
-
-        private Func<bool> _CommandLineCommand;
-
-        public Func<bool> CommandLineCommand { get { return _CommandLineCommand; } }
-
-        Func<string, bool>[] _CommonCommandLineSwitches;
-        Func<string[], bool>[] _CommandLineCommands;
-
-        const string CLARG_SWITCH = "-";
-        const string CLARG_InputEncoding = CLARG_SWITCH + "ie:";
-        const string CLARG_OutputEncoding = CLARG_SWITCH + "oe:";
-        const string CLARG_OutputFile = CLARG_SWITCH + "of:";
-        const string CLARG_InputFile = CLARG_SWITCH + "if:";
-
-        const string CLARG_Convert = "convert";
-        const string CLARG_Help = "help";
-
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="args"></param>
-        ///// <remarks>Command line is something like this:
-        ///// [command] [filepath] </remarks>
-        //public void ProcessCommandLine(string[] args)
-        //{
-        //    Console.WriteLine("Processing command line...");
-        //    if (args == null || args.Length <= 0)
-        //    {
-        //        Console.WriteLine("No command line arguments.");
-        //        return;
-        //    }
-
-        //    //string inputFile = args[0];// [0]: input file path.
-        //    //Console.WriteLine("Input file:'" + inputFile + "'");
-
-        //    if (_CommandLineCommands == null)
-        //    {
-        //        int ci = 0;// command counter
-        //        _CommandLineCommands = new Func<string[], bool>[2];
-        //        _CommandLineCommands[ci++] = this.ProcessConvertCLCommand;
-        //        _CommandLineCommands[ci++] = this.ProcessHelpCLCommand;
-        //        //_CommandLineCommands[1] = this.ProcessOutputEncodingCLArg;
-        //    }
-
-        //    for (int i = 0; i < _CommandLineCommands.Length; i++)
-        //    {
-        //        if (_CommandLineCommands[i](args))
-        //        {
-        //            break;
-        //        }
-        //    }//for i
-
-        //    if (_CommandLineCommand != null)
-        //        return;
-
-        //    //No Command was found. Load the switches:
-        //    InitCommonSwitches();
-
-        //    args.ProcessCommadLineSwitches(0, _CommonCommandLineSwitches, this.ProcessNoSwitch);
-        //}
-
-        //bool ProcessNoSwitch(string arg)
-        //{
-        //    if (string.IsNullOrWhiteSpace(_InputFilePath))
-        //    {
-        //        _InputFilePath = arg;
-        //    }
-        //    else
-        //    {
-        //        _OutputFilePath = arg;
-        //    }
-        //    return true;
-        //}
-        //bool ProcessInputEncodingCLArg(string arg)
-        //{
-        //    string switchName = CLARG_InputEncoding;
-        //    if (!arg.IsSwitch(switchName))
-        //        return false;
-
-        //    string switchData;
-        //    switchData = arg.GetSwitchData(switchName);//
-
-        //    EncodingInfo encodingInfo;
-        //    encodingInfo = GetEncodingInfoFromSwitchData(switchData);
-        //    if (encodingInfo == null)
-        //    {
-        //        Console.WriteLine("Switch InputEncoding '" + switchName + "' does not provide a recognizable code page '" + switchData + "'.");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Input encoding '" + encodingInfo.DisplayName + "'.");
-        //        _InputEncoding = encodingInfo.GetEncoding();
-        //    }
-
-        //    return true;
-        //}
-        //bool ProcessOutputEncodingCLArg(string arg)
-        //{
-        //    string switchName = CLARG_OutputEncoding;
-        //    if (!arg.IsSwitch(switchName))
-        //        return false;
-
-        //    string switchData;
-        //    switchData = arg.GetSwitchData(switchName);//
-
-        //    EncodingInfo encodingInfo;
-        //    encodingInfo = GetEncodingInfoFromSwitchData(switchData);
-        //    if (encodingInfo == null)
-        //    {
-        //        Console.WriteLine("Switch OutputEncoding '" + switchName + "' does not provide a recognizable code page '" + switchData + "'.");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Output encoding '" + encodingInfo.DisplayName + "'.");
-        //        _OutputEncoding = encodingInfo.GetEncoding();
-        //    }
-
-        //    return true;
-        //}
-
-        EncodingInfo GetEncodingInfoFromSwitchData(string switchData)
-        {
-            EncodingInfo encodingInfo;
-            int codePage;
-            if (Int32.TryParse(switchData, out codePage))
-            {
-                encodingInfo = this.Encodings.FirstOrDefault(x => x.CodePage == codePage);
-            }
-            else
-            {
-                encodingInfo = this.Encodings.FirstOrDefault(x => x.Name == switchData);
-            }
-
-            return encodingInfo;
-        }
-
-        //void InitCommonSwitches()
-        //{
-        //    if (_CommonCommandLineSwitches != null)
-        //        return;
-
-        //    _CommonCommandLineSwitches = new Func<string, bool>[2];
-        //    _CommonCommandLineSwitches[0] = this.ProcessInputEncodingCLArg;
-        //    _CommonCommandLineSwitches[1] = this.ProcessOutputEncodingCLArg;
-        //}
-        //bool ProcessConvertCLCommand(string[] args)
-        //{
-        //    string switchName = CLARG_Convert;
-        //    if (!args[0].IsSwitch(switchName))
-        //        return false;
-
-        //    InitCommonSwitches();
-
-        //    args.ProcessCommadLineSwitches(1, _CommonCommandLineSwitches, this.ProcessNoSwitch);
-
-        //    _CommandLineCommand = this.CLConvert;
-        //    return true;
-        //}
-
-        //bool ProcessHelpCLCommand(string[] args)
-        //{
-        //    string switchName = CLARG_Help;
-        //    if (!args[0].IsSwitch(switchName))
-        //        return false;
-
-        //    _CommandLineCommand = this.Help;
-        //    return true;
-        //}
-
-        //bool CLConvert()
-        //{
-        //    this.Convert();
-        //    return true;
-        //}
-        //bool Help()
-        //{
-        //    Console.WriteLine("Available commands:");
-        //    Console.WriteLine(CLARG_Convert);
-        //    Console.WriteLine(CLARG_Help);
-
-        //    return true;
-        //}
-        #endregion//
 
         #region Trace helpers
         public override string ToString()

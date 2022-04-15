@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using EncodingConverter.Commands;
+using EncodingConverter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace EncodingConverter.Commands.Tests
+namespace EncodingConverterMSTests.Commands
 {
     [TestClass()]
     public class CmdLineToArgvWTests

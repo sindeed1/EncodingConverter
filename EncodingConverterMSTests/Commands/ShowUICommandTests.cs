@@ -9,7 +9,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace EncodingConverter.Commands.Tests
+namespace EncodingConverterMSTests.Commands
 {
     [TestClass()]
     public class ShowUICommandTests

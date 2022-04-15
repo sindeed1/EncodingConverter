@@ -374,7 +374,7 @@ namespace EncodingConverter.Forms
         {
             if (file?.Trim().ToLower() == Program.ECC.InputFilePath?.Trim().ToLower())
             {
-                Program.ECC.RefreshInputFielPath();
+                Program.ECC.RefreshInputFilePath();
             }
             else
             {

@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using EncodingConverter;
 
-namespace EncodingConverter.Commands.Tests
+namespace EncodingConverterMSTests
 {
     static internal class ECCTestHelper
     {
@@ -18,10 +19,10 @@ namespace EncodingConverter.Commands.Tests
             ecc.AssertECCOutputEncoding(oe.HeaderName);
             ecc.AssertECCOutputFile(outputFile);
 
-            ecc.AssertContent();
+            ecc.AssertConversion();
         }
 
-        public static void AssertContent(this EncodingConverterCore ecc)
+        public static void AssertConversion(this EncodingConverterCore ecc)
         {
             string input = File.ReadAllText(ecc.InputFilePath, ecc.InputEncoding);
             string output = File.ReadAllText(ecc.OutputFilePath, ecc.OutputEncoding);
@@ -69,6 +70,14 @@ namespace EncodingConverter.Commands.Tests
                 Trace.Write("[ERROR!]");
             }
             Assert.IsTrue(condition);
+        }
+
+        public static string CreateFile(string path, Encoding encoding, int length)
+        {
+            string str = new string('1', length);
+
+            File.WriteAllText(path, str, encoding);
+            return str;
         }
 
     }

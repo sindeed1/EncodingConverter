@@ -81,7 +81,7 @@ namespace EncodingConverter.Commands
                 InitForm(_FormType);
             }
 
-            Trace.TraceInformation("Run Application using form: " + _Form.GetType().FullName);
+            Trace.TraceInformation($"{nameof(ShowUICommand)}: Run Application using form: " + _Form.GetType().FullName);
             Application.Run(_Form);
         }
 
@@ -109,28 +109,40 @@ namespace EncodingConverter.Commands
             //First, remove the method from the event:
             _Form.Load -= _Form_Load;
 
+            //Program.ECC.AutoDetectInputEncoding = true;
+
             //After constructing the form and before loading it we will load the init values
             //that are passed in the arguments. This will rewrite the values to the form after
             //loading from the settings:
             if (_InputEncodingAvailable)
             {
+                //Program.ECC.AutoDetectInputEncoding = false;
                 Program.ECC.InputEncoding = _InputEncoding?.GetEncoding();
-                Program.ECC.AutoDetectInputEncoding = false;
             }
 
             if (_InputFilePathArg != null)
             {
-                Program.ECC.AutoDetectInputEncoding = false;
+                //Program.ECC.AutoDetectInputEncoding = false;
                 Program.ECC.InputFilePath = _InputFilePathArg;
+                //try
+                //{
+                //    Program.ECC.InputFilePath = _InputFilePathArg;
+                //}
+                //catch (Exception ex)
+                //{
+                //    Trace.TraceWarning($"An exception was encountered while setting a new value " +
+                //        $"{nameof(EncodingConverterCore)}.{nameof(EncodingConverterCore.InputFilePath)}='{_InputFilePathArg}'.");
+                //    Trace.WriteLine($"Exception: {ex}");
+                //}
             }
             if (_OutputEncodingAvailable)
             {
-                Program.ECC.AutoDetectInputEncoding = false;
+                //Program.ECC.AutoDetectInputEncoding = false;
                 Program.ECC.OutputEncoding = _OutputEncoding?.GetEncoding();
             }
             if (_OutputFilePathArg != null)
             {
-                Properties.Settings.Default.AutoDetectInputEncoding = false;
+                //Properties.Settings.Default.AutoDetectInputEncoding = false;
                 Program.ECC.OutputFilePath = _OutputFilePathArg;
             }
         }
