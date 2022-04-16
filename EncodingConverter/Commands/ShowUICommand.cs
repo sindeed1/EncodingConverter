@@ -13,10 +13,11 @@ namespace EncodingConverter.Commands
     class ShowUICommand : ICommandLineCommand
     {
         public const string CL_Name = "showui";
-        public const string CLARG_FORM = "-form:";
-        const string CLARG_SWITCH = "-";
+        public const string CLARG_FORM = "-form";
+        //const string CLARG_SWITCH = "-";
         public const string CLARG_InputEncoding = CommandLine.CLARG_InputEncoding;// "-ie";
         public const string CLARG_OutputEncoding = CommandLine.CLARG_OutputEncoding;// "-oe";
+        public const string CLARG_AutoDetectInputEncoding = "-ad";
 
         Func<string[], int, int>[] _CommonCommandLineSwitches;
 
@@ -35,6 +36,7 @@ namespace EncodingConverter.Commands
             $"[ {CLARG_FORM}<{CommandLine.CLARG_DataSeparator}<formName>| formName>>]" +
             $"[ {CLARG_InputEncoding}<{CommandLine.CLARG_DataSeparator}<encoding.CodePage|.Name>>| <encoding.CodePage|.Name>>]" +
             $"[ {CLARG_OutputEncoding}<{CommandLine.CLARG_DataSeparator}<encoding.CodePage|.Name>>| <encoding.CodePage|.Name>>]" +
+            //$"[ {CLARG_AutoDetectInputEncoding}<{CommandLine.CLARG_DataSeparator}<true|false>| <true|false>>]" +
             $"[ inputFileName]" +
             $"[ outputFileName]" +
             $"{Environment.NewLine}    '{CLARG_FORM}' Optional, Name of the form to be displayed." +
@@ -113,13 +115,17 @@ namespace EncodingConverter.Commands
 
             //After constructing the form and before loading it we will load the init values
             //that are passed in the arguments. This will rewrite the values to the form after
-            //loading from the settings:
-            if (_InputEncodingAvailable)
-            {
-                //Program.ECC.AutoDetectInputEncoding = false;
-                Program.ECC.InputEncoding = _InputEncoding?.GetEncoding();
-            }
-
+            //loading from the settings.
+            //IMPORTANT: The ORDER of setting the arguments to the ECC is IMPORTANT!
+            //1. InputFile
+            //2. InputEncoding: If AutoDetectInputEncodding is true, then setting InputFile will cause an auto detection
+            //                  of the input encoding. This means that InputEncoding will change after setting InputFile.
+            //                  To keep the given inputEncoding argument, we have to set it AFTER InputFile.
+            //2. OutputEncoding
+            //3. OutputFile: Output file is connected directly to the 'OutputPathFormatter' class, witch will change
+            //              the output file whenever a change to InputEncoding, InputFile, OutputEncoding..etc happens.
+            //              Therefore, OutputFile must be the last argument to be set so that it stay and not be overwritten
+            //              by changes in other properties.
             if (_InputFilePathArg != null)
             {
                 //Program.ECC.AutoDetectInputEncoding = false;
@@ -134,6 +140,11 @@ namespace EncodingConverter.Commands
                 //        $"{nameof(EncodingConverterCore)}.{nameof(EncodingConverterCore.InputFilePath)}='{_InputFilePathArg}'.");
                 //    Trace.WriteLine($"Exception: {ex}");
                 //}
+            }
+            if (_InputEncodingAvailable)
+            {
+                //Program.ECC.AutoDetectInputEncoding = false;
+                Program.ECC.InputEncoding = _InputEncoding?.GetEncoding();
             }
             if (_OutputEncodingAvailable)
             {
@@ -206,7 +217,7 @@ namespace EncodingConverter.Commands
             int lastArgsIndex = CommandLine.GetSwitchData(args, startingIndex, switchName, CommandLine.CLARG_DataSeparator, out switchData);
             if (lastArgsIndex < startingIndex || string.IsNullOrEmpty(switchData))
             {
-                Trace.TraceWarning($"Switch '{args[startingIndex]}' is not input encoding switch '{switchName}'!");
+                Trace.TraceWarning($"Argument '{args[startingIndex]}' is not input encoding switch '{switchName}'!");
                 return lastArgsIndex;
             }
 
@@ -239,7 +250,7 @@ namespace EncodingConverter.Commands
             int lastArgsIndex = CommandLine.GetSwitchData(args, startingIndex, switchName, CommandLine.CLARG_DataSeparator, out switchData);
             if (lastArgsIndex < startingIndex || string.IsNullOrEmpty(switchData))
             {
-                Trace.TraceWarning($"Switch '{args[startingIndex]}' is not output encoding switch '{switchName}'!");
+                Trace.TraceWarning($"Argument '{args[startingIndex]}' is not output encoding switch '{switchName}'!");
                 return lastArgsIndex;
             }
 

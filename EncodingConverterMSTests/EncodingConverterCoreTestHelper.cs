@@ -14,12 +14,12 @@ namespace EncodingConverterMSTests
     {
         public static void AssertAll(this EncodingConverterCore ecc, string inputFile, string outputFile, Encoding ie, Encoding oe)
         {
+            ecc.AssertConversion();
+
             ecc.AssertECCInputEncoding(ie.HeaderName);
             ecc.AssertECCInputFile(inputFile);
             ecc.AssertECCOutputEncoding(oe.HeaderName);
             ecc.AssertECCOutputFile(outputFile);
-
-            ecc.AssertConversion();
         }
 
         public static void AssertConversion(this EncodingConverterCore ecc)
@@ -32,26 +32,26 @@ namespace EncodingConverterMSTests
         }
         public static void AssertECCInputFile(this EncodingConverterCore ecc, string inputFile)
         {
-            AssertQuestion($"ECC.InputFilePath.Contains('{inputFile}') ?"
+            AssertQuestion($"ECC.InputFilePath'{ecc.InputFilePath}'.Contains('{inputFile}') ?"
                 , !string.IsNullOrWhiteSpace(ecc.InputFilePath)
                     && ecc.InputFilePath.ToLower().Contains(inputFile));
         }
         public static void AssertECCOutputFile(this EncodingConverterCore ecc, string outputFile)
         {
-            AssertQuestion($"ECC.OutputFilePath.Contains('{outputFile}') ?"
+            AssertQuestion($"ECC.OutputFilePath'{ecc.OutputFilePath}'.Contains('{outputFile}') ?"
                 , !string.IsNullOrWhiteSpace(ecc.OutputFilePath)
                     && ecc.OutputFilePath.ToLower().Contains(outputFile));
         }
         public static void AssertECCOutputEncoding(this EncodingConverterCore ecc, string encodingArg)
         {
-            AssertQuestion($"ECC.OutputEncoding = '{encodingArg}' ?"
+            AssertQuestion($"ECC.OutputEncoding'{ecc.OutputEncoding?.BodyName}' = '{encodingArg}' ?"
             , ecc.OutputEncoding != null
                 && (ecc.OutputEncoding.BodyName.ToLower().Contains(encodingArg)
                     || ecc.OutputEncoding.EncodingName.ToLower().Contains(encodingArg)));
         }
         public static void AssertECCInputEncoding(this EncodingConverterCore ecc, string encodingArg)
         {
-            AssertQuestion($"ECC.InputEncoding = '{encodingArg}' ?"
+            AssertQuestion($"ECC.InputEncoding'{ecc.InputEncoding?.BodyName}' = '{encodingArg}' ?"
             , ecc.InputEncoding != null
                 && (ecc.InputEncoding.BodyName.ToLower().Contains(encodingArg)
                     || ecc.InputEncoding.EncodingName.ToLower().Contains(encodingArg)));

@@ -70,6 +70,92 @@ namespace EncodingConverterMSTests.Commands
             cmd.ECC.AssertAll(inputFile, outputFile, inputEncoding, outputEncoding);
         }
 
+        [TestMethod("Args: inputFile, oe, outputEncoding, outputFile")]
+        public void ConvertCommandTest3()
+        {
+
+            ConvertCommandTest cmd = new ConvertCommandTest();
+
+            string inputFile = "testinputfile";
+            Encoding inputEncoding = Encoding.Unicode;
+            string outputFile = "testoutputfile";
+            Encoding outputEncoding = Encoding.UTF7;
+
+            string[] args = new string[] { cmd.Name
+                                            , inputFile
+                                            , ConvertCommandTest.SwitchOutputEncoding
+                                            , outputEncoding.HeaderName
+                                            , outputFile
+                                            };
+
+            string inputContent = ECCTestHelper.CreateFile(inputFile, inputEncoding, 10);
+
+            int lastArgIndex = cmd.Execute(args, 0);
+
+            ECCTestHelper.AssertQuestion($"Command consumed all arguments length='{args.Length}'?", args.Length - 1 == lastArgIndex);
+
+            cmd.ECC.AssertAll(inputFile, outputFile, inputEncoding, outputEncoding);
+        }
+
+        [TestMethod("Args: inputFile, " + ConvertCommandTest.SwitchOutputEncoding + ", outputEncoding, " + ConvertCommandTest.SwitchOutputPathFormat + ", outputPathFormat")]
+        public void ConvertCommandTest4()
+        {
+
+            ConvertCommandTest cmd = new ConvertCommandTest();
+
+            string inputFile = "testinputfile";
+            Encoding inputEncoding = Encoding.Unicode;
+            string outputFile = inputFile + ".test";
+            Encoding outputEncoding = Encoding.UTF7;
+            string outputPathFormat = "{1}.test";
+
+            string[] args = new string[] { cmd.Name
+                                            , inputFile
+                                            , ConvertCommandTest.SwitchOutputEncoding
+                                            , outputEncoding.HeaderName
+                                            , ConvertCommandTest.SwitchOutputPathFormat
+                                            , outputPathFormat
+                                            };
+
+            string inputContent = ECCTestHelper.CreateFile(inputFile, inputEncoding, 10);
+
+            int lastArgIndex = cmd.Execute(args, 0);
+
+            ECCTestHelper.AssertQuestion($"Command consumed all arguments length='{args.Length}'?", args.Length - 1 == lastArgIndex);
+
+            ECCTestHelper.AssertQuestion($"ECC.Output path format'{cmd.OPF?.FormatString}' = '{outputPathFormat}'?", cmd.OPF?.FormatString == outputPathFormat);
+
+            cmd.ECC.AssertAll(inputFile, outputFile, inputEncoding, outputEncoding);
+        }
+
+        [TestMethod("Args: inputFile, " + ConvertCommandTest.SwitchOutputPathFormat + ", outputPathFormat")]
+        public void ConvertCommandTest5()
+        {
+
+            ConvertCommandTest cmd = new ConvertCommandTest();
+
+            string inputFile = "testinputfile";
+            Encoding inputEncoding = Encoding.Unicode;
+            string outputFile = inputFile + ".test";
+            Encoding outputEncoding = Encoding.UTF8;
+            string outputPathFormat = "{1}.test";
+
+            string[] args = new string[] { cmd.Name
+                                            , inputFile
+                                            , ConvertCommandTest.SwitchOutputPathFormat
+                                            , outputPathFormat
+                                            };
+
+            string inputContent = ECCTestHelper.CreateFile(inputFile, inputEncoding, 10);
+
+            int lastArgIndex = cmd.Execute(args, 0);
+
+            ECCTestHelper.AssertQuestion($"Command consumed all arguments length='{args.Length}'?", args.Length - 1 == lastArgIndex);
+
+            ECCTestHelper.AssertQuestion($"ECC.Output path format'{cmd.OPF?.FormatString}' = '{outputPathFormat}'?", cmd.OPF?.FormatString == outputPathFormat);
+
+            cmd.ECC.AssertAll(inputFile, outputFile, inputEncoding, outputEncoding);
+        }
 
     }
 }

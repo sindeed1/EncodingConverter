@@ -145,6 +145,7 @@ namespace EncodingConverterMSTests.Commands
             AssertMainFormIsOpen("mainform4");
 
             cmd.ECC.AssertECCInputFile(inputFilePathArg);
+            cmd.ECC.AssertECCInputEncoding(encodingArg);
             cmd.ECC.AssertECCOutputFile(outputFilePathArg);
 
             //Trace.WriteLine("");

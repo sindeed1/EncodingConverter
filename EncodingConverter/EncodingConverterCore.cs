@@ -46,7 +46,7 @@ namespace EncodingConverter
         Encoding _OutputEncoding;
 
 
-        private bool _AutoCheckInputEncoding;
+        private bool _AutoDetectInputEncoding;
         private string _PreferredInputEncoding;
         private string _InputText;
 
@@ -150,12 +150,12 @@ namespace EncodingConverter
 
         public bool AutoDetectInputEncoding
         {
-            get { return _AutoCheckInputEncoding; }
+            get { return _AutoDetectInputEncoding; }
             set
             {
-                if (_AutoCheckInputEncoding == value)
+                if (_AutoDetectInputEncoding == value)
                     return;
-                _AutoCheckInputEncoding = value;
+                _AutoDetectInputEncoding = value;
                 Trace.TraceInformation(nameof(EncodingConverterCore) + "." + nameof(this.AutoDetectInputEncoding) + ".set:'" + value + "'");
 
                 OnAutoDetectInputEncodingChanged();
@@ -353,7 +353,7 @@ namespace EncodingConverter
             OnInputFilePathChanged();
 
             //Encoding encoding;
-            if (_AutoCheckInputEncoding)
+            if (_AutoDetectInputEncoding)
             {
                 DetectInputEncoding();
                 //this.InputEncoding = DetectInputEncdoing(_InputFilePath, _PreferredInputEncoding);
@@ -363,6 +363,16 @@ namespace EncodingConverter
                 this.DetectedEncodings = null;
             }
         }
+        /// <summary>
+        /// Converts the encoding of <paramref name="inputFile"/> from <paramref name="inputEncoding"/> to <paramref name="outputEncoding"/>
+        /// and writes the result to <paramref name="outputFile"/>.
+        /// </summary>
+        /// <param name="inputFile">Input file to read from.</param>
+        /// <param name="inputEncoding">Encoding of the input file to use while reading from.</param>
+        /// <param name="outputFile">Encoding of the output to use when writing to.</param>
+        /// <param name="outputEncoding">Out file to write the converted content to.</param>
+        /// <remarks>If <paramref name="inputFile"/> and <paramref name="outputFile"/> are the same the <paramref name="inputFile"/>
+        /// will be overwritten.</remarks>
         public static void Convert(string inputFile, Encoding inputEncoding, string outputFile, Encoding outputEncoding)
         {
             string text;

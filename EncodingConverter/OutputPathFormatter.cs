@@ -31,6 +31,9 @@ namespace EncodingConverter
     /// <remarks>The <see cref="OutputPathFormatter"/> is an attached sub-system that uses the 
     /// <see cref="EncodingConverterCore"/> as one of the sources. It will update the formated output path back to the
     /// <see cref="EncodingConverterCore"/>.</remarks>
+#if DEBUG == true
+    public
+#endif
     class OutputPathFormatter
     {
         static char[] _SplitChars = { '|' };
@@ -61,6 +64,7 @@ namespace EncodingConverter
             this.ECC = ecc;
             this.FormatString = formatString;
             this.CompanionFileSearchPattern = companionFileSearchPattern;
+
         }
         #endregion
 
@@ -129,7 +133,14 @@ namespace EncodingConverter
                 _ECC = value;
 
                 if (_ECC != null)
+                {
                     WireECC(_ECC);
+                    //After settign a new ECC, we have to update the formatting parameters with
+                    //the new values from ECC:
+                    this.Ecc_InputFilePathChanged(this.ECC, EventArgs.Empty);
+                    this.Ecc_OutputEncodingChanged(this.ECC, EventArgs.Empty);
+                    this.Ecc_InputEncodingChanged(this.ECC, EventArgs.Empty);
+                }
 
             }
         }
