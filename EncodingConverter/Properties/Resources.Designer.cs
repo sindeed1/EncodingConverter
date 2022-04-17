@@ -149,11 +149,47 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changing input file caused an error because input file &apos;{0}&apos; was not found!.
+        /// </summary>
+        internal static string Message_Err_ChangeInputFile_FileNotFound {
+            get {
+                return ResourceManager.GetString("Message_Err_ChangeInputFile_FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing of input file to &apos;{0}&apos; caused an unspecified error!.
+        /// </summary>
+        internal static string Message_Err_ChangeInputFile_UnspecifiedError {
+            get {
+                return ResourceManager.GetString("Message_Err_ChangeInputFile_UnspecifiedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Couldn&apos;t complete the conversion because of the following error:.
         /// </summary>
         internal static string Message_Err_ConversionFailedForTheFollowingError {
             get {
                 return ResourceManager.GetString("Message_Err_ConversionFailedForTheFollowingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detection of input encoding didn&apos;t succeed because input file &apos;{0}&apos; was not found!.
+        /// </summary>
+        internal static string Message_Err_DetectInputEncodingFailed_InputFileNotFound {
+            get {
+                return ResourceManager.GetString("Message_Err_DetectInputEncodingFailed_InputFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detection of input encoding didn&apos;t succeed because of unspecified error!.
+        /// </summary>
+        internal static string Message_Err_DetectInputEncodingFailed_UnspecifiedError {
+            get {
+                return ResourceManager.GetString("Message_Err_DetectInputEncodingFailed_UnspecifiedError", resourceCulture);
             }
         }
         
@@ -203,20 +239,20 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to copy error details to clipboard?.
+        /// </summary>
+        internal static string Message_Q_Error_DoYouWantToCopyErrorMessage {
+            get {
+                return ResourceManager.GetString("Message_Q_Error_DoYouWantToCopyErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Output file already exists. Do you want to overwrite it?.
         /// </summary>
         internal static string Message_Q_OutputFileAlreadyExists_Overwrite {
             get {
                 return ResourceManager.GetString("Message_Q_OutputFileAlreadyExists_Overwrite", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Encoding Converter.
-        /// </summary>
-        internal static string ProgramTitel {
-            get {
-                return ResourceManager.GetString("ProgramTitel", resourceCulture);
             }
         }
         

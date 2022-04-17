@@ -196,13 +196,13 @@ namespace EncodingConverter.Forms
             if (!File.Exists(txtInputPath.Text))
             {
                 MessageBox.Show(Properties.Resources.Message_PleaseBrowseForInputFileFirst
-                    , Properties.Resources.ProgramTitel);
+                    , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
                 return;
             }
             if (txtOutputPath.Text.Length == 0)
             {
                 MessageBox.Show(Properties.Resources.Message_PleaseBrowseWhereToSaveTheFileFirst
-                    , Properties.Resources.ProgramTitel);
+                    , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
                 return;
             }
             if (evInputEncoding.SelectedEncodingInfo == null)
@@ -226,13 +226,13 @@ namespace EncodingConverter.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText());
-                ex.WriteToTrace();
+                ex.WriteToTraceAsError();
                 return;
             }
 
             // Done !!
             DialogResult res = MessageBox.Show(this, Properties.Resources.Message_Done,
-                Properties.Resources.ProgramTitel, MessageBoxButtons.OK);
+                Properties.Resources.Message_Err_ChangeInputFile_FileNotFound, MessageBoxButtons.OK);
         }
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -272,7 +272,7 @@ namespace EncodingConverter.Forms
         private void linkAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             DialogResult res = MessageBox.Show(this, Properties.Resources.Message_About,
-                Properties.Resources.ProgramTitel, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Properties.Resources.Message_Err_ChangeInputFile_FileNotFound, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void InputControl_DragDrop(object sender, DragEventArgs e)
         {

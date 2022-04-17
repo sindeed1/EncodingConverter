@@ -72,21 +72,30 @@ namespace EncodingConverter
         /// Writes the <see cref="Exception"/> to the trace as <see cref="Trace.TraceError(string)"/>.
         /// </summary>
         /// <param name="ex"></param>
-        public static void WriteToTrace(this Exception ex)
-        {
-            Trace.TraceError(ex.ToText());
-        }
+        public static void WriteToTraceAsError(this Exception ex) { Trace.TraceError(ex.ToText()); }
+        /// <summary>
+        /// Writes the <see cref="Exception"/> to the trace as <see cref="Trace.TraceWarning(string)"/>.
+        /// </summary>
+        /// <param name="ex"></param>
+        public static void WriteToTraceAsWarning(this Exception ex) { Trace.TraceWarning(ex.ToText()); }
+        /// <summary>
+        /// Writes the <see cref="Exception"/> to the trace as <see cref="Trace.WriteLine(string)"/>.
+        /// </summary>
+        /// <param name="ex"></param>
+        public static void WriteToTrace(this Exception ex) { Trace.WriteLine(ex.ToText()); }
+
         public static string ToText(this Exception ex)
         {
             string result = string.Empty;
-            result = result + nameof(ex.Message) + ": " + ex?.Message;
-            result = result + nameof(ex.StackTrace) + ": " + ex.StackTrace;
-            result = result + nameof(ex.InnerException) + ": " + ex.InnerException?.Message;
+            result += nameof(ex.Message) + ": " + ex?.Message + Environment.NewLine;
+            result += nameof(ex.StackTrace) + ": " + ex.StackTrace + Environment.NewLine;
+            result += nameof(ex.InnerException) + ": " + ex.InnerException?.Message;
 
             return result;
         }
+
     }
-    
+
 
     static class EncodingHelper
     {

@@ -24,6 +24,8 @@ namespace EncodingConverter.Commands
         {
             if (!args.IsSwitch(argsStartIndex, this.Name))
                 return argsStartIndex - 1;
+            
+            Win32Helper.StartConsole();
 
             InitCommonSwitches();
 

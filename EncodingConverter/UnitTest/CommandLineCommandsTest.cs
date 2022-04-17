@@ -33,11 +33,11 @@ namespace EncodingConverter.UnitTest
             _command = new ShowUICommand();
         }
 
-        public static string SwitchCmdName { get => ShowUICommand.CL_Name; }
+        public const string SwitchCmdName = ShowUICommand.CL_Name;
 
-        public static string SwitchForm { get => ShowUICommand.CLARG_FORM; }
-        public static string SwitchInputEncoding { get => ShowUICommand.CLARG_InputEncoding; }
-        public static string SwitchOutputEncoding { get => ShowUICommand.CLARG_OutputEncoding; }
+        public const string SwitchForm = ShowUICommand.CLARG_FORM;
+        public const string SwitchInputEncoding = ShowUICommand.CLARG_InputEncoding;
+        public const string SwitchOutputEncoding = ShowUICommand.CLARG_OutputEncoding;
     }
 
     public class ConvertCommandTest : CommandTestWrapper
@@ -51,6 +51,7 @@ namespace EncodingConverter.UnitTest
 
         public const string SwitchCmdName = ConvertCommand.CLARG_Name;
 
+        public const string Overwrite = ConvertCommand.CLARG_Overwrite;
         public const string SwitchAutoDetectEncoding = ConvertCommand.CLARG_AutoDetectEncoding;
         public const string SwitchInputEncoding = ConvertCommand.CLARG_InputEncoding;
         public const string SwitchPrefferedInputEncoding = ConvertCommand.CLARG_PreferredEncoding;

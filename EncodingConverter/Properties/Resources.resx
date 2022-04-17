@@ -150,8 +150,24 @@ Encoding Converter is distributed AS IS in the hope that it will be useful, but 
   <data name="Message_Done" xml:space="preserve">
     <value>Done !!</value>
   </data>
+  <data name="Message_Err_ChangeInputFile_FileNotFound" xml:space="preserve">
+    <value>Changing input file caused an error because input file '{0}' was not found!</value>
+    <comment>{0} is inputFilePath</comment>
+  </data>
+  <data name="Message_Err_ChangeInputFile_UnspecifiedError" xml:space="preserve">
+    <value>Changing of input file to '{0}' caused an unspecified error!</value>
+    <comment>{0} is inputFilePath</comment>
+  </data>
   <data name="Message_Err_ConversionFailedForTheFollowingError" xml:space="preserve">
     <value>Couldn't complete the conversion because of the following error:</value>
+  </data>
+  <data name="Message_Err_DetectInputEncodingFailed_InputFileNotFound" xml:space="preserve">
+    <value>Detection of input encoding didn't succeed because input file '{0}' was not found!</value>
+    <comment>{0} is inputFilePath, Question with yes, no.</comment>
+  </data>
+  <data name="Message_Err_DetectInputEncodingFailed_UnspecifiedError" xml:space="preserve">
+    <value>Detection of input encoding didn't succeed because of unspecified error!</value>
+    <comment>Question with yes, no.</comment>
   </data>
   <data name="Message_Err_NoPermissionToPerformConversion" xml:space="preserve">
     <value>The program doesn't have the permission to perform the conversion.</value>
@@ -168,11 +184,12 @@ Encoding Converter is distributed AS IS in the hope that it will be useful, but 
   <data name="Message_PleaseBrowseWhereToSaveTheFileFirst" xml:space="preserve">
     <value>Please browse where to save the file first !</value>
   </data>
+  <data name="Message_Q_Error_DoYouWantToCopyErrorMessage" xml:space="preserve">
+    <value>Do you want to copy error details to clipboard?</value>
+    <comment>Yes/No Question</comment>
+  </data>
   <data name="Message_Q_OutputFileAlreadyExists_Overwrite" xml:space="preserve">
     <value>Output file already exists. Do you want to overwrite it?</value>
-  </data>
-  <data name="ProgramTitel" xml:space="preserve">
-    <value>Encoding Converter</value>
   </data>
   <data name="star" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\star.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

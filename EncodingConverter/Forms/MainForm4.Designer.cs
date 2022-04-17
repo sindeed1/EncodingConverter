@@ -277,6 +277,8 @@
             this.tbInputText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbInputText.BackColor = System.Drawing.SystemColors.Control;
+            this.tbInputText.ForeColor = System.Drawing.SystemColors.WindowText;
             this.tbInputText.Location = new System.Drawing.Point(2, 16);
             this.tbInputText.Multiline = true;
             this.tbInputText.Name = "tbInputText";

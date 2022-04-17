@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommandLine;
+using System.IO;
 
 namespace EncodingConverter.Commands
 {
@@ -19,6 +20,9 @@ namespace EncodingConverter.Commands
         public const string CLARG_AutoDetectEncoding = "-ad";// auto detect input encoding
         public const string CLARG_PreferredEncoding = "-pe";// preferred encoding
         public const string CLARG_OutputPathFormat = "-outform";// output path format
+        public const string CLARG_Overwrite = "-overwrite";// Overwrite output file if needed without asking.
+        public const string CLARG_Trace = "-trace";// Write trace to console.
+        public const string CLARG_Delay = "-delay";// Delays ending of program by asking to press any key to end.
 
         public const string CLARG_CompFile = "-cf";// companion file
         public const string CLARG_CompFileSearchPattern = "-cfsearch";// companion file search pattern
@@ -36,6 +40,9 @@ namespace EncodingConverter.Commands
          * -ie: is the encoding of the input file.
          */
         Func<string[], int, int>[] _CommonCommandLineSwitches;
+        bool _Overwrite;
+        bool _Delay;
+        ConsoleTraceListener _TraceListener;
 
         public string Name => CLARG_Name;
 
@@ -63,6 +70,8 @@ namespace EncodingConverter.Commands
                 //if (!args[0].IsSwitch(switchName))
                 return argsStartIndex - 1;
 
+            Win32Helper.StartConsole();
+
             InitCommonSwitches();
 
             /* Handling of switches in this command is done in a similar fashion to handling command line:
@@ -78,6 +87,8 @@ namespace EncodingConverter.Commands
             Program.ECC.OutputEncoding = Encoding.UTF8;
             Program.ECC.InputEncoding = null;
             Program.ECC.InputFilePath = null;
+            _Overwrite = false;
+            _Delay = false;
 
             if (_OPF != null)
             {
@@ -99,20 +110,67 @@ namespace EncodingConverter.Commands
                 }
             }
 
-            //Execute the conversion:
-            Program.ECC.Convert();
+            if (_Overwrite || !File.Exists(Program.ECC.OutputFilePath))
+            {
+                //Execute the conversion:
+                Convert();
+            }
+            else
+            {
+                Console.WriteLine($"File '{Program.ECC.OutputFilePath}' already exists; Overwrite? y/n");
+                var key = Console.ReadKey();
+
+                if (key != null && key.KeyChar == 'y')
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("Overwrite authorized.");
+
+                    Convert();
+                }
+                else
+                {
+                    Console.WriteLine("Do not overwrite!");
+                }
+            }
 
 
             //Clean up:
+            if (_TraceListener != null)
+            {
+                // Flush any pending trace messages, remove the
+                // console trace listener from the collection,
+                // and close the console trace listener.
+                Trace.Flush();
+                Trace.Listeners.Remove(_TraceListener);
+                _TraceListener.Close();
+                _TraceListener = null;
+            }
             //if (_OPF != null)
             //{
             //    _OPF.ECC = null;
             //    _OPF = null;
             //}
-
+            if (_Delay)
+            {
+                Console.WriteLine("Press any key to end...");
+                Console.ReadKey();
+            }
             return argsStartIndex;
         }
 
+        void Convert()
+        {
+            //Execute the conversion including overwrite:
+            var ex = Program.ECC.ConvertSafe();
+            if (ex != null)
+            {
+                Console.WriteLine($"An error was encountered while converting file '{Program.ECC.InputFilePath}' into file '{Program.ECC.OutputFilePath}'!");
+            }
+            else
+            {
+                Console.WriteLine($"No error was reported during conversion. Success!");
+            }
+        }
 
         void InitCommonSwitches()
         {
@@ -121,7 +179,7 @@ namespace EncodingConverter.Commands
 
             //Notice: Handler of no-switch is not included. It will be processed as the default handler
             //witch means it will be executed if no switch matches:
-            _CommonCommandLineSwitches = new Func<string[], int, int>[7];
+            _CommonCommandLineSwitches = new Func<string[], int, int>[10];
             int i = 0;
             _CommonCommandLineSwitches[i++] = CommandLine.ProcessInputEncodingCLArg;
             _CommonCommandLineSwitches[i++] = CommandLine.ProcessOutputEncodingCLArg;
@@ -130,6 +188,9 @@ namespace EncodingConverter.Commands
             _CommonCommandLineSwitches[i++] = this.ProcessOutputPathFormatCLArg;
             _CommonCommandLineSwitches[i++] = this.ProcessCompanionFileSearchPatternCLArg;
             _CommonCommandLineSwitches[i++] = this.ProcessCompanionFileCLArg;
+            _CommonCommandLineSwitches[i++] = this.ProcessOverwriteCLArg;
+            _CommonCommandLineSwitches[i++] = this.ProcessTraceCLArg;
+            _CommonCommandLineSwitches[i++] = this.ProcessDelayCLArg;
         }
 
         //bool ProcessInputEncodingCLArg(string arg)
@@ -293,6 +354,61 @@ namespace EncodingConverter.Commands
             this.OutputPathFormatter.CompanionFile = switchData;
 
             return lastArgsIndex;
+        }
+        int ProcessOverwriteCLArg(string[] args, int startingIndex)
+        {
+            string switchName = CLARG_Overwrite;
+            if (args.IsSwitch(startingIndex, switchName))
+            {
+                _Overwrite = true;
+                Trace.TraceInformation("Overwrite switch was detected. Output file will be overwritten if needed without asking.");
+            }
+            else
+            {
+                Trace.TraceWarning($"Argument '{args[startingIndex]}' is not overwrite switch '{switchName}'!");
+                return startingIndex - 1;
+            }
+
+            return startingIndex;
+        }
+        int ProcessTraceCLArg(string[] args, int startingIndex)
+        {
+            string switchName = CLARG_Trace;
+            if (!args.IsSwitch(startingIndex, switchName))
+            {
+                Trace.TraceWarning($"Argument '{args[startingIndex]}' is not trace switch '{switchName}'!");
+                return startingIndex - 1;
+            }
+
+            Trace.TraceInformation($"Switch '{switchName}' was detected. Trace will be written to console output.");
+
+
+            _TraceListener = new ConsoleTraceListener();
+            _TraceListener.Name = "convertCommandTracer";
+
+            _TraceListener.WriteLine($"{DateTime.Now} [{_TraceListener.Name }] - Starting output to trace listener.");
+
+            // Add the new console trace listener to
+            // the collection of trace listeners.
+            Trace.Listeners.Add(_TraceListener);
+
+            return startingIndex;
+        }
+        int ProcessDelayCLArg(string[] args, int startingIndex)
+        {
+            string switchName = CLARG_Delay;
+            if (args.IsSwitch(startingIndex, switchName))
+            {
+                _Delay = true;
+                Trace.TraceInformation("Delay switch was detected. User will be asked to press any key to end the program.");
+            }
+            else
+            {
+                Trace.TraceWarning($"Argument '{args[startingIndex]}' is not delay switch '{switchName}'!");
+                return startingIndex - 1;
+            }
+
+            return startingIndex;
         }
 
 #if DEBUG == true
