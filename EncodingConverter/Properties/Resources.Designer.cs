@@ -257,6 +257,15 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Encoding Converter.
+        /// </summary>
+        internal static string Program_Titel {
+            get {
+                return ResourceManager.GetString("Program_Titel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap star {

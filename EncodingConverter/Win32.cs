@@ -158,9 +158,12 @@ namespace EncodingConverter
         /// <param name="msg"></param>
         public static void ShowMessageBox(this Exception ex, string msg)
         {
-            if (MessageBox.Show(msg
-                , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound + Properties.Resources.Message_Q_Error_DoYouWantToCopyErrorMessage
-                , MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show(msg + Environment.NewLine + Properties.Resources.Message_Q_Error_DoYouWantToCopyErrorMessage
+                , Properties.Resources.Program_Titel
+                , MessageBoxButtons.YesNo
+                , MessageBoxIcon.Warning
+                , MessageBoxDefaultButton.Button1
+                ) == DialogResult.Yes)
             {
                 Clipboard.SetText(ex.ToText());
             }

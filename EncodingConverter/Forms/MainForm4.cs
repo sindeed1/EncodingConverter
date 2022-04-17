@@ -37,6 +37,8 @@ namespace EncodingConverter.Forms
         public MainForm4()
         {
             InitializeComponent();
+            this.Text = Properties.Resources.Program_Titel;
+
             //chkAutoDetect.DataBindings[0].
             Program.ECC.MaxDetectedInputEncodings = Properties.Settings.Default.MaxDetectedInputEncodingsCount;
 
@@ -251,7 +253,7 @@ namespace EncodingConverter.Forms
             RemoveToolStripButtons();
             if (ecc.DetectedEncodings == null)
                 return;
-            
+
             for (int i = 0; i < ecc.DetectedEncodings.Length; i++)
             {
                 var encoding = ecc.DetectedEncodings[i];
@@ -419,13 +421,13 @@ namespace EncodingConverter.Forms
             if (!File.Exists(txtInputPath.Text))
             {
                 MessageBox.Show(Properties.Resources.Message_PleaseBrowseForInputFileFirst
-                    , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
+                    , Properties.Resources.Program_Titel);
                 return;
             }
             if (txtOutputPath.Text.Length == 0)
             {
                 MessageBox.Show(Properties.Resources.Message_PleaseBrowseWhereToSaveTheFileFirst
-                    , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
+                    , Properties.Resources.Program_Titel);
                 return;
             }
             if (evInputEncoding.SelectedEncodingInfo == null)
@@ -447,8 +449,9 @@ namespace EncodingConverter.Forms
                 {
                     Trace.TraceInformation("Output file already exists. Ask the user whether to overwrite or not.");
                     if (MessageBox.Show(Properties.Resources.Message_Q_OutputFileAlreadyExists_Overwrite
-                        , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound
-                        , MessageBoxButtons.OKCancel) != DialogResult.OK)
+                        , Properties.Resources.Program_Titel
+                        , MessageBoxButtons.OKCancel
+                        , MessageBoxIcon.Question) != DialogResult.OK)
                     {
                         Trace.TraceInformation("User didn't choose OK, Do not overwrite.");
                         return;
@@ -465,15 +468,15 @@ namespace EncodingConverter.Forms
             {
                 if (ex is System.Security.SecurityException)
                 {
-                    MessageBox.Show(Properties.Resources.Message_Err_NoPermissionToPerformConversion + ex.ToText()
-                        , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
+                    ex.ShowMessageBox(Properties.Resources.Message_Err_NoPermissionToPerformConversion);
                     return;
                 }
                 else
                 {
-                    MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText()
-                        , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
-                    //ex.WriteToTraceAsError();
+                    ex.ShowMessageBox(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError);
+                    //MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText()
+                    //    , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
+                    ////ex.WriteToTraceAsError();
                     return;
                 }
             }
@@ -496,8 +499,11 @@ namespace EncodingConverter.Forms
             //}
 
             // Done !!
-            DialogResult res = MessageBox.Show(this, Properties.Resources.Message_Done,
-                Properties.Resources.Message_Err_ChangeInputFile_FileNotFound, MessageBoxButtons.OK);
+            DialogResult res = MessageBox.Show(this
+                , Properties.Resources.Message_Done
+                , Properties.Resources.Program_Titel
+                , MessageBoxButtons.OK
+                , MessageBoxIcon.Information);
         }
         private void linkLabelDetectInputEncoding_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -556,7 +562,7 @@ namespace EncodingConverter.Forms
         {
             DialogResult res = MessageBox.Show(this
                 , string.Format(Properties.Resources.Message_About, Application.ProductVersion)
-                , this.Text
+                , Properties.Resources.Program_Titel
                 , MessageBoxButtons.OK
                 , MessageBoxIcon.Information);
         }
