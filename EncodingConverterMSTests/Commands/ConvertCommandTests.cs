@@ -115,6 +115,7 @@ namespace EncodingConverterMSTests.Commands
                                             , outputEncoding.HeaderName
                                             , ConvertCommandTest.SwitchOutputPathFormat
                                             , outputPathFormat
+                                            , ConvertCommandTest.Overwrite
                                             };
 
             string inputContent = ECCTestHelper.CreateFile(inputFile, inputEncoding, 10);

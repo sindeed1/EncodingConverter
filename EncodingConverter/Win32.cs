@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Windows.Forms;
+using Microsoft.Win32.SafeHandles;
+using System.IO;
+using System.Diagnostics;
 
 namespace EncodingConverter
 {
@@ -32,6 +36,24 @@ namespace EncodingConverter
         public static extern int AllocConsole();
         public const int STD_OUTPUT_HANDLE = -11;
         public const int MY_CODE_PAGE = 437;
+
+
+        public static void StartConsole()
+        {
+            Trace.WriteLine("Starting console...");
+            Win32Helper.AllocConsole();
+            IntPtr stdHandle = Win32Helper.GetStdHandle(Win32Helper.STD_OUTPUT_HANDLE);
+            SafeFileHandle safeFileHandle = new SafeFileHandle(stdHandle, true);
+            FileStream fileStream = new FileStream(safeFileHandle, FileAccess.Write);
+            Encoding encoding = System.Text.Encoding.GetEncoding(Win32Helper.MY_CODE_PAGE);
+            StreamWriter standardOutput = new StreamWriter(fileStream, encoding)
+            {
+                AutoFlush = true
+            };
+            Console.SetOut(standardOutput);
+
+            Console.WriteLine("Console started.");
+        }
 
     }
 
@@ -127,4 +149,21 @@ namespace EncodingConverter
 
     }
 
+    static class ExceptionWinFormsHelper
+    {
+        /// <summary>
+        /// Shows a <see cref="MessageBox"/> with Yes/No buttons. Yes will copy the exception to the clipboard.
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <param name="msg"></param>
+        public static void ShowMessageBox(this Exception ex, string msg)
+        {
+            if (MessageBox.Show(msg
+                , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound + Properties.Resources.Message_Q_Error_DoYouWantToCopyErrorMessage
+                , MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Clipboard.SetText(ex.ToText());
+            }
+        }
+    }
 }

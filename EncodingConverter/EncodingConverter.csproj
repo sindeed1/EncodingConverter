@@ -141,6 +141,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="EncodingConverterCore.cs" />
+    <Compile Include="EncodingConverterSafeCore.cs" />
     <Compile Include="EncodingTools\EncodingTools.cs" />
     <Compile Include="EncodingTools\Multilang\CMLangConvertCharset.cs" />
     <Compile Include="EncodingTools\Multilang\CMLangConvertCharsetClass.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Forms\MainForm5.Designer.cs">
       <DependentUpon>MainForm5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MainFormLogic.cs" />
     <Compile Include="Forms\WinFormsHelpers.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Helpers\MethodPropertyLinker.cs" />

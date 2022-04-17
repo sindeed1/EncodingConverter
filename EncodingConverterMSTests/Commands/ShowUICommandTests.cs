@@ -43,7 +43,24 @@ namespace EncodingConverterMSTests.Commands
             Application.Exit();
         }
 
-        [TestMethod("Args: inputFile, oe:outputEncoding")]
+        [TestMethod("Long test; Args: inputFile")]
+        public void ShowUICommandTestInputFileLongSwitch()
+        {
+            string inputFilePathArg = "testinputfile6";
+            string[] args = new string[] { ShowUICommandTest.SwitchCmdName
+                                        , inputFilePathArg };
+
+            ShowUICommandTest cmd = InvokeNewShowUICommand(args);
+            AssertMainFormIsOpen("mainform4");
+
+            cmd.ECC.AssertECCInputFile(inputFilePathArg);
+
+            Thread.Sleep(10000);
+            Application.Exit();
+        }
+
+
+        [TestMethod("Args: inputFile, " + ShowUICommandTest.SwitchOutputEncoding + ":outputEncoding")]
         public void ShowUICommandTestSwitchesOutputEncoding()
         {
             string inputFilePathArg = "testinputfile";
@@ -60,7 +77,7 @@ namespace EncodingConverterMSTests.Commands
 
             Application.Exit();
         }
-        [TestMethod("Args: inputFile, oe, outputEncoding")]
+        [TestMethod("Args: inputFile, " + ShowUICommandTest.SwitchOutputEncoding + ", outputEncoding")]
         public void ShowUICommandTestSwitchesOutputEncoding2()
         {
             string inputFilePathArg = "testinputfile";
@@ -79,7 +96,7 @@ namespace EncodingConverterMSTests.Commands
             Application.Exit();
         }
 
-        [TestMethod("Args: inputFile, ie:inputEncoding")]
+        [TestMethod("Args: inputFile, " + ShowUICommandTest.SwitchInputEncoding + ":inputEncoding")]
         public void ShowUICommandTestSwitchesInputEncoding()
         {
             string inputFilePathArg = "testinputfile";
@@ -129,7 +146,7 @@ namespace EncodingConverterMSTests.Commands
 
             Application.Exit();
         }
-        [TestMethod("Args: inputFile, ie, inputEncoding, outputFile")]
+        [TestMethod("Args: inputFile, " + ShowUICommandTest.SwitchInputEncoding + ", inputEncoding, outputFile")]
         public void ShowUICommandTestSwitchesOutputpath2()
         {
             string inputFilePathArg = "testinputfile";
@@ -137,8 +154,8 @@ namespace EncodingConverterMSTests.Commands
             string encodingArg = "utf-8";
             string[] args = new string[] { ShowUICommandTest.SwitchCmdName
                                         , inputFilePathArg
-                                        , ShowUICommandTest.SwitchInputEncoding 
-                                        , encodingArg 
+                                        , ShowUICommandTest.SwitchInputEncoding
+                                        , encodingArg
                                         , outputFilePathArg};
 
             ShowUICommandTest cmd = InvokeNewShowUICommand(args);

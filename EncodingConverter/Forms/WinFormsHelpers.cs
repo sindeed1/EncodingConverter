@@ -38,6 +38,7 @@ namespace EncodingConverter.Forms
             EventLink textChangeEventLinks = new EventLink(textBox, _ControlTextChangedEventInfo);
 
             UpdateLock<String> binding = new UpdateLock<String>(property1, textChangeEventLinks, property2, obj2ChangeEvent);
+            
             return binding;
         }
 

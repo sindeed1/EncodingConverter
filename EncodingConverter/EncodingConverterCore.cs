@@ -245,6 +245,8 @@ namespace EncodingConverter
         /// Detects the input encoding based on <see cref="InputFilePath"/> and <see cref="PreferredInputEncoding"/>.
         /// The detected encoding will be then automatically set to <see cref="InputEncoding"/>.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="FileNotFoundException"></exception>
         public void DetectInputEncoding()
         {
             Encoding[] detectedEncodings = null;
@@ -403,7 +405,7 @@ namespace EncodingConverter
                 TraceWarning(nameof(DetectInputEncoding), "Exception while reading input file '" +
                     inputPath + $"': {Environment.NewLine}"
                     );
-                ex.WriteToTrace();
+                ex.WriteToTraceAsError();
             }
             finally
             {
@@ -421,7 +423,7 @@ namespace EncodingConverter
                 catch (Exception ex)
                 {
                     TraceWarning($"Error while detecting the encoding of the file '{inputPath}'.");
-                    ex.WriteToTrace();
+                    ex.WriteToTraceAsError();
                     TraceWarning("Execution will continue with no detected encodings.");
                     encoding = null;
                 }
@@ -437,7 +439,7 @@ namespace EncodingConverter
                 catch (Exception ex)
                 {
                     TraceWarning($"Error while detecting the encoding of the file '{inputPath}'.");
-                    ex.WriteToTrace();
+                    ex.WriteToTraceAsError();
                 }
                 if (encodings == null || encodings.Length <= 0)
                 {
@@ -529,12 +531,19 @@ namespace EncodingConverter
                 buf = new byte[stream.Length];
                 stream.Read(buf, 0, (int)stream.Length);
             }
+            catch (OverflowException ex)
+            {
+                TraceWarning(nameof(DetectInputEncoding), $"A '{nameof(OverflowException)}' was encountered while reading input file '" +
+                    inputPath + $". Most likely because the file is too large.': {Environment.NewLine}"
+                    );
+                ex.WriteToTraceAsError();
+            }
             catch (Exception ex)
             {
                 TraceWarning(nameof(DetectInputEncoding), "Exception while reading input file '" +
                     inputPath + $"': {Environment.NewLine}"
                     );
-                ex.WriteToTrace();
+                ex.WriteToTraceAsError();
             }
             finally
             {
@@ -550,7 +559,7 @@ namespace EncodingConverter
             catch (Exception ex)
             {
                 TraceWarning($"Error while detecting the encoding of the file '{inputPath}'.");
-                ex.WriteToTrace();
+                ex.WriteToTraceAsError();
             }
             return encodings;
         }

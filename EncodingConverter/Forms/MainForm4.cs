@@ -30,6 +30,8 @@ namespace EncodingConverter.Forms
 
         OneWayUpdater<string> _InputTextLink;
 
+        MainFormLogic _FormLogic;
+
         #region ...ctor...
 
         public MainForm4()
@@ -50,6 +52,8 @@ namespace EncodingConverter.Forms
             evOutputEncoding = _TSOutputEncodingViewer.EncodingsViewer;
 
             _OPF = new OutputPathFormatter(Program.ECC);
+
+            _FormLogic = new MainFormLogic();
 
             this.Icon = Properties.Resources.Icon_Encoding_Converter_32x32;
 
@@ -93,9 +97,20 @@ namespace EncodingConverter.Forms
             txtOutputPath.BindText(new PropertyLink<string>(() => ECC.OutputFilePath, (x) => { ECC.OutputFilePath = x; })
                 , new EventLink(ECC, nameof(ECC.OutputFilePathChanged)))
                 .UpdateObj2To1();
+
+
+            //Bind 'FormLogic.InputTextColor' to 'tbInputText.ForeColor'"
+            OneWayUpdater<Color> inputTextColor = new OneWayUpdater<Color>(() => _FormLogic.InputTextColor
+                        , x => tbInputText.ForeColor = x
+                        , new EventLink(_FormLogic, nameof(_FormLogic.InputTextColorChanged)));
+
+            Exception ex = null;
             //Bind 'ECC.InputText' to 'tbInputText':
+            //_InputTextLink = tbInputText.BindTextAsDestination(
+            //    () => (!splitContainer1.Panel2Collapsed && File.Exists(ECC.InputFilePath)) ? ECC.GetInputTextSafe(out ex) : null
+            //    , new EventLink(ECC, nameof(ECC.InputTextChanged)));
             _InputTextLink = tbInputText.BindTextAsDestination(
-                () => (!splitContainer1.Panel2Collapsed && File.Exists(ECC.InputFilePath)) ? ECC.InputText : null
+                () => (!splitContainer1.Panel2Collapsed) ? _FormLogic.InputText : null
                 , new EventLink(ECC, nameof(ECC.InputTextChanged)));
             _InputTextLink.Update();
 
@@ -105,7 +120,7 @@ namespace EncodingConverter.Forms
             //    tbInputText.Text = ECC.InputText;
             //}
 
-            var text = File.Exists(ECC.InputFilePath) ? ECC.InputText : null;
+            //var text = File.Exists(ECC.InputFilePath) ? ECC.GetInputTextSafe(out ex) : null;
 
             var inputEncodingEventLink = new EventLink(ECC, nameof(ECC.InputEncodingChanged));
             //Bind 'ECC.InputEncoding' to 'evInputEncoding.SelectedEncodingInfo':
@@ -234,7 +249,9 @@ namespace EncodingConverter.Forms
             //    return;
             //}
             RemoveToolStripButtons();
-
+            if (ecc.DetectedEncodings == null)
+                return;
+            
             for (int i = 0; i < ecc.DetectedEncodings.Length; i++)
             {
                 var encoding = ecc.DetectedEncodings[i];
@@ -402,13 +419,13 @@ namespace EncodingConverter.Forms
             if (!File.Exists(txtInputPath.Text))
             {
                 MessageBox.Show(Properties.Resources.Message_PleaseBrowseForInputFileFirst
-                    , Properties.Resources.ProgramTitel);
+                    , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
                 return;
             }
             if (txtOutputPath.Text.Length == 0)
             {
                 MessageBox.Show(Properties.Resources.Message_PleaseBrowseWhereToSaveTheFileFirst
-                    , Properties.Resources.ProgramTitel);
+                    , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
                 return;
             }
             if (evInputEncoding.SelectedEncodingInfo == null)
@@ -430,10 +447,10 @@ namespace EncodingConverter.Forms
                 {
                     Trace.TraceInformation("Output file already exists. Ask the user whether to overwrite or not.");
                     if (MessageBox.Show(Properties.Resources.Message_Q_OutputFileAlreadyExists_Overwrite
-                        , Properties.Resources.ProgramTitel
+                        , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound
                         , MessageBoxButtons.OKCancel) != DialogResult.OK)
                     {
-                        Trace.TraceInformation("User didn't chose OK, Do not overwrite.");
+                        Trace.TraceInformation("User didn't choose OK, Do not overwrite.");
                         return;
                     }
                     else
@@ -443,31 +460,59 @@ namespace EncodingConverter.Forms
                 }
             }
 
-            try
+            var ex = Program.ECC.ConvertSafe();
+            if (ex != null)
             {
-                Program.ECC.Convert();
+                if (ex is System.Security.SecurityException)
+                {
+                    MessageBox.Show(Properties.Resources.Message_Err_NoPermissionToPerformConversion + ex.ToText()
+                        , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText()
+                        , Properties.Resources.Message_Err_ChangeInputFile_FileNotFound);
+                    //ex.WriteToTraceAsError();
+                    return;
+                }
             }
-            catch (System.Security.SecurityException ex)
-            {
-                MessageBox.Show(Properties.Resources.Message_Err_NoPermissionToPerformConversion + ex.ToText()
-                    , Properties.Resources.ProgramTitel);
-                return;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText()
-                    , Properties.Resources.ProgramTitel);
-                ex.WriteToTrace();
-                return;
-            }
+            //try
+            //{
+            //    Program.ECC.Convert();
+            //}
+            //catch (System.Security.SecurityException ex)
+            //{
+            //    MessageBox.Show(Properties.Resources.Message_Err_NoPermissionToPerformConversion + ex.ToText()
+            //        , Properties.Resources.ProgramTitel);
+            //    return;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(Properties.Resources.Message_Err_ConversionFailedForTheFollowingError + ex.ToText()
+            //        , Properties.Resources.ProgramTitel);
+            //    ex.WriteToTraceAsError();
+            //    return;
+            //}
 
             // Done !!
             DialogResult res = MessageBox.Show(this, Properties.Resources.Message_Done,
-                Properties.Resources.ProgramTitel, MessageBoxButtons.OK);
+                Properties.Resources.Message_Err_ChangeInputFile_FileNotFound, MessageBoxButtons.OK);
         }
         private void linkLabelDetectInputEncoding_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Program.ECC.DetectInputEncoding();
+            var ex = Program.ECC.DetectInputEncodingSafe();
+            if (ex != null)
+            {
+                if (ex is FileNotFoundException)
+                {
+                    ex.ShowMessageBox(string.Format(Properties.Resources.Message_Err_DetectInputEncodingFailed_InputFileNotFound, Program.ECC.InputFilePath));
+                }
+                else
+                {
+                    ex.ShowMessageBox(string.Format(Properties.Resources.Message_Err_DetectInputEncodingFailed_UnspecifiedError, Program.ECC.InputFilePath));
+                }
+            }
         }
         private void btnChangeOutputFile_Click(object sender, EventArgs e)
         {
@@ -511,7 +556,9 @@ namespace EncodingConverter.Forms
         {
             DialogResult res = MessageBox.Show(this
                 , string.Format(Properties.Resources.Message_About, Application.ProductVersion)
-                , Properties.Resources.ProgramTitel, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                , this.Text
+                , MessageBoxButtons.OK
+                , MessageBoxIcon.Information);
         }
         private void InputControl_DragDrop(object sender, DragEventArgs e)
         {
@@ -543,7 +590,19 @@ namespace EncodingConverter.Forms
             }
             else
             {
-                Program.ECC.InputFilePath = file;
+                //Program.ECC.InputFilePath = file;
+                var ex = Program.ECC.InputFilePathSafeSet(file);
+                if (ex != null)
+                {
+                    if (ex is FileNotFoundException)
+                    {
+                        ex.ShowMessageBox(String.Format(Properties.Resources.Message_Err_ChangeInputFile_FileNotFound, file));
+                    }
+                    else
+                    {
+                        ex.ShowMessageBox(String.Format(Properties.Resources.Message_Err_ChangeInputFile_UnspecifiedError, file));
+                    }
+                }
             }
         }
     }

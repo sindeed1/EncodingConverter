@@ -129,17 +129,8 @@ namespace EncodingConverter.Commands
             if (_InputFilePathArg != null)
             {
                 //Program.ECC.AutoDetectInputEncoding = false;
-                Program.ECC.InputFilePath = _InputFilePathArg;
-                //try
-                //{
-                //    Program.ECC.InputFilePath = _InputFilePathArg;
-                //}
-                //catch (Exception ex)
-                //{
-                //    Trace.TraceWarning($"An exception was encountered while setting a new value " +
-                //        $"{nameof(EncodingConverterCore)}.{nameof(EncodingConverterCore.InputFilePath)}='{_InputFilePathArg}'.");
-                //    Trace.WriteLine($"Exception: {ex}");
-                //}
+                //Program.ECC.InputFilePath = _InputFilePathArg;
+                Program.ECC.InputFilePathSafeSet(_InputFilePathArg);
             }
             if (_InputEncodingAvailable)
             {
