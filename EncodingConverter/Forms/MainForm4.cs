@@ -20,7 +20,7 @@ namespace EncodingConverter.Forms
         EncodingsViewer evInputEncoding;
         EncodingsViewer evOutputEncoding;
 
-        EncodingInfo[] encodingInfos;
+        EncodingInfo[] _EncodingInfos;
         Lazy<SaveFileDialog> _SFD;
         Lazy<OpenFileDialog> _OFD;
 
@@ -60,11 +60,11 @@ namespace EncodingConverter.Forms
             this.Icon = Properties.Resources.Icon_Encoding_Converter_32x32;
 
 
-            encodingInfos = Encoding.GetEncodings();
-            evInputEncoding.EncodingInfos = encodingInfos;
-            evOutputEncoding.EncodingInfos = encodingInfos;
+            _EncodingInfos = Encoding.GetEncodings();
+            evInputEncoding.EncodingInfos = _EncodingInfos;
+            evOutputEncoding.EncodingInfos = _EncodingInfos;
 
-            EncodingInfo[] favs = Properties.Settings.Default.FavoriteEncodings?.Select(cp => encodingInfos.FirstOrDefault(enc => enc.CodePage == cp)).Where(x => x != null).ToArray();
+            EncodingInfo[] favs = Properties.Settings.Default.FavoriteEncodings?.Select(cp => _EncodingInfos.FirstOrDefault(enc => enc.CodePage == cp)).Where(x => x != null).ToArray();
             evInputEncoding.FavoriteEncodingInfos = favs;
             evOutputEncoding.FavoriteEncodingInfos = favs;
 
@@ -128,7 +128,7 @@ namespace EncodingConverter.Forms
             //Bind 'ECC.InputEncoding' to 'evInputEncoding.SelectedEncodingInfo':
             WinFormsHelpers.Bind(new PropertyLink<EncodingInfo>(() => evInputEncoding.SelectedEncodingInfo, x => evInputEncoding.SelectedEncodingInfo = x)
                 , new EventLink(evInputEncoding, nameof(evInputEncoding.SelectedEncodingInfoChanged))
-                , new PropertyLink<EncodingInfo>(() => encodingInfos?.FirstOrDefault(x => x.CodePage == ECC.InputEncoding?.CodePage), x => ECC.InputEncoding = x?.GetEncoding())
+                , new PropertyLink<EncodingInfo>(() => _EncodingInfos?.FirstOrDefault(x => x.CodePage == ECC.InputEncoding?.CodePage), x => ECC.InputEncoding = x?.GetEncoding())
                 , inputEncodingEventLink)
                 .UpdateObj2To1();
             //Bind 'ECC.InputEncoding' to 'lblInputEncoding':
@@ -147,8 +147,8 @@ namespace EncodingConverter.Forms
             //3- Now make the Bindings:
             //  Bind 'ECC.OutputEncoding' to 'Settings.LastOutputEncoding':
             WinFormsHelpers.Bind(new PropertyLink<Encoding>
-                        (() => encodingInfos?.FirstOrDefault(x => x.CodePage == defSet.LastOutputEncoding)?.GetEncoding()
-                        , x => defSet.LastOutputEncoding = x.CodePage)
+                        (() => _EncodingInfos?.FirstOrDefault(x => x.CodePage == defSet.LastOutputEncoding)?.GetEncoding()
+                        , x => defSet.LastOutputEncoding = x == null ? 0 : x.CodePage)
                 , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
                 , ECCOutputEncodingPropertyLink
                 , ECCOutputEncodingEventLink)
@@ -161,8 +161,8 @@ namespace EncodingConverter.Forms
             //    , ECCOutputEncodingEventLink)
             //    .UpdateObj2To1();
             WinFormsHelpers.Bind(new PropertyLink<Encoding>(
-                        () => evOutputEncoding.SelectedEncodingInfo.GetEncoding()
-                        , x => evOutputEncoding.SelectedEncodingInfo = encodingInfos?.FirstOrDefault(ei => x?.CodePage == ei.CodePage))
+                        () => evOutputEncoding.SelectedEncodingInfo?.GetEncoding()
+                        , x => evOutputEncoding.SelectedEncodingInfo = _EncodingInfos?.FirstOrDefault(ei => x?.CodePage == ei.CodePage))
                 , new EventLink(evOutputEncoding, nameof(evOutputEncoding.SelectedEncodingInfoChanged))
                 , ECCOutputEncodingPropertyLink
                 , ECCOutputEncodingEventLink)
@@ -433,32 +433,35 @@ namespace EncodingConverter.Forms
             if (evInputEncoding.SelectedEncodingInfo == null)
             {
                 Trace.TraceInformation("Can not convert. Input encoding is not specified.");
+                MessageBox.Show(Properties.Resources.Message_PleaseSelectInputEncodingFirst
+                    , Properties.Resources.Program_Titel);
                 return;
             }
             if (evOutputEncoding.SelectedEncodingInfo == null)
             {
                 Trace.TraceInformation("Can not convert. Output encoding is not specified.");
+                MessageBox.Show(Properties.Resources.Message_PleaseSelectOutputEncodingFirst
+                    , Properties.Resources.Program_Titel);
                 return;
             }
             if (_AllowOverwriteOutputFile)
                 Trace.TraceInformation("Overwrite permission already granted.");
             else
             {
-                Trace.TraceInformation("Overwrite permission is not already granted.");
                 if (File.Exists(txtOutputPath.Text))
                 {
-                    Trace.TraceInformation("Output file already exists. Ask the user whether to overwrite or not.");
+                    Trace.TraceInformation("Output file already exists. Overwrite permission is not already granted. Ask the user whether to overwrite or not.");
                     if (MessageBox.Show(Properties.Resources.Message_Q_OutputFileAlreadyExists_Overwrite
                         , Properties.Resources.Program_Titel
                         , MessageBoxButtons.OKCancel
                         , MessageBoxIcon.Question) != DialogResult.OK)
                     {
-                        Trace.TraceInformation("User didn't choose OK, Do not overwrite.");
+                        Trace.TraceInformation("User didn't choose OK, Do not overwrite!");
                         return;
                     }
                     else
                     {
-                        Trace.TraceInformation("User chose 'OK'.");
+                        Trace.TraceInformation("User chose 'OK'. File will be overwritten.");
                     }
                 }
             }

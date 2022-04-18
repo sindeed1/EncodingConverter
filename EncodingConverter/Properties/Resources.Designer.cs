@@ -239,6 +239,24 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select an input encoding first!.
+        /// </summary>
+        internal static string Message_PleaseSelectInputEncodingFirst {
+            get {
+                return ResourceManager.GetString("Message_PleaseSelectInputEncodingFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select output encoding first!.
+        /// </summary>
+        internal static string Message_PleaseSelectOutputEncodingFirst {
+            get {
+                return ResourceManager.GetString("Message_PleaseSelectOutputEncodingFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to copy error details to clipboard?.
         /// </summary>
         internal static string Message_Q_Error_DoYouWantToCopyErrorMessage {

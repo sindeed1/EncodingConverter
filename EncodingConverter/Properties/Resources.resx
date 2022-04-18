@@ -184,6 +184,12 @@ Encoding Converter is distributed AS IS in the hope that it will be useful, but 
   <data name="Message_PleaseBrowseWhereToSaveTheFileFirst" xml:space="preserve">
     <value>Please browse where to save the file first !</value>
   </data>
+  <data name="Message_PleaseSelectInputEncodingFirst" xml:space="preserve">
+    <value>Please select an input encoding first!</value>
+  </data>
+  <data name="Message_PleaseSelectOutputEncodingFirst" xml:space="preserve">
+    <value>Please select output encoding first!</value>
+  </data>
   <data name="Message_Q_Error_DoYouWantToCopyErrorMessage" xml:space="preserve">
     <value>Do you want to copy error details to clipboard?</value>
     <comment>Yes/No Question</comment>
