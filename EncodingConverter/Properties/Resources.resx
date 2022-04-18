@@ -194,6 +194,10 @@ Encoding Converter is distributed AS IS in the hope that it will be useful, but 
     <value>Do you want to copy error details to clipboard?</value>
     <comment>Yes/No Question</comment>
   </data>
+  <data name="Message_Q_InputFileMaybeTooLarge_Open_YesNo" xml:space="preserve">
+    <value>Input file '{0}' may be too large to open. Do you want to try to open it?</value>
+    <comment>{0} is InputFilePath</comment>
+  </data>
   <data name="Message_Q_OutputFileAlreadyExists_Overwrite" xml:space="preserve">
     <value>Output file already exists. Do you want to overwrite it?</value>
   </data>

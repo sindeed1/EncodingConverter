@@ -593,6 +593,28 @@ namespace EncodingConverter.Forms
 
         void ChangeInputFile(string file)
         {
+            if (File.Exists(file))
+            {
+                FileInfo fi = new FileInfo(file);
+                if (fi.Length > Program.Settings.InputFileWarningSize)
+                {
+                    Trace.TraceWarning($"New input file '{file}' has the size of '{fi.Length}' byte witch is larger that the warning limit '{Program.Settings.InputFileWarningSize}' byte." +
+                        $" Ask the use if he/she wants to try to open it...");
+                    var result = MessageBox.Show(this
+                        , string.Format(Properties.Resources.Message_Q_InputFileMaybeTooLarge_Open_YesNo, file)
+                        , Properties.Resources.Program_Titel
+                        , MessageBoxButtons.YesNo
+                        , MessageBoxIcon.Question
+                        , MessageBoxDefaultButton.Button2);
+
+                    Trace.Write($"User chose '{result}'.");
+
+                    if (result != DialogResult.OK && result != DialogResult.Yes)
+                    {
+                        return;
+                    }
+                }
+            }
             if (file?.Trim().ToLower() == Program.ECC.InputFilePath?.Trim().ToLower())
             {
                 Program.ECC.RefreshInputFilePath();

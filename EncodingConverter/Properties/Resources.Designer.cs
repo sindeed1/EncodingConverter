@@ -266,6 +266,15 @@ namespace EncodingConverter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input file &apos;{0}&apos; may be too large to open. Do you want to try to open it?.
+        /// </summary>
+        internal static string Message_Q_InputFileMaybeTooLarge_Open_YesNo {
+            get {
+                return ResourceManager.GetString("Message_Q_InputFileMaybeTooLarge_Open_YesNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Output file already exists. Do you want to overwrite it?.
         /// </summary>
         internal static string Message_Q_OutputFileAlreadyExists_Overwrite {

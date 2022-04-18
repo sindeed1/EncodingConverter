@@ -8,8 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Diagnostics;
-
 namespace EncodingConverter.Properties {
     
     
@@ -53,14 +51,10 @@ namespace EncodingConverter.Properties {
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AutoDetectInputEncoding {
             get {
-                var result = ((bool)(this["AutoDetectInputEncoding"]));
-                Trace.TraceInformation($"Settings.{nameof(AutoDetectInputEncoding)}.get: {result}");
-                return result;
-                //return ((bool)(this["AutoDetectInputEncoding"]));
+                return ((bool)(this["AutoDetectInputEncoding"]));
             }
             set {
                 this["AutoDetectInputEncoding"] = value;
-                Trace.TraceInformation($"Settings.{nameof(AutoDetectInputEncoding)}.set: {value}");
             }
         }
         
@@ -145,6 +139,15 @@ namespace EncodingConverter.Properties {
             }
             set {
                 this["MaxDetectedInputEncodingsCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2097152")]
+        public long InputFileWarningSize {
+            get {
+                return ((long)(this["InputFileWarningSize"]));
             }
         }
     }
