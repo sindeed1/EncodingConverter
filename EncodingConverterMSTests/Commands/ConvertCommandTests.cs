@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿#if DEBUG == true
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EncodingConverter.UnitTest;
 using System;
 using System.Collections.Generic;
@@ -160,3 +161,4 @@ namespace EncodingConverterMSTests.Commands
 
     }
 }
+#endif
