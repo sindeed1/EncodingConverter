@@ -598,7 +598,7 @@ namespace EncodingConverter.Forms
                 FileInfo fi = new FileInfo(file);
                 if (fi.Length > Program.Settings.InputFileWarningSize)
                 {
-                    Trace.TraceWarning($"New input file '{file}' has the size of '{fi.Length}' byte witch is larger that the warning limit '{Program.Settings.InputFileWarningSize}' byte." +
+                    Trace.TraceWarning($"New input file '{file}' with size '{fi.Length}' byte is larger than the warning limit '{Program.Settings.InputFileWarningSize}' byte." +
                         $" Ask the use if he/she wants to try to open it...");
                     var result = MessageBox.Show(this
                         , string.Format(Properties.Resources.Message_Q_InputFileMaybeTooLarge_Open_YesNo, file)
