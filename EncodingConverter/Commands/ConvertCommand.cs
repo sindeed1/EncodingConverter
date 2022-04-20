@@ -17,17 +17,17 @@ namespace EncodingConverter.Commands
         //const string CLARG_SWITCH = "-";//CommandLineArgument
         public const string CLARG_InputEncoding = CommandLine.CLARG_InputEncoding;// "-ie";// input encoding
         public const string CLARG_OutputEncoding = CommandLine.CLARG_OutputEncoding;// "-oe";// output encoding
-        public const string CLARG_AutoDetectEncoding = "-ad";// auto detect input encoding
-        public const string CLARG_PreferredEncoding = "-pe";// preferred encoding
-        public const string CLARG_OutputPathFormat = "-outform";// output path format
-        public const string CLARG_Overwrite = "-overwrite";// Overwrite output file if needed without asking.
-        public const string CLARG_Trace = "-trace";// Write trace to console.
-        public const string CLARG_Delay = "-delay";// Delays ending of program by asking to press any key to end.
+        public const string CLARG_AutoDetectEncoding = "/ad";// auto detect input encoding
+        public const string CLARG_PreferredEncoding = "/pe";// preferred encoding
+        public const string CLARG_OutputPathFormat = "/outform";// output path format
+        public const string CLARG_Overwrite = "/overwrite";// Overwrite output file if needed without asking.
+        public const string CLARG_Trace = "/trace";// Write trace to console.
+        public const string CLARG_Delay = "/delay";// Delays ending of program by asking to press any key to end.
 
-        public const string CLARG_CompFile = "-cf";// companion file
-        public const string CLARG_CompFileSearchPattern = "-cfsearch";// companion file search pattern
+        public const string CLARG_CompFile = "/cf";// companion file
+        public const string CLARG_CompFileSearchPattern = "/cfsearch";// companion file search pattern
 
-        public const string CLARG_Name = "convert";
+        public const string CLARG_Name = "/convert";
 
         /* Syntax:
          * convert <inputFileName>[ -ie:<inputEncoding>| -ie <inputEncoding>]

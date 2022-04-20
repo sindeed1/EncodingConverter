@@ -12,12 +12,12 @@ namespace EncodingConverter.Commands
 {
     class ShowUICommand : ICommandLineCommand
     {
-        public const string CL_Name = "showui";
-        public const string CLARG_FORM = "-form";
+        public const string CL_Name = "/showui";
+        public const string CLARG_FORM = "/form";
         //const string CLARG_SWITCH = "-";
-        public const string CLARG_InputEncoding = CommandLine.CLARG_InputEncoding;// "-ie";
-        public const string CLARG_OutputEncoding = CommandLine.CLARG_OutputEncoding;// "-oe";
-        public const string CLARG_AutoDetectInputEncoding = "-ad";
+        public const string CLARG_InputEncoding = CommandLine.CLARG_InputEncoding;// "/ie";
+        public const string CLARG_OutputEncoding = CommandLine.CLARG_OutputEncoding;// "/oe";
+        public const string CLARG_AutoDetectInputEncoding = "/ad";
 
         Func<string[], int, int>[] _CommonCommandLineSwitches;
 

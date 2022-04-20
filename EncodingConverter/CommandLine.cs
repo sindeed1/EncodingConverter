@@ -12,8 +12,8 @@ namespace EncodingConverter
     /// </summary>
     static class CommandLine
     {
-        public const string CLARG_InputEncoding = "-ie";
-        public const string CLARG_OutputEncoding = "-oe";
+        public const string CLARG_InputEncoding = "/ie";
+        public const string CLARG_OutputEncoding = "/oe";
         public const char CLARG_DataSeparator = ':';
 
         /// <summary>

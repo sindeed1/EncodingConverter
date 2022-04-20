@@ -13,11 +13,11 @@ namespace EncodingConverter.Commands
     class ConsoleCommand : ICommandLineCommand
     {
         const string end = "end";
-        public string Name => "console";
+        public string Name => "/console";
 
         public string ShortDescription => "Displays console and allows execution of internal commands.";
 
-        public string LongDescription => "'end' is an internal command to console. Type 'end' while in console to exit the console.";
+        public string LongDescription => $"'{end}' is an internal command to console. Type '{end}' while in console to exit the console.";
 
         public int Execute(string[] args, int argsStartIndex)
         {

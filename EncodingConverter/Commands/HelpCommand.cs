@@ -9,7 +9,7 @@ namespace EncodingConverter.Commands
 {
     class HelpCommand : ICommandLineCommand
     {
-        const string CL_Name = "help";
+        const string CL_Name = "/help";
 
         public string Name => CL_Name;
 

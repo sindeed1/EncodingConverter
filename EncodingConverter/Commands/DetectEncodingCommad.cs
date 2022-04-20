@@ -9,7 +9,7 @@ namespace EncodingConverter.Commands
 {
     class DetectEncodingCommad : ICommandLineCommand
     {
-        const string CL_Name = "detect";
+        const string CL_Name = "/detect";
         //const string CLARG_FORM = "form:";
         //const string CLARG_SWITCH = "-";
         Func<string[], int, int>[] _Switches;
