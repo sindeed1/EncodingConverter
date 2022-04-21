@@ -21,7 +21,7 @@ namespace EncodingConverter.Commands
         public const string CLARG_PreferredEncoding = "/pe";// preferred encoding
         public const string CLARG_OutputPathFormat = "/outform";// output path format
         public const string CLARG_Overwrite = "/overwrite";// Overwrite output file if needed without asking.
-        public const string CLARG_Trace = "/trace";// Write trace to console.
+        public const string CLARG_Verbose = "/verbose";// Write trace to console.
         public const string CLARG_Delay = "/delay";// Delays ending of program by asking to press any key to end.
 
         public const string CLARG_CompFile = "/cf";// companion file
@@ -373,7 +373,7 @@ namespace EncodingConverter.Commands
         }
         int ProcessTraceCLArg(string[] args, int startingIndex)
         {
-            string switchName = CLARG_Trace;
+            string switchName = CLARG_Verbose;
             if (!args.IsSwitch(startingIndex, switchName))
             {
                 Trace.TraceWarning($"Argument '{args[startingIndex]}' is not trace switch '{switchName}'!");
