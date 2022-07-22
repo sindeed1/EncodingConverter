@@ -9,7 +9,7 @@
   <Identity
     Name="22202Sindeed.EncodingConverter"
     Publisher="CN=AA"
-    Version="3.1.11.0" />
+    Version="3.1.13.0" />
 
   <Properties>
     <DisplayName>Encoding Converter</DisplayName>
@@ -43,6 +43,7 @@
   </Applications>
 
   <Capabilities>
-    <rescap:Capability Name="runFullTrust" />
+	  <rescap:Capability Name="runFullTrust" />
+	  <rescap:Capability Name="broadFileSystemAccess" />
   </Capabilities>
 </Package>
